@@ -1,6 +1,5 @@
 const fs = require('fs');
 const oracledb = require('oracledb');
-const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const con = require('../utility/dbconfig')
@@ -16,13 +15,6 @@ if (libPath && fs.existsSync(libPath)) {
 }
 
 exports.signup = (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        const error = new Error('Validation failed.');
-        error.statusCode = 422;
-        error.data = errors.array();
-        throw error;
-    }
     const email = req.body.email;
     const firstName = req.body.firstName;
     const password = req.body.password;
