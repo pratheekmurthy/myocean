@@ -14,40 +14,10 @@ if (libPath && fs.existsSync(libPath)) {
   oracledb.initOracleClient({ libDir: libPath });
 }
 
-exports.signup = (req, res, next) => {
-    const email = req.body.email;
-    const firstName = req.body.firstName;
-    const password = req.body.password;
-    bcrypt
-        .hash(password, 12)
-        .then(async hashedPw => {
-            let connection
-            try{
-                connection = await oracledb.getConnection(con);
-                const sqlQuery = `INSERT INTO "Users"("firstName", email, "password") VALUES(:1, :2, :3)`;
-                binds = [[firstName, email, hashedPw ]];
-                result = await connection.execute(sqlQuery, binds, {});
-                res.status(201).json({ message: 'User created!', userId: result.id });
-            } catch(err) {
-                if (!err.statusCode) {
-                    err.statusCode = 500;
-                }
-                next(err);
-            } finally {
-                if (connection) {
-                    try {
-                    await connection.close();
-                    } catch(err) {
-                    console.log("Error when closing the database connection: ", err);
-                    }
-                }
-            }
-        })
-};
-
 exports.login = (req, res, next) => {
-    const email = req.body.email;
+    const username = req.body.userName;
     const password = req.body.password;
+    const otp_value = req.body.otpValue;
     let loadedUser;
     let connection;
     (async function() {
@@ -55,8 +25,8 @@ exports.login = (req, res, next) => {
            connection = await oracledb.getConnection(con);
            console.log("Successfully connected to Oracle!")
            connection.execute(
-            `select * from "Users" where email = :email`,
-            [email],  
+            `select * from qport_user_profile a where (lower(a.username) = :username or lower(a.email_id) = :email) and a.is_active = 1`,
+            [username, username],
            function(err, user) {
                 if (err) {
                     if (!err.statusCode) {
@@ -64,32 +34,38 @@ exports.login = (req, res, next) => {
                     }
                     next(err);
                 }
-                if (!user) {
+                let meta_data_name = user.metaData;
+                let meta_data = extractName(meta_data_name);
+                if (user.rows.length == 0) {
                     const error = new Error('A user with this email could not be found.');
                     error.statusCode = 401;
                     throw error;
                 }
-                loadedUser = user.rows[0];
-                isEqual = bcrypt.compare(password, user.password);
-                if (!isEqual) {
-                    const error = new Error('Wrong password!');
-                    error.statusCode = 401;
-                    throw error;
-                }
+                const userData = toObject(meta_data, user.rows[0])
+                loadedUser = userData;
+                console.log(userData)
+                // isEqual = bcrypt.compare(password, user.password);
+                // if (!isEqual) {
+                //     const error = new Error('Wrong password!');
+                //     error.statusCode = 401;
+                //     throw error;
+                // }
                 const token = jwt.sign(
                     {
-                        email: loadedUser.email,
-                        userId: loadedUser.id
+                        UserName: loadedUser.username,
+                        CompanyFk: loadedUser.company_fk,
+                        UserPk: loadedUser.userpk
                     },
                     'somesupersecretsecret',
                     { expiresIn: '1h' }
                 );
-                res.status(200).json({ token: token, userId: loadedUser.id });
+                res.status(200).json({ token: token, userDetails: loadedUser });
            });
         } catch(err) {
             if (!err.statusCode) {
                 err.statusCode = 500;
             }
+            console.log('error occoured')
             next(err);
         } finally {
             if (connection) {
@@ -102,3 +78,17 @@ exports.login = (req, res, next) => {
         }
     })()
 };
+
+function toObject(names, values) {
+    var result = {};
+    for (var i = 0; i < names.length; i++)
+         result[names[i]] = values[i];
+    return result;
+}
+
+function extractName(data) {
+    var result = [];
+    for (var i = 0; i < data.length; i++)
+         result.push((data[i].name).toLowerCase())
+    return result;
+}

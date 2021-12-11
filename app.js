@@ -2,7 +2,7 @@ const path = require('path');
 require('dotenv').config()
 const express = require('express');
 const PORT = process.env.PORT || 6000
-
+const database = require('./services/database')
 const app = express();
 const authRoutes = require('./routes/auth');
 
@@ -14,7 +14,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
-app.use((req, res, next) => {
+app.use( async (req, res, next) => {
+    await database.initialize()
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader(
         'Access-Control-Allow-Methods',
@@ -24,14 +25,14 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/api', authRoutes);
+app.use('/api/Auth', authRoutes);
 
-app.use((error, req, res, next) => {
-    console.log(error);
+app.use( async (error, req, res, next) => {
     const status = error.statusCode || 500;
     const message = error.message;
     const data = error.data;
     res.status(status).json({ message: message, data: data });
+    await database.close()
 });
 
 app.listen(PORT, () => {
