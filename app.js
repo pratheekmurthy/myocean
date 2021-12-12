@@ -5,6 +5,7 @@ const PORT = process.env.PORT || 6000
 const database = require('./services/database')
 const app = express();
 const authRoutes = require('./routes/auth');
+const menuRoutes = require('./routes/menu');
 
 
 app.use(express.json());
@@ -26,12 +27,13 @@ app.use( async (req, res, next) => {
 });
 
 app.use('/api/Auth', authRoutes);
+app.use('/api', menuRoutes);
 
 app.use( async (error, req, res, next) => {
     const status = error.statusCode || 500;
     const message = error.message;
     const data = error.data;
-    res.status(status).json({ message: message, data: data });
+    res.status(status).json({ statusCode: status, message: message, data: data });
     await database.close()
 });
 

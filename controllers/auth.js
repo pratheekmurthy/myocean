@@ -1,9 +1,4 @@
-const fs = require('fs');
-const oracledb = require('oracledb');
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const con = require('../utility/dbconfig');
-const { user } = require('../utility/dbconfig');
 const database = require('../services/database')
 
 // let libPath;
