@@ -5,6 +5,7 @@ const PORT = process.env.PORT || 6000
 const database = require('./services/database')
 const app = express();
 const authRoutes = require('./routes/auth');
+const alertRoutes = require('./routes/alerts');
 const menuRoutes = require('./routes/menu');
 const signUpRoutes = require('./routes/Signup');
 const dropDownRoutes = require('./routes/dropDown');
@@ -29,6 +30,7 @@ app.use( async (req, res, next) => {
 });
 
 app.use('/api/Auth', authRoutes);
+app.use('/api/alerts', alertRoutes);
 app.use('/api/signup', signUpRoutes)
 app.use('/api/dropdown', dropDownRoutes)
 app.use('/api', menuRoutes);
