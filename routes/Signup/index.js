@@ -5,11 +5,11 @@ const signUpController = require('../../controllers/signup');
 
 const router = express.Router();
 const joiValidator = require('../../middleware/joi')
-// const { menuSchema } = require('../../schema/index')
+const { fetchSignUpSchema } = require('../../schema/signup/index')
 
-router.get('/fetchnotifications', joiValidator(menuSchema, 'query'), signUpController.fetchNotifications);
-router.post('/fetchalerts', joiValidator(menuSchema, 'query'), signUpController.fetchAlerts);
-router.get('/fetchsignup', joiValidator(menuSchema, 'query'), signUpController.fetchSignUp);
+router.get('/fetchnotifications', signUpController.fetchNotifications);
+router.post('/fetchalerts', signUpController.fetchAlerts);
+router.get('/fetchsignup', joiValidator(fetchSignUpSchema, 'query'), signUpController.fetchSignUp);
 router.get('/saveuserdetails', joiValidator(menuSchema, 'query'), signUpController.saveUserDetails);
 router.get('/fetchcountries', joiValidator(menuSchema, 'query'), signUpController.fetchCountries);
 router.get('/fetchlocations', joiValidator(menuSchema, 'query'), signUpController.fetchLocations);
