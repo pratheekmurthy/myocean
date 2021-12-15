@@ -6,6 +6,7 @@ const database = require('./services/database')
 const app = express();
 const authRoutes = require('./routes/auth');
 const menuRoutes = require('./routes/menu');
+const signUpRoutes = require('./routes/Signup');
 
 
 app.use(express.json());
@@ -28,6 +29,7 @@ app.use( async (req, res, next) => {
 
 app.use('/api/Auth', authRoutes);
 app.use('/api', menuRoutes);
+app.use('/api/signup', signUpRoutes)
 
 app.use( async (error, req, res, next) => {
     const status = error.statusCode || 500;
