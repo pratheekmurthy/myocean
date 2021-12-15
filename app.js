@@ -7,6 +7,7 @@ const app = express();
 const authRoutes = require('./routes/auth');
 const menuRoutes = require('./routes/menu');
 const signUpRoutes = require('./routes/Signup');
+const countriesRoutes = require('./routes/countries');
 
 
 app.use(express.json());
@@ -16,7 +17,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
-app.use( async (req, res, next) => {
+app.use(async (req, res, next) => {
     await database.initialize()
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader(
@@ -30,8 +31,9 @@ app.use( async (req, res, next) => {
 app.use('/api/Auth', authRoutes);
 app.use('/api', menuRoutes);
 app.use('/api/signup', signUpRoutes)
+app.use('/api/country', countriesRoutes)
 
-app.use( async (error, req, res, next) => {
+app.use(async (error, req, res, next) => {
     const status = error.statusCode || 500;
     const message = error.message;
     const data = error.data;
