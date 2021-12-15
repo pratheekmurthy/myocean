@@ -12,7 +12,7 @@ const { fetchValidateEmail } = require('../../schema/signup/index')
 const { fetchValidateMobile } = require('../../schema/signup/index')
 
 router.get('/fetchnotifications', signUpController.fetchNotifications);
-router.post('/fetchalerts', signUpController.fetchAlerts);
+router.post('/fetchalerts', signUpController.fetchAlerts); 
 router.get('/fetchsignup', joiValidator(fetchSignUpSchema, 'query'), signUpController.fetchSignUp);
 router.get('/saveuserdetails', signUpController.saveUserDetails);
 router.get('/fetchcountries', signUpController.fetchCountries);
