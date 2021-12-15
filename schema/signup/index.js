@@ -4,10 +4,10 @@ const schemas = {
         userpk: Joi.string().required()
     }),
     fetchLocationsSchema:  Joi.object().keys({ 
-        countrypk: Joi.int().required()
+        countrypk: Joi.number().required()
     }),
     fetchCustomerSchema: Joi.object().keys({
-        custpk:Joi.int().required()
+        custpk:Joi.number().required()
     }),
     fetchValidateEmail: Joi.object().keys({
         email:Joi.string().required()
