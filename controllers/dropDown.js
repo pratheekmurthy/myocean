@@ -2,8 +2,8 @@ const database = require('../services/database')
 
 exports.fetchDropdown = async (req, res, next) => {
     let searchflag = (req.query.searchflag).toUpperCase()
-    let param3 = req.query.param3
-    let param4 = (req.query.param4).toLowerCase() || 0
+    let param3 = req.query.param3;
+    let param4 = req.query.param4;
     let response;
     try {
         switch(searchflag){
@@ -63,9 +63,20 @@ const FetchDDtable = (p1, p2) => {
     const resp = new Promise( async (resolve, reject) => {
         let api_response = {};
         try{
-            let query = `select b.pk, b.id, b.name, b.name as "text", b.preference, b.type as "columnCaption" from qport_dropdown_values b where b.is_active = 1 and b.form_fk = :p1 and lower(b.type) = :p2`;
-            let bind = [p1, p2]
-            const output = await database.simpleExecute(query, bind);
+            let query = '';
+            query += ' select b.pk, b.id, b.name, b.name as "text", ';
+            query += ' b.preference, b.type as "columnCaption" from ';
+            query += ' qport_dropdown_values b where b.is_active = 1 ';
+            if(p1.length > 0)
+            {
+                query += ' and b.form_fk = '+ p1;
+            }
+            if(p2.length > 0)
+            {
+                query += ' and lower(b.type) = lower(\'' + p2 + '\')';
+            }
+            //let bind = [ ]
+            const output = await database.simpleExecute(query);
             let data = output.rows;
             api_response.Status = 'Success'
             api_response.StatusCode = 'GFS000001'
@@ -76,7 +87,6 @@ const FetchDDtable = (p1, p2) => {
             api_response.error = err
             reject(api_response)
         }
- 
     })
     return resp;
 }
