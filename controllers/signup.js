@@ -13,7 +13,7 @@ exports.fetchCountries =  async (req, res, next) => {
             api_response.Status = 'Success'
             api_response.StatusCode = 'GFS000001'
             api_response.data = data
-            res.send(200).json(api_response)
+            res.status(200).json(api_response)
     }
     catch (err) {
         if (!err.statusCode) {
