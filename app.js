@@ -30,8 +30,8 @@ app.use( async (req, res, next) => {
 });
 
 app.use('/api/Auth', authRoutes);
-app.use('/api/alerts', alertRoutes);
 app.use('/api/signup', signUpRoutes)
+app.use('/api/alerts', alertRoutes);
 app.use('/api/dropdown', dropDownRoutes)
 app.use('/api', menuRoutes);
 
