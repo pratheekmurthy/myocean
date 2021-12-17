@@ -2,7 +2,18 @@ const database = require('../services/database')
 
 exports.fetchNotifications =  async (req, res, next) => {
     try {
-        let query = `SELECT dv.pk AS "pk", dv.id AS "id", dv.name AS "name", NULL AS "imageFile", NULL AS "columnCaption", dv.preference AS "preference", dv.name AS "text", dv.type AS "type" FROM qport_dropdown_values dv WHERE dv.form_fk = 1 AND dv.type = 'Notifications' ORDER BY dv.preference`;
+        let query = ' select dv.pk as "pk", ';
+        query += ' dv.id         as "id", ';
+        query += ' dv.name       as "name", ';
+        query += ' null          as "imagefile", ';
+        query += ' null          as "columnCaption", ';
+        query += ' dv.preference as "preference", ';
+        query += ' dv.name       as "text", ';
+        query += ' dv.type       as "type" ';
+        query += ' from qport_dropdown_values dv ';
+        query += ' where dv.form_fk = 1 ';
+        query += ' and dv.type = \'Notifications\' ';
+        query += ' order by dv.preference ';
         const notification = await database.simpleExecute(query);
         data = notification.rows
         res.status(200).json({ "Status": "Success",
