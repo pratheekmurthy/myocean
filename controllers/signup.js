@@ -176,8 +176,62 @@ exports.fetchCountries =  async (req, res, next) => {
         next(err);
     }
 }
-exports.fetchLocations =  async (req, res, next) => {}
-exports.fetchMloCompanies =  async (req, res, next) => {}
+exports.fetchLocations =  async (req, res, next) => {
+    try {
+        const { countryfk } = req.query;
+        let query = ' select loc.location_mst_pk as "pk", ';
+        query += ' loc.location_id     as "id", ';
+        query += ' loc.location_name   as "name", ';
+        query += ' loc.location_name   as "text", ';
+        query += ' 0                   as "peference" ';
+        query += ' from country_mst_tbl cmt, location_mst_tbl loc ';
+        query += ' where loc.country_mst_fk = cmt.country_mst_pk ';
+        if(countryfk.length > 0)
+        {
+            query += ' and cmt.active = '+ countryfk;
+        }
+        query += ' and cmt.country_mst_pk = 1 ';
+        query += ' order by loc.location_name ';
+
+        const dropdown = await database.simpleExecute(query);
+        data = dropdown.rows
+        res.status(200).json({ "Status": "Success",
+        "StatusCode": "GFS000001", "data": data})
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+}
+exports.fetchMloCompanies =  async (req, res, next) => {
+    try {
+        const { countryfk } = req.query;
+        let query = ' select loc.location_mst_pk as "pk", ';
+        query += ' loc.location_id     as "id", ';
+        query += ' loc.location_name   as "name", ';
+        query += ' loc.location_name   as "text", ';
+        query += ' 0                   as "peference" ';
+        query += ' from country_mst_tbl cmt, location_mst_tbl loc ';
+        query += ' where loc.country_mst_fk = cmt.country_mst_pk ';
+        if(countryfk.length > 0)
+        {
+            query += ' and cmt.active = '+ countrypk;
+        }
+        query += ' and cmt.country_mst_pk = 1 ';
+        query += ' order by loc.location_name ';
+
+        const dropdown = await database.simpleExecute(query);
+        data = dropdown.rows
+        res.status(200).json({ "Status": "Success",
+        "StatusCode": "GFS000001", "data": data})
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+}
 exports.fetchCustomer =  async (req, res, next) => {}
 exports.fetchDesignation =  async (req, res, next) => {}
 exports.validateEmail =  async (req, res, next) => {}

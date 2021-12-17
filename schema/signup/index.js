@@ -4,7 +4,7 @@ const schemas = {
         userpk: Joi.string().required()
     }),
     fetchLocationsSchema:  Joi.object().keys({ 
-        countrypk: Joi.number().required()
+        countryfk: Joi.number().required()
     }),
     fetchCustomerSchema: Joi.object().keys({
         custpk:Joi.number().required()
