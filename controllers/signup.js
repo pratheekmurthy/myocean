@@ -178,7 +178,7 @@ exports.fetchCountries =  async (req, res, next) => {
 }
 exports.fetchLocations =  async (req, res, next) => {
     try {
-        const { countryfk } = req.query;
+        const { countrypk } = req.query;
         let query = ' select loc.location_mst_pk as "pk", ';
         query += ' loc.location_id     as "id", ';
         query += ' loc.location_name   as "name", ';
@@ -186,11 +186,11 @@ exports.fetchLocations =  async (req, res, next) => {
         query += ' 0                   as "peference" ';
         query += ' from country_mst_tbl cmt, location_mst_tbl loc ';
         query += ' where loc.country_mst_fk = cmt.country_mst_pk ';
-        if(countryfk.length > 0)
+        query += ' and cmt.active = 1';
+        if(countrypk.length > 0)
         {
-            query += ' and cmt.active = '+ countryfk;
+            query += ' and cmt.country_mst_pk = '+ countrypk;
         }
-        query += ' and cmt.country_mst_pk = 1 ';
         query += ' order by loc.location_name ';
 
         const dropdown = await database.simpleExecute(query);
@@ -206,20 +206,19 @@ exports.fetchLocations =  async (req, res, next) => {
 }
 exports.fetchMloCompanies =  async (req, res, next) => {
     try {
-        const { countryfk } = req.query;
-        let query = ' select loc.location_mst_pk as "pk", ';
-        query += ' loc.location_id     as "id", ';
-        query += ' loc.location_name   as "name", ';
-        query += ' loc.location_name   as "text", ';
+        let query = ' select cmt.customer_mst_pk as "pk", ';
+        query += ' cmt.customer_id     as "id", ';
+        query += ' cmt.customer_name   as "name", ';
+        query += ' cmt.customer_name   as "text", ';
         query += ' 0                   as "peference" ';
-        query += ' from country_mst_tbl cmt, location_mst_tbl loc ';
-        query += ' where loc.country_mst_fk = cmt.country_mst_pk ';
-        if(countryfk.length > 0)
-        {
-            query += ' and cmt.active = '+ countrypk;
-        }
-        query += ' and cmt.country_mst_pk = 1 ';
-        query += ' order by loc.location_name ';
+        query += ' from customer_mst_tbl      cmt, ';
+        query += ' location_mst_tbl      lmt, ';
+        query += ' location_type_mst_tbl ltmt ';
+        query += ' where cmt.qils_location_mst_fk = lmt.location_mst_pk ';
+        query += ' and lmt.location_type_fk = ltmt.location_type_mst_pk ';
+        query += ' and cmt.isactive = 1 ';
+        query += ' and ltmt.location_type_id = \'HQ\' ';
+        query += ' order by cmt.customer_name ';
 
         const dropdown = await database.simpleExecute(query);
         data = dropdown.rows
@@ -232,10 +231,110 @@ exports.fetchMloCompanies =  async (req, res, next) => {
         next(err);
     }
 }
-exports.fetchCustomer =  async (req, res, next) => {}
-exports.fetchDesignation =  async (req, res, next) => {}
-exports.validateEmail =  async (req, res, next) => {}
-exports.validateMobile =  async (req, res, next) => {}
+exports.fetchCustomer =  async (req, res, next) => {
+    try {
+        const { custpk } = req.query;
+        let query = ' select cmt.customer_mst_pk as "pk", ';
+        query += ' cmt.customer_id     as "id", ';
+        query += ' cmt.customer_name   as "name", ';
+        query += ' cmt.customer_name   as "text", ';
+        query += ' 0                   as "peference" ';
+        query += ' from customer_mst_tbl cmt, location_mst_tbl lmt ';
+        query += ' where cmt.qils_location_mst_fk = lmt.location_mst_pk ';
+        query += ' and cmt.isactive = 1 ';
+        if(custpk.length > 0)
+        {
+            query += ' and cmt.customer_mst_pk = '+ custpk;
+        }
+        query += ' order by cmt.customer_name ';
+
+        const dropdown = await database.simpleExecute(query);
+        data = dropdown.rows
+        res.status(200).json({ "Status": "Success",
+        "StatusCode": "GFS000001", "data": data})
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+}
+exports.fetchDesignation =  async (req, res, next) => {
+    try {
+        let query = ' select dmt.designation_mst_pk as "pk", ';
+        query += ' dmt.designation_id     as "id", ';
+        query += ' dmt.designation_name   as "name", ';
+        query += ' dmt.designation_name   as "text", ';
+        query += ' 0                      as "peference" ';
+        query += ' from designation_mst_tbl dmt ';
+        query += ' where dmt.isactive = 1 ';
+        query += ' order by dmt.designation_name ';
+        
+        const dropdown = await database.simpleExecute(query);
+        data = dropdown.rows
+        res.status(200).json({ "Status": "Success",
+        "StatusCode": "GFS000001", "data": data})
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+}
+exports.validateEmail =  async (req, res, next) => {
+    try {
+        const { email } = req.query;
+        let query = ' select count(*) ecnt';
+        query += ' from qport_user_profile q ';
+        query += ' where lower(q.contact_email_add) = lower(\''+ email + '\')';
+        
+        const cnt = await database.simpleExecute(query);
+        data = cnt.rows[0].ECNT;
+        if(data == 0)
+        {
+            res.status(200).json({ "Status": "Error",
+            "StatusCode": "GFE000009", "data": email})
+        }
+        else
+        {
+            res.status(200).json({ "Status": "Success",
+            "StatusCode": "GFE000001", "data": email})
+        }
+        
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+}
+exports.validateMobile =  async (req, res, next) => {
+    try {
+        const { mobile } = req.query;
+        let query = ' select count(*) ecnt';
+        query += ' from qport_user_profile q ';
+        query += ' where trim(q.contact_mob_phone_no) = trim(\''+ mobile + '\')';
+        
+        const cnt = await database.simpleExecute(query);
+        data = cnt.rows[0].ECNT;
+        if(data == 0)
+        {
+            res.status(200).json({ "Status": "Error",
+            "StatusCode": "GFE000009", "data": mobile})
+        }
+        else
+        {
+            res.status(200).json({ "Status": "Success",
+            "StatusCode": "GFE000001", "data": mobile})
+        }
+        
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+}
 exports.inviteColleague =  async (req, res, next) => {}
 
 const lowercaseKeys = obj =>
