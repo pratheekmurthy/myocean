@@ -14,6 +14,10 @@ const schemas = {
     }),
     fetchValidateMobile: Joi.object().keys({
         mobile:Joi.string().required()
+    }),
+    inviteColleague: Joi.object().keys({
+        emailids:Joi.string().required(),
+        userName:Joi.string().required()
     })
 };
 module.exports = schemas;
