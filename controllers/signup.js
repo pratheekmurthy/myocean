@@ -171,10 +171,19 @@ exports.saveUserDetails =  async (req, res, next) => {
     
     try {
         const reqData = req.body;
+        let response;
         if(reqData.userpk == 0)
         {
             response = await insertUserInfo(reqData);
         }
+        let queryUserPK = ' select t.userpk from qport_user_profile t where t.rowid =  \\' + response.lastRowid + '\'';
+        const UserFK = await database.simpleExecute(queryUserPK);
+        let value = UserFK.rows[0];
+        
+        notificationArr = reqData.notification;
+
+        let notificationres = await updateNotifications(notificationArr);
+
         data = [];
         res.status(200).json({ "Status": "Success",
         "StatusCode": "GFS000001", "data": data})
@@ -534,10 +543,16 @@ const insertUserInfo = (data) => {
             //console.log(query)
             const userInfo = await database.simpleExecute(query, [],{ autoCommit: true});
             //console.log(userInfo)
-            if(userInfo.rowsAffected == 1)
-                let queryUserPK = ' select t.userpk from qport_user_profile t where t.rowid =  \\' + userInfo.lastRowid + '\'';
-            const UserFK = await database.simpleExecute(queryUserPK);
-            console.log(UserFK.rows[0]);
+            const respone ={}
+            if(userInfo.rowsAffected == 1){
+                respone.status='true';
+                respone.data = userInfo;
+                resolve(respone)
+            }else{
+                respone.status='false';
+                respone.error = 'user record not created';
+                resolve(respone)
+            }
 
             
             //res.status(200).json({ "Status": "Error",
@@ -547,8 +562,16 @@ const insertUserInfo = (data) => {
         if (!err.statusCode) {
             err.statusCode = 500;
         }
-        next(err);
+        reject(err)
     }
 }
 
-const createSql = ``
+const updateNotifications = (data) => {
+    return new Promise( async (resolve, reject) => {
+        for(let i = 0; i < data.length; i ++){
+            let query = ``;
+            const notificationInfo = await database.simpleExecute(query, [],{ autoCommit: true});
+        }
+        resolve(true);
+    })
+}
