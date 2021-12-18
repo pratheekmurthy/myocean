@@ -81,8 +81,22 @@ const schemas = {
         company_city:Joi.string().allow(''),
         company_state:Joi.string().allow(''),
         copy_mailing_address:Joi.number(),
-        owner_type:Joi.string().allow('')
+        owner_type:Joi.string().allow(''),
+        notificationdtl:Joi.array().items({
+            usernotifypk:Joi.number().required(),
+            notify_desc_ifk:Joi.string().required(),
+            isselected:Joi.number(),
+            is_active:Joi.number(),
+            created_by_fk:Joi.number()
+        })
     }),
+    // notificationdtlSchema: Joi.object().keys({
+    //     usernotifypk:Joi.string().required(),
+    //     notify_desc_ifk:Joi.string().required(),
+    //     isselected:Joi.number(),
+    //     is_active:Joi.number(),
+    //     created_by_fk:Joi.number()
+    // }),
     inviteColleagueSchema: Joi.object().keys({
         emailids:Joi.string().required(),
         userName:Joi.string().required()

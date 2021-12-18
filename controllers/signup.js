@@ -168,7 +168,6 @@ exports.fetchSignUp =  async (req, res, next) => {
     }
 }
 exports.saveUserDetails =  async (req, res, next) => {
-    
     try {
         const reqData = req.body;
         let response;
@@ -176,15 +175,16 @@ exports.saveUserDetails =  async (req, res, next) => {
         {
             response = await insertUserInfo(reqData);
         }
-        let queryUserPK = ' select t.userpk from qport_user_profile t where t.rowid =  \\' + response.lastRowid + '\'';
-        const UserFK = await database.simpleExecute(queryUserPK);
-        let value = UserFK.rows[0];
-        
-        notificationArr = reqData.notification;
+        let queryUser = 'select t.userpk from qport_user_profile ';
+        queryUser+= ' t where t.rowid = \'' + response.data.lastRowid + '\'';
+        const UserDataRow = await database.simpleExecute(queryUser);
+        let UserFK = UserDataRow.rows[0]["USERPK"];
+        reqData.userpk = UserFK;
+        notificationArr = reqData.notificationdtl;
 
-        let notificationres = await updateNotifications(notificationArr);
+        await saveNotifications(UserFK, notificationArr);
 
-        data = [];
+        data = UserFK;
         res.status(200).json({ "Status": "Success",
         "StatusCode": "GFS000001", "data": data})
     } catch (err) {
@@ -193,7 +193,6 @@ exports.saveUserDetails =  async (req, res, next) => {
         }
         next(err);
     }
-  
 }
 exports.fetchCountries =  async (req, res, next) => {
     try {
@@ -566,11 +565,46 @@ const insertUserInfo = (data) => {
     }
 }
 
-const updateNotifications = (data) => {
+const saveNotifications = (userfk, data) => {
     return new Promise( async (resolve, reject) => {
+        //const tempId =  [];
+        let query = '';
         for(let i = 0; i < data.length; i ++){
-            let query = ``;
-            const notificationInfo = await database.simpleExecute(query, [],{ autoCommit: true});
+           if(data[i].usernotifypk == 0)
+           {
+                query = ' insert into qport_user_notify'
+                query += ' (userfk, ';
+                query += ' notify_desc_ifk, ';
+                query += ' isselected, ';
+                query += ' is_active, ';
+                query += ' created_by_fk) ';
+                query += ' values ';
+                query += ' (' + userfk + ',';
+                query += ' \'' + data[i].notify_desc_ifk + '\',';
+                query += ' ' + data[i].isselected + ',';
+                //query += ' ' + data[i].gen_country_fk + ',';
+                query += ' ' + data[i].is_active + ',';
+                query += ' ' + data[i].created_by_fk + ')';
+                await database.simpleExecute(query, [],{ autoCommit: true});
+           }
+           else
+           {
+                query = ' insert into qport_user_notify'
+                query += ' (userfk, ';
+                query += ' notify_desc_ifk, ';
+                query += ' isselected, ';
+                query += ' is_active, ';
+                query += ' created_by_fk) ';
+                query += ' values ';
+                query += ' (' + userfk + ',';
+                query += ' ' + data[i].notify_desc_ifk + ',';
+                query += ' ' + data[i].isselected + ',';
+                query += ' ' + data[i].gen_country_fk + ',';
+                query += ' ' + data[i].is_active + ',';
+                query += ' ' + data[i].created_by_fk + ')';
+
+                await database.simpleExecute(query, [],{ autoCommit: true});
+           }
         }
         resolve(true);
     })
