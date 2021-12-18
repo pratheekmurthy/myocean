@@ -13,7 +13,7 @@ const schemas = {
         skiprecords: Joi.number(),
         totalrecords: Joi.number(),
         endrecord: Joi.number(),
-        exportflag: Joi.number(),
+        exportflag: Joi.number()
     }),
     fetchuserdetails: Joi.object().keys({
         userpk: Joi.number().required()
@@ -31,15 +31,15 @@ const schemas = {
         despk: Joi.number(),
         companytype: Joi.string(),
         loggedinuser: Joi.number().required(),
-        status: Joi.number(),
+        status: Joi.number()
     }),
     deleteuser: Joi.object().keys({
-        userpk: Joi.number(),
+        userpk: Joi.number()
     }),
     getuserdropdown: Joi.object().keys({
         companytype: Joi.string(),
         companypk: Joi.number(),
-        departmentpk: Joi.number(),
+        departmentpk: Joi.number()
     }),
     fetchuserpreference: Joi.object().keys({
         userpk: Joi.number(),
@@ -48,12 +48,12 @@ const schemas = {
         despk: Joi.number(),
         companytype: Joi.string(),
         loggedinuser: Joi.number().required(),
-        status: Joi.number(),
+        status: Joi.number()
     }),
     printusers: Joi.object().keys({
         userpk: Joi.number(),
         loginpk: Joi.number(),
-        usersession_id: Joi.string(),
+        usersession_id: Joi.string()
     })
 };
 module.exports = schemas;

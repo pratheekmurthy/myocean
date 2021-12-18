@@ -82,6 +82,10 @@ const schemas = {
         company_state:Joi.string(),
         copy_mailing_address:Joi.bool(),
         owner_type:Joi.string()
+    }),
+    inviteColleagueSchema: Joi.object().keys({
+        emailids:Joi.string().required(),
+        userName:Joi.string().required()
     })
 };
 module.exports = schemas;
