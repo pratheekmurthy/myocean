@@ -133,8 +133,7 @@ exports.fetchSignUp =  async (req, res, next) => {
         query += ' order by qdv.preference ';
         
         const notificationdtl = await database.simpleExecute(query);
-        notificationdtl = lowercaseKeys(notificationdtl.rows[0])
-        data.notificationdtl = notificationdtl
+        data.notificationdt = turnArraytoLowerCase(notificationdtl.rows)
 
         query = ' select coalesce(usr.usernotifypk, 0) as usernotifypk, ';
         query += ' coalesce(usr.userfk, 0) as userfk, ';
@@ -152,7 +151,8 @@ exports.fetchSignUp =  async (req, res, next) => {
         query += ' order by qdv.preference ';
         
         const alertdtl = await database.simpleExecute(query);
-        data.alertdtl = alertdtl.rows
+        data.alertdtl = turnArraytoLowerCase(alertdtl.rows)
+        
         let lowerdata =  lowercaseKeys(data);
         res.status(200).json({ "Status": "Success",
         "StatusCode": "GFS000001", "data": lowerdata})
@@ -353,8 +353,10 @@ const lowercaseKeys = obj =>
 const turnArraytoLowerCase = (arr) => {
     let tempArr = []
     for(let i = 0; i<arr.length; i++){
-        let convertedobj = arr[i]
+        let convertedobj = lowercaseKeys(arr[i])
+        tempArr.push(convertedobj);
     }
+    return tempArr;
 }
 
 const insertUserInfo = (data) => {
