@@ -53,6 +53,7 @@ exports.fetchAlerts =  async (req, res, next) => {
 exports.fetchSignUp =  async (req, res, next) => {
     try {
         //User Profile
+        const { userpk } = req.query;
         let query = ' select user1.userpk, ';
         query += ' user1.salutation_ifk, ';
         query += ' user1.dob, ';
@@ -110,9 +111,10 @@ exports.fetchSignUp =  async (req, res, next) => {
         query += ' left join country_mst_tbl mailingcompany ';
         query += ' on user1.mailing_add_country_fk = mailingcompany.country_mst_pk ';
         query += ' where 1 = 1 ';
+        query += ' and user1.userpk = ' + userpk + '';
 
         const userprofile = await database.simpleExecute(query);
-        data = userprofile.rows
+        data = userprofile.rows[0];
 
         //Notifications
         query = ' select coalesce(usr.usernotifypk, 0) as usernotifypk, ';
@@ -125,14 +127,13 @@ exports.fetchSignUp =  async (req, res, next) => {
         query += ' usr.last_updated_by_fk, ';
         query += ' usr.last_updated_on ';
         query += ' from qport_dropdown_values qdv ';
-        query += ' left join (select * from qport_user_notify n where n.userfk = 0) usr ';
+        query += ' left join (select * from qport_user_notify n where n.userfk = ' + userpk + ') usr ';
         query += ' on qdv.id = usr.notify_desc_ifk ';
         query += ' where qdv.type = \'Notifications\' ';
         query += ' order by qdv.preference ';
         
         const notificationdtl = await database.simpleExecute(query);
-        data = notificationdtl.rows
-
+        data.notificationdtl = lowercaseKeys(notificationdtl.rows)
 
         query = ' select coalesce(usr.usernotifypk, 0) as usernotifypk, ';
         query += ' coalesce(usr.userfk, 0) as userfk, ';
@@ -150,10 +151,10 @@ exports.fetchSignUp =  async (req, res, next) => {
         query += ' order by qdv.preference ';
         
         const alertdtl = await database.simpleExecute(query);
-        data = alertdtl.rows
-
+        data.alertdtl = alertdtl.rows
+        let lowerdata =  lowercaseKeys(data);
         res.status(200).json({ "Status": "Success",
-        "StatusCode": "GFS000001", "data": data})
+        "StatusCode": "GFS000001", "data": lowerdata})
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
