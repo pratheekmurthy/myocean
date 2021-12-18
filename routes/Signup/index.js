@@ -16,6 +16,6 @@ router.get('/fetchCustomer', joiValidator(fetchCustomerSchema, 'query'), signUpC
 router.get('/fetchdesignation', signUpController.fetchDesignation);
 router.get('/validateemail', joiValidator(fetchValidateEmail, 'query'), signUpController.validateEmail);
 router.get('/validatemobile', joiValidator(fetchValidateMobile, 'query'), signUpController.validateMobile);
-router.post('/invitecolleague', joiValidator(inviteColleague, 'body') signUpController.inviteColleague);
+router.post('/invitecolleague', joiValidator(inviteColleague, 'body'), signUpController.inviteColleague);
 
 module.exports = router;
