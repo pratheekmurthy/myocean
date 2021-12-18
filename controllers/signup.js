@@ -29,7 +29,11 @@ exports.fetchAlerts =  async (req, res, next) => {
     }
 }
 exports.fetchSignUp =  async (req, res, next) => {}
-exports.saveUserDetails =  async (req, res, next) => {}
+exports.saveUserDetails =  async (req, res, next) => {
+    const reqData = req.body;
+    if(reqData.userpk == 0)
+    response = await insertUserInfo(reqData);
+}
 exports.fetchCountries =  async (req, res, next) => {
     try {
         let query = `select cont.country_mst_pk as pk, cont.country_id as "id", cont.country_name as "name", cont.country_name as "text", 0 as "Preference" from country_mst_tbl cont where cont.active = 1 order by cont.country_name`
@@ -57,3 +61,14 @@ const lowercaseKeys = obj =>
     acc[key.toLowerCase()] = obj[key];
     return acc;
   }, {});
+
+const insertUserInfo = (data) => {
+    return new Promise( async (resolve, reject) => {
+        let query;
+        query = `INSERT INTO qport_user_profile (passwordhash, passwordsalt, email_id, username, is_active, login_password, login_confirm_password) VALUES ("demo","demo", ${data.email_id}, ${data.username}, 1, "demo", "demo")`;
+        console.log(query)
+        const userInfo = await database.simpleExecute(query, [],{ autoCommit: true});
+        console.log(userInfo)
+    })
+    // return resp
+}

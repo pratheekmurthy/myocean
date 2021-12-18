@@ -13,7 +13,7 @@ console.info("entered routes")
 router.get('/fetchnotifications', signUpController.fetchNotifications);
 router.post('/fetchalerts', signUpController.fetchAlerts); 
 router.get('/fetchsignup', joiValidator(fetchSignUpSchema, 'query'), signUpController.fetchSignUp);
-router.get('/saveuserdetails', signUpController.saveUserDetails);
+router.post('/saveuserdetails', signUpController.saveUserDetails);
 router.get('/fetchcountries', signUpController.fetchCountries);
 router.get('/fetchlocations', joiValidator(fetchLocationsSchema, 'query'), signUpController.fetchLocations);
 router.get('/fetchmlocompanies', signUpController.fetchMloCompanies);
