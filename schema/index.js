@@ -7,10 +7,10 @@ const schemas = {
   }), 
   // define all the other schemas below 
   menuSchema: Joi.object().keys({ 
-    userpk: Joi.string().required()
+    userpk: Joi.number().required()
   }),
   alertSchema: Joi.object().keys({ 
-    userpk: Joi.string().required()
+    userpk: Joi.number().required()
   })
 }; 
 module.exports = schemas;

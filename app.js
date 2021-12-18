@@ -5,9 +5,12 @@ const PORT = process.env.PORT || 6000
 const database = require('./services/database')
 const app = express();
 const authRoutes = require('./routes/auth');
+const alertRoutes = require('./routes/alerts');
 const menuRoutes = require('./routes/menu');
 const signUpRoutes = require('./routes/Signup');
 const countriesRoutes = require('./routes/countries');
+const dropDownRoutes = require('./routes/dropDown');
+const userProfileRoutes = require('./routes/userProfile');
 
 
 app.use(express.json());
@@ -29,9 +32,12 @@ app.use(async (req, res, next) => {
 });
 
 app.use('/api/Auth', authRoutes);
-app.use('/api', menuRoutes);
 app.use('/api/signup', signUpRoutes)
 app.use('/api/country', countriesRoutes)
+app.use('/api/alerts', alertRoutes);
+app.use('/api/dropdown', dropDownRoutes);
+app.use('/api/userprofile', userProfileRoutes);
+app.use('/api', menuRoutes);
 
 app.use(async (error, req, res, next) => {
     const status = error.statusCode || 500;

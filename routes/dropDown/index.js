@@ -1,10 +1,10 @@
 const express = require('express');
-const menuController = require('../../controllers/menu');
+const dropDownController = require('../../controllers/dropDown');
 
 const router = express.Router();
 const joiValidator = require('../../middleware/joi')
-const { menuSchema } = require('../../schema/index')
+const { fetchDropdownSchema } = require('../../schema/dropdown/index')
 
-router.post('/menu', joiValidator(menuSchema, 'query'), menuController.menuList);
+router.get('/fetchdropdown', joiValidator(fetchDropdownSchema, 'query'), dropDownController.fetchDropdown);
 
 module.exports = router;
