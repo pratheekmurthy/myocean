@@ -19,7 +19,7 @@ const schemas = {
         userpk:Joi.number(),
         salutation_ifk:Joi.string().required(),
         gen_country_fk:Joi.number().required(),
-        dob:Joi.string().isoDate('dd/MM/yyyy'),
+        dob:Joi.string(),
         first_name:Joi.string(),
         last_name:Joi.string(),
         gen_location_fk:Joi.number(),
