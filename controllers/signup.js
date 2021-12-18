@@ -72,3 +72,6 @@ const insertUserInfo = (data) => {
     })
     // return resp
 }
+
+
+const createSql = ``
