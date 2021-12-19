@@ -170,23 +170,21 @@ exports.fetchSignUp =  async (req, res, next) => {
 exports.saveUserDetails =  async (req, res, next) => {
     try {
         const reqData = req.body;
-        let response;
+        let response = await saveUserProfile(reqData);
+
         if(reqData.userpk == 0)
         {
-            response = await saveUserProfile(reqData);
+            let queryUser = 'select t.userpk from qport_user_profile ';
+            queryUser+= ' t where t.rowid = \'' + response.data.lastRowid + '\'';
+            const UserDataRow = await database.simpleExecute(queryUser);
+            reqData.userpk = UserDataRow.rows[0]["USERPK"];
         }
-        let queryUser = 'select t.userpk from qport_user_profile ';
-        queryUser+= ' t where t.rowid = \'' + response.data.lastRowid + '\'';
-        const UserDataRow = await database.simpleExecute(queryUser);
-        let UserFK = UserDataRow.rows[0]["USERPK"];
-        reqData.userpk = UserFK;
-
         //Notification
         notificationArr = reqData.notificationdtl;
-        await saveNotifications(UserFK, notificationArr);
+        await saveNotifications(reqData.userpk, notificationArr);
         //Alerts
         alertArr = reqData.alertdtl;
-        await saveAlerts(UserFK, alertArr);
+        await saveAlerts(reqData.userpk, alertArr);
 
         data = UserFK;
         res.status(200).json({ "Status": "Success",
@@ -414,134 +412,207 @@ exports.inviteColleague =  async (req, res, next) => {
 
 const saveUserProfile = (data) => {
     try {
-        let dob =  moment(data.dob).format('DD/MM/YYYY');
-        return new Promise( async (resolve, reject) => {
-            let query = ' insert into qport_user_profile ';
-            query += ' (salutation_ifk, ';
-            query += ' gen_country_fk, ';
-            query += ' dob, ';
-            query += ' first_name, ';
-            query += ' last_name, ';
-            query += ' gen_location_fk, ';
-            query += ' company_type, ';
-            query += ' company_name, ';
-            query += ' company_cus_ref_no, ';
-            query += ' company_designation, ';
-            query += ' company_str_add1, ';
-            query += ' company_str_add2, ';
-            query += ' company_country_fk, ';
-            query += ' company_zipcode, ';
-            query += ' contact_email_add, ';
-            query += ' contact_comfirm_email_add, ';
-            query += ' contact_bus_countrycode, ';
-            query += ' contact_bus_area, ';
-            query += ' contact_bus_tel_no, ';
-            query += ' contact_mob_countrycode, ';
-            query += ' contact_mob_phone_no, ';
-            query += ' contact_mob_city, ';
-            query += ' contact_mob_state, ';
-            query += ' contact_mob_country_fk, ';
-            query += ' contact_mob_zipcode, ';
-            query += ' mailing_add_str_add1, ';
-            query += ' mailing_add_str_add2, ';
-            query += ' mailing_add_city, ';
-            query += ' mailing_add_state, ';
-            query += ' mailing_add_country_fk, ';
-            query += ' mailing_add_zipcode, ';
-            query += ' login_password, ';
-            query += ' login_confirm_password, ';
-            query += ' login_otp_by, ';
-            query += ' notification_required, ';
-            query += ' alert_required, ';
-            query += ' recommended, ';
-            query += ' recommended_emails, ';
-            query += ' subscribed, ';
-            query += ' terms_conditions, ';
-            query += ' is_active, ';
-            query += ' created_by_fk, ';
-            query += ' created_on, ';
-            query += ' passwordhash, ';
-            query += ' passwordsalt, ';
-            query += ' username, ';
-            query += ' login_code_number, ';
-            query += ' wrong_pwd_count, ';
-            query += ' enable_otp, ';
-            query += ' company_fk, ';
-            query += ' usermaster_pk, ';
-            query += ' email_id, ';
-            query += ' mobile_number, ';
-            query += ' office_number, ';
-            query += ' rel_mobile_number, ';
-            query += ' user_image, ';
-            query += ' alias, ';
-            query += ' cust_fk, ';
-            query += ' company_city, ';
-            query += ' company_state, ';
-            query += ' copy_mailing_address, ';
-            query += ' owner_type) ';
-            query += ' values ';
-            query += ' (\''+ data.salutation_ifk + '\',';
-            query += ' ' + data.gen_country_fk + ',';
-            query += ' \'' + dob + '\',';
-            query += ' \'' + data.first_name + '\',';
-            query += ' \'' + data.last_name + '\',';
-            query += ' ' + data.gen_location_fk + ',';
-            query += ' \'' + data.company_type + '\',';
-            query += ' \'' + data.company_name + '\',';
-            query += ' \'' + data.company_cus_ref_no + '\',';
-            query += ' \'' + data.company_designation + '\',';
-            query += ' \'' + data.company_str_add1 + '\',';
-            query += ' \'' + data.company_str_add2 + '\',';
-            query += ' ' + data.company_country_fk + ',';
-            query += ' \'' + data.company_zipcode + '\',';
-            query += ' \'' + data.contact_email_add + '\',';
-            query += ' \'' + data.contact_comfirm_email_add + '\',';
-            query += ' \'' + data.contact_bus_countrycode + '\',';
-            query += ' \'' + data.contact_bus_area + '\',';
-            query += ' \'' + data.contact_bus_tel_no + '\',';
-            query += ' \'' + data.contact_mob_countrycode + '\',';
-            query += ' \'' + data.contact_mob_phone_no + '\',';
-            query += ' \'' + data.contact_mob_city + '\',';
-            query += ' \'' + data.contact_mob_state + '\',';
-            query += ' ' + data.contact_mob_country_fk + ',';
-            query += ' \'' + data.contact_mob_zipcode + '\',';
-            query += ' \'' + data.mailing_add_str_add1 + '\',';
-            query += ' \'' + data.mailing_add_str_add2 + '\',';
-            query += ' \'' + data.mailing_add_city + '\',';
-            query += ' \'' + data.mailing_add_state + '\',';
-            query += ' ' + data.mailing_add_country_fk + ',';
-            query += ' \''+ data.mailing_add_zipcode + '\',';
-            query += ' \'' + data.login_password + '\',';
-            query += ' \'' + data.login_confirm_password + '\',';
-            query += ' \'' + data.login_otp_by + '\',';
-            query += ' ' + data.notification_required + ',';
-            query += ' ' + data.alert_required + ',';
-            query += ' ' + data.recommended + ',';
-            query += ' \'' + data.recommended_emails + '\',';
-            query += ' ' + data.subscribed + ',';
-            query += ' ' + data.terms_conditions + ',';
-            query += ' ' + data.is_active + ',';
-            query += ' ' + data.created_by_fk + ',';
-            query += ' sysdate,';
-            query += ' \'' + data.passwordhash + '\',';
-            query += ' \'' + data.passwordsalt + '\',';
-            query += ' \'' + data.username + '\',';
-            query += ' \'' + data.login_code_number + '\',';
-            query += ' \'' + data.wrong_pwd_count + '\',';
-            query += ' ' + data.enable_otp + ',';
-            query += ' ' + data.company_fk + ',';
-            query += ' ' + data.usermaster_pk + ',';
-            query += ' \'' + data.email_id + '\',';
-            query += ' \'' + data.mobile_number + '\',';
-            query += ' \'' + data.office_number + '\',';
-            query += ' \'' + data.rel_mobile_number + '\',';
-            query += ' \'' + data.user_image + '\',';
-            query += ' \'' + data.alias + '\',';
-            query += ' ' + data.cust_fk + ',';
-            query += ' \'' + data.company_city + '\',';
-            query += ' \'' + data.company_state + '\',';
-            query += ' ' + data.copy_mailing_address + ',';
-            query += ' \'' + data.owner_type + '\')';
+       return new Promise( async (resolve, reject) => {
+            let dob =  moment(data.dob).format('DD/MM/YYYY');
+
+            let query = '';
+            if(data.userpk == 0)
+            {
+                query = ' insert into qport_user_profile ';
+                query += ' (salutation_ifk, ';
+                query += ' gen_country_fk, ';
+                query += ' dob, ';
+                query += ' first_name, ';
+                query += ' last_name, ';
+                query += ' gen_location_fk, ';
+                query += ' company_type, ';
+                query += ' company_name, ';
+                query += ' company_cus_ref_no, ';
+                query += ' company_designation, ';
+                query += ' company_str_add1, ';
+                query += ' company_str_add2, ';
+                query += ' company_country_fk, ';
+                query += ' company_zipcode, ';
+                query += ' contact_email_add, ';
+                query += ' contact_comfirm_email_add, ';
+                query += ' contact_bus_countrycode, ';
+                query += ' contact_bus_area, ';
+                query += ' contact_bus_tel_no, ';
+                query += ' contact_mob_countrycode, ';
+                query += ' contact_mob_phone_no, ';
+                query += ' contact_mob_city, ';
+                query += ' contact_mob_state, ';
+                query += ' contact_mob_country_fk, ';
+                query += ' contact_mob_zipcode, ';
+                query += ' mailing_add_str_add1, ';
+                query += ' mailing_add_str_add2, ';
+                query += ' mailing_add_city, ';
+                query += ' mailing_add_state, ';
+                query += ' mailing_add_country_fk, ';
+                query += ' mailing_add_zipcode, ';
+                query += ' login_password, ';
+                query += ' login_confirm_password, ';
+                query += ' login_otp_by, ';
+                query += ' notification_required, ';
+                query += ' alert_required, ';
+                query += ' recommended, ';
+                query += ' recommended_emails, ';
+                query += ' subscribed, ';
+                query += ' terms_conditions, ';
+                query += ' is_active, ';
+                query += ' created_by_fk, ';
+                query += ' created_on, ';
+                query += ' passwordhash, ';
+                query += ' passwordsalt, ';
+                query += ' username, ';
+                query += ' login_code_number, ';
+                query += ' wrong_pwd_count, ';
+                query += ' enable_otp, ';
+                query += ' company_fk, ';
+                query += ' usermaster_pk, ';
+                query += ' email_id, ';
+                query += ' mobile_number, ';
+                query += ' office_number, ';
+                query += ' rel_mobile_number, ';
+                query += ' user_image, ';
+                query += ' alias, ';
+                query += ' cust_fk, ';
+                query += ' company_city, ';
+                query += ' company_state, ';
+                query += ' copy_mailing_address, ';
+                query += ' owner_type) ';
+                query += ' values ';
+                query += ' (\''+ data.salutation_ifk + '\',';
+                query += ' ' + data.gen_country_fk + ',';
+                query += ' \'' + dob + '\',';
+                query += ' \'' + data.first_name + '\',';
+                query += ' \'' + data.last_name + '\',';
+                query += ' ' + data.gen_location_fk + ',';
+                query += ' \'' + data.company_type + '\',';
+                query += ' \'' + data.company_name + '\',';
+                query += ' \'' + data.company_cus_ref_no + '\',';
+                query += ' \'' + data.company_designation + '\',';
+                query += ' \'' + data.company_str_add1 + '\',';
+                query += ' \'' + data.company_str_add2 + '\',';
+                query += ' ' + data.company_country_fk + ',';
+                query += ' \'' + data.company_zipcode + '\',';
+                query += ' \'' + data.contact_email_add + '\',';
+                query += ' \'' + data.contact_comfirm_email_add + '\',';
+                query += ' \'' + data.contact_bus_countrycode + '\',';
+                query += ' \'' + data.contact_bus_area + '\',';
+                query += ' \'' + data.contact_bus_tel_no + '\',';
+                query += ' \'' + data.contact_mob_countrycode + '\',';
+                query += ' \'' + data.contact_mob_phone_no + '\',';
+                query += ' \'' + data.contact_mob_city + '\',';
+                query += ' \'' + data.contact_mob_state + '\',';
+                query += ' ' + data.contact_mob_country_fk + ',';
+                query += ' \'' + data.contact_mob_zipcode + '\',';
+                query += ' \'' + data.mailing_add_str_add1 + '\',';
+                query += ' \'' + data.mailing_add_str_add2 + '\',';
+                query += ' \'' + data.mailing_add_city + '\',';
+                query += ' \'' + data.mailing_add_state + '\',';
+                query += ' ' + data.mailing_add_country_fk + ',';
+                query += ' \''+ data.mailing_add_zipcode + '\',';
+                query += ' \'' + data.login_password + '\',';
+                query += ' \'' + data.login_confirm_password + '\',';
+                query += ' \'' + data.login_otp_by + '\',';
+                query += ' ' + data.notification_required + ',';
+                query += ' ' + data.alert_required + ',';
+                query += ' ' + data.recommended + ',';
+                query += ' \'' + data.recommended_emails + '\',';
+                query += ' ' + data.subscribed + ',';
+                query += ' ' + data.terms_conditions + ',';
+                query += ' ' + data.is_active + ',';
+                query += ' ' + data.created_by_fk + ',';
+                query += ' sysdate,';
+                query += ' \'' + data.passwordhash + '\',';
+                query += ' \'' + data.passwordsalt + '\',';
+                query += ' \'' + data.username + '\',';
+                query += ' \'' + data.login_code_number + '\',';
+                query += ' \'' + data.wrong_pwd_count + '\',';
+                query += ' ' + data.enable_otp + ',';
+                query += ' ' + data.company_fk + ',';
+                query += ' ' + data.usermaster_pk + ',';
+                query += ' \'' + data.email_id + '\',';
+                query += ' \'' + data.mobile_number + '\',';
+                query += ' \'' + data.office_number + '\',';
+                query += ' \'' + data.rel_mobile_number + '\',';
+                query += ' \'' + data.user_image + '\',';
+                query += ' \'' + data.alias + '\',';
+                query += ' ' + data.cust_fk + ',';
+                query += ' \'' + data.company_city + '\',';
+                query += ' \'' + data.company_state + '\',';
+                query += ' ' + data.copy_mailing_address + ',';
+                query += ' \'' + data.owner_type + '\')';
+            }
+            else
+            {
+                query = ' update qport_user_profile set ';
+                query += ' salutation_ifk	=	\'' + data.salutation_ifk + '\', ';
+                query += ' gen_country_fk	=	' + data.gen_country_fk + ',';
+                query += ' dob	=	\'' + dob + '\', ';
+                query += ' first_name	=	\'' + data.first_name + '\', ';
+                query += ' last_name	=	\'' + data.last_name + '\', ';
+                query += ' gen_location_fk	=	' + data.gen_location_fk + ', ';
+                query += ' company_type	=	\'' + data.company_type + '\', ';
+                query += ' company_name	=	\'' + data.company_name + '\', ';
+                query += ' company_cus_ref_no	=	\'' + data.company_cus_ref_no + '\', ';
+                query += ' company_designation	=	\'' + data.company_designation + '\', ';
+                query += ' company_str_add1	=	\''  + data.company_str_add1 + '\', ';
+                query += ' company_str_add2	=	\''  + data.company_str_add2 + '\', ';
+                query += ' company_country_fk	=	'  + data.company_country_fk + ', ';
+                query += ' company_zipcode	=	\'' + data.company_zipcode + '\', ';
+                query += ' contact_email_add	=	\'' + data.contact_email_add + '\', ';
+                query += ' contact_comfirm_email_add	=	\'' + data.contact_comfirm_email_add + '\', ';
+                query += ' contact_bus_countrycode	=	\'' + data.contact_bus_countrycode + '\', ';
+                query += ' contact_bus_area	=	\'' + data.contact_bus_area + '\', ';
+                query += ' contact_bus_tel_no	=	\'' + data.contact_bus_tel_no + '\', ';
+                query += ' contact_mob_countrycode	=	\'' + data.contact_mob_countrycode + '\', ';
+                query += ' contact_mob_phone_no	=	\'' + data.contact_mob_phone_no + '\', ';
+                query += ' contact_mob_city	=	\'' + data.contact_mob_city + '\', ';
+                query += ' contact_mob_state	=	\'' + data.contact_mob_state + '\', ';
+                query += ' contact_mob_country_fk	=	' + data.contact_mob_country_fk + ', ';
+                query += ' contact_mob_zipcode	=	\'' + data.contact_mob_zipcode + '\', ';
+                query += ' mailing_add_str_add1	=	\'' + data.mailing_add_str_add1 + '\', ';
+                query += ' mailing_add_str_add2	=	\'' + data.mailing_add_str_add2 + '\', ';
+                query += ' mailing_add_city	=	\'' + data.mailing_add_city + '\', ';
+                query += ' mailing_add_state	=	\'' + data.mailing_add_state + '\', ';
+                query += ' mailing_add_country_fk	=	' + data.mailing_add_country_fk + ', ';
+                query += ' mailing_add_zipcode	=	\'' + data.mailing_add_zipcode + '\', ';
+                query += ' login_password	=	\'' + data.login_password + '\', ';
+                query += ' login_confirm_password	=	\'' + data.login_confirm_password + '\', ';
+                query += ' login_otp_by	=	\'' + data.login_otp_by + '\', ';
+                query += ' notification_required	=	' + data.notification_required + ', ';
+                query += ' alert_required	=	' + data.alert_required + ', ';
+                query += ' recommended	=	\'' + data.recommended + '\', ';
+                query += ' recommended_emails	=	\'' + data.recommended_emails + '\', ';
+                query += ' subscribed	=	' + data.subscribed + ', ';
+                query += ' terms_conditions	=	' + data.terms_conditions + ', ';
+                query += ' is_active	=	' + data.is_active + ', ';
+                query += ' last_updated_by_fk	=	' + data.last_updated_by_fk + ', ';
+                query += ' last_updated_on	=	sysdate, ';
+                query += ' passwordhash	=	\'' + data.passwordhash + '\', ';
+                query += ' passwordsalt	=	\'' + data.passwordsalt + '\', ';
+                query += ' username	=	\'' + data.username + '\', ';
+                query += ' login_code_number	=	\'' + data.login_code_number + '\', ';
+                query += ' wrong_pwd_count	=	' + data.wrong_pwd_count + ', ';
+                query += ' enable_otp	=	' + data.enable_otp + ', ';
+                query += ' company_fk	=	' + data.company_fk + ', ';
+                query += ' usermaster_pk	=	' + data.usermaster_pk + ', ';
+                query += ' email_id	=	\'' + data.email_id + '\', ';
+                query += ' mobile_number	=	\'' + data.mobile_number + '\', ';
+                query += ' office_number	=	\'' + data.office_number + '\', ';
+                query += ' rel_mobile_number	=	\'' + data.rel_mobile_number + '\', ';
+                query += ' user_image	=	\'' + data.user_image + '\', ';
+                query += ' alias	=	\'' + data.alias + '\', ';
+                query += ' cust_fk	=	' + data.cust_fk + ', ';
+                query += ' company_city	=	\'' + data.company_city + '\', ';
+                query += ' company_state	=	\'' + data.company_state + '\', ';
+                query += ' copy_mailing_address	=	\'' + data.copy_mailing_address + '\', ';
+                query += ' owner_type	=	\'' + data.owner_type + '\', ';
+                query += ' version_no	= version_no + 1 ';
+                query += ' where userpk = \'' + data.userpk + '\', ';
+            }
             //console.log(query)
             const userInfo = await database.simpleExecute(query, [],{ autoCommit: true});
             //console.log(userInfo)
@@ -555,10 +626,6 @@ const saveUserProfile = (data) => {
                 respone.error = 'user record not created';
                 resolve(respone)
             }
-
-            
-            //res.status(200).json({ "Status": "Error",
-            //"StatusCode": "GFE000009", "data": query})
         })
     } catch (err) {
         if (!err.statusCode) {
