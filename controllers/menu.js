@@ -1,4 +1,6 @@
 const database = require('../services/database')
+const {lowercaseKeys, turnArraytoLowerCase} = require('../utility/util')
+const groupBy = require('lodash/groupBy')
 
 exports.menuList =  async (req, res, next) => {
     const { userpk } = req.query;
@@ -31,8 +33,19 @@ exports.menuList =  async (req, res, next) => {
 
     temp_data['MC'] = ordered_mc;
     temp_data['HC'] = ordered_hc;
-    let data = temp_data
-
+    let sortMCData = sortByKey( temp_data['MC'], "MENUFORM_SORT_ORDER")
+    let sortHCData = sortByKey( temp_data['HC'], "MENUFORM_SORT_ORDER")
+    delete temp_data['MC']
+    delete temp_data['HC']
+    let MC = groupBy(sortMCData, function(n) {
+        return n.MODULE_ID;
+    });
+    let HC = groupBy(sortHCData, function(n) {
+        return n.MODULE_ID;
+    });
+    temp_data['MyConnect'] = getSortedMenu(MC);
+    temp_data['HelpCenter'] = getSortedMenu(HC);
+    let data = lowercaseKeys(temp_data)
     res.status(200).json({data})
 
 
@@ -46,3 +59,28 @@ function sortByKey(array, key) {
       return ((x < y) ? -1 : ((x > y) ? 1 : 0));
     });
   }
+
+
+function getSortedMenu(obj){
+    const arr = []
+
+    for (var item in obj){
+        let tempObj = {}
+        tempObj.modmenu_sort_order = obj[item][0].MODMENU_SORT_ORDER
+        tempObj.module_id= obj[item][0].MODULE_ID
+        tempObj.modulemaster_pk = obj[item][0].MODULEMASTER_PK
+        tempObj.module_name = obj[item][0].MODULE_NAME
+        tempObj.menuform_sort_order = obj[item][0].MENUFORM_SORT_ORDER
+        tempObj.module_image = obj[item][0].MENUFORM_IMAGE
+        tempObj.accessflag = obj[item][0].ACCESSFLAG
+        tempObj.childData = getData(JSON.stringify (obj[item]))
+        arr.push(tempObj)
+    }
+    return arr
+}
+
+function getData(arr){
+    let tempArr = JSON.parse(arr)
+    tempArr = turnArraytoLowerCase(tempArr)
+    return tempArr;
+}
