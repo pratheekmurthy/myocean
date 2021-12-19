@@ -173,16 +173,20 @@ exports.saveUserDetails =  async (req, res, next) => {
         let response;
         if(reqData.userpk == 0)
         {
-            response = await insertUserInfo(reqData);
+            response = await saveUserProfile(reqData);
         }
         let queryUser = 'select t.userpk from qport_user_profile ';
         queryUser+= ' t where t.rowid = \'' + response.data.lastRowid + '\'';
         const UserDataRow = await database.simpleExecute(queryUser);
         let UserFK = UserDataRow.rows[0]["USERPK"];
         reqData.userpk = UserFK;
-        notificationArr = reqData.notificationdtl;
 
+        //Notification
+        notificationArr = reqData.notificationdtl;
         await saveNotifications(UserFK, notificationArr);
+        //Alerts
+        alertArr = reqData.alertdtl;
+        await saveAlerts(UserFK, alertArr);
 
         data = UserFK;
         res.status(200).json({ "Status": "Success",
@@ -408,8 +412,7 @@ exports.inviteColleague =  async (req, res, next) => {
 
 }
 
-
-const insertUserInfo = (data) => {
+const saveUserProfile = (data) => {
     try {
         let dob =  moment(data.dob).format('DD/MM/YYYY');
         return new Promise( async (resolve, reject) => {
@@ -482,7 +485,7 @@ const insertUserInfo = (data) => {
             query += ' \'' + dob + '\',';
             query += ' \'' + data.first_name + '\',';
             query += ' \'' + data.last_name + '\',';
-            query += ' \'' + data.gen_location_fk + '\',';
+            query += ' ' + data.gen_location_fk + ',';
             query += ' \'' + data.company_type + '\',';
             query += ' \'' + data.company_name + '\',';
             query += ' \'' + data.company_cus_ref_no + '\',';
@@ -500,44 +503,44 @@ const insertUserInfo = (data) => {
             query += ' \'' + data.contact_mob_phone_no + '\',';
             query += ' \'' + data.contact_mob_city + '\',';
             query += ' \'' + data.contact_mob_state + '\',';
-            query += ' \'' + data.contact_mob_country_fk + '\',';
+            query += ' ' + data.contact_mob_country_fk + ',';
             query += ' \'' + data.contact_mob_zipcode + '\',';
             query += ' \'' + data.mailing_add_str_add1 + '\',';
             query += ' \'' + data.mailing_add_str_add2 + '\',';
             query += ' \'' + data.mailing_add_city + '\',';
             query += ' \'' + data.mailing_add_state + '\',';
-            query += ' \'' + data.mailing_add_country_fk + '\',';
+            query += ' ' + data.mailing_add_country_fk + ',';
             query += ' \''+ data.mailing_add_zipcode + '\',';
             query += ' \'' + data.login_password + '\',';
             query += ' \'' + data.login_confirm_password + '\',';
             query += ' \'' + data.login_otp_by + '\',';
-            query += ' \'' + data.notification_required + '\',';
-            query += ' \'' + data.alert_required + '\',';
-            query += ' \'' + data.recommended + '\',';
+            query += ' ' + data.notification_required + ',';
+            query += ' ' + data.alert_required + ',';
+            query += ' ' + data.recommended + ',';
             query += ' \'' + data.recommended_emails + '\',';
-            query += ' \'' + data.subscribed + '\',';
-            query += ' \'' + data.terms_conditions + '\',';
-            query += ' \'' + data.is_active + '\',';
-            query += ' \'' + data.created_by_fk + '\',';
+            query += ' ' + data.subscribed + ',';
+            query += ' ' + data.terms_conditions + ',';
+            query += ' ' + data.is_active + ',';
+            query += ' ' + data.created_by_fk + ',';
             query += ' sysdate,';
             query += ' \'' + data.passwordhash + '\',';
             query += ' \'' + data.passwordsalt + '\',';
             query += ' \'' + data.username + '\',';
             query += ' \'' + data.login_code_number + '\',';
             query += ' \'' + data.wrong_pwd_count + '\',';
-            query += ' \'' + data.enable_otp + '\',';
-            query += ' \'' + data.company_fk + '\',';
-            query += ' \'' + data.usermaster_pk + '\',';
+            query += ' ' + data.enable_otp + ',';
+            query += ' ' + data.company_fk + ',';
+            query += ' ' + data.usermaster_pk + ',';
             query += ' \'' + data.email_id + '\',';
             query += ' \'' + data.mobile_number + '\',';
             query += ' \'' + data.office_number + '\',';
             query += ' \'' + data.rel_mobile_number + '\',';
             query += ' \'' + data.user_image + '\',';
             query += ' \'' + data.alias + '\',';
-            query += ' \'' + data.cust_fk + '\',';
+            query += ' ' + data.cust_fk + ',';
             query += ' \'' + data.company_city + '\',';
             query += ' \'' + data.company_state + '\',';
-            query += ' \'' + data.copy_mailing_address + '\',';
+            query += ' ' + data.copy_mailing_address + ',';
             query += ' \'' + data.owner_type + '\')';
             //console.log(query)
             const userInfo = await database.simpleExecute(query, [],{ autoCommit: true});
@@ -603,6 +606,50 @@ const saveNotifications = (userfk, data) => {
                 query += ' ' + data[i].is_active + ',';
                 query += ' ' + data[i].created_by_fk + ')';
 
+                await database.simpleExecute(query, [],{ autoCommit: true});
+           }
+        }
+        resolve(true);
+    })
+}
+
+const saveAlerts = (userfk, data) => {
+    return new Promise( async (resolve, reject) => {
+        //const tempId =  [];
+        let query = '';
+        for(let i = 0; i < data.length; i ++){
+           if(data[i].useralertpk == 0)
+           {
+                query = ' insert into qport_user_alerts'
+                query += ' (userfk, ';
+                query += ' alert_desc_ifk, ';
+                query += ' isselected, ';
+                query += ' is_active, ';
+                query += ' created_by_fk) ';
+                query += ' values ';
+                query += ' (' + userfk + ',';
+                query += ' \'' + data[i].alert_desc_ifk + '\',';
+                query += ' ' + data[i].isselected + ',';
+                //query += ' ' + data[i].gen_country_fk + ',';
+                query += ' ' + data[i].is_active + ',';
+                query += ' ' + data[i].created_by_fk + ')';
+                await database.simpleExecute(query, [],{ autoCommit: true});
+           }
+           else
+           {
+                query = ' insert into qport_user_alerts'
+                query += ' (userfk, ';
+                query += ' alert_desc_ifk, ';
+                query += ' isselected, ';
+                query += ' is_active, ';
+                query += ' created_by_fk) ';
+                query += ' values ';
+                query += ' (' + userfk + ',';
+                query += ' \'' + data[i].alert_desc_ifk + '\',';
+                query += ' ' + data[i].isselected + ',';
+                //query += ' ' + data[i].gen_country_fk + ',';
+                query += ' ' + data[i].is_active + ',';
+                query += ' ' + data[i].created_by_fk + ')';
                 await database.simpleExecute(query, [],{ autoCommit: true});
            }
         }
