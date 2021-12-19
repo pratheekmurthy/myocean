@@ -11,6 +11,8 @@ const signUpRoutes = require('./routes/Signup');
 const countriesRoutes = require('./routes/countries');
 const dropDownRoutes = require('./routes/dropDown');
 const userProfileRoutes = require('./routes/userProfile');
+const scheduleRoutes = require('./routes/viewSchedule');
+const emailRoutes = require('./routes/emailManagement')
 
 
 app.use(express.json());
@@ -31,13 +33,17 @@ app.use(async (req, res, next) => {
     next();
 });
 
+app.use('/api', menuRoutes);
 app.use('/api/Auth', authRoutes);
-app.use('/api/signup', signUpRoutes)
+app.use('/api/Signup', signUpRoutes)
 app.use('/api/country', countriesRoutes)
-app.use('/api/alerts', alertRoutes);
+app.use('/api/Alerts', alertRoutes);
 app.use('/api/dropdown', dropDownRoutes);
 app.use('/api/userprofile', userProfileRoutes);
-app.use('/api', menuRoutes);
+app.use('/api/ViewSchedule', scheduleRoutes);
+app.use('/api/EmailManagement', emailRoutes);
+
+
 
 app.use(async (error, req, res, next) => {
     const status = error.statusCode || 500;
