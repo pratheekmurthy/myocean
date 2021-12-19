@@ -2,17 +2,17 @@ const path = require('path');
 require('dotenv').config()
 const express = require('express');
 const PORT = process.env.PORT || 6000
-const database = require('./services/database')
+const database = require('../services/database')
 const app = express();
-const authRoutes = require('./routes/auth');
-const alertRoutes = require('./routes/alerts');
-const menuRoutes = require('./routes/menu');
-const signUpRoutes = require('./routes/Signup');
-const countriesRoutes = require('./routes/countries');
-const dropDownRoutes = require('./routes/dropDown');
-const userProfileRoutes = require('./routes/userProfile');
-const scheduleRoutes = require('./routes/viewSchedule');
-const emailRoutes = require('./routes/emailManagement')
+const authRoutes = require('../routes/auth');
+const alertRoutes = require('../routes/alerts');
+const menuRoutes = require('../routes/menu');
+const signUpRoutes = require('../routes/Signup');
+const countriesRoutes = require('../routes/countries');
+const dropDownRoutes = require('../routes/dropDown');
+const userProfileRoutes = require('../routes/userProfile');
+const scheduleRoutes = require('../routes/viewSchedule');
+const emailRoutes = require('../routes/emailManagement')
 
 
 app.use(express.json());
