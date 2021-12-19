@@ -88,6 +88,13 @@ const schemas = {
             isselected:Joi.number(),
             is_active:Joi.number(),
             created_by_fk:Joi.number()
+        }),
+        alertdtl:Joi.array().items({
+            useralertpk:Joi.number().required(),
+            alert_desc_ifk:Joi.string().required(),
+            isselected:Joi.number(),
+            is_active:Joi.number(),
+            created_by_fk:Joi.number()
         })
     }),
     // notificationdtlSchema: Joi.object().keys({
