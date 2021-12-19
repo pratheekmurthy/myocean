@@ -7,4 +7,6 @@ const { loginSchema } = require('../../schema/index')
 
 router.post('/login', joiValidator(loginSchema, 'body'), authController.login);
 
+// router.post('/login/forgotpassword', joiValidator(resetpasswordSchema, 'params'), authController.forgotPassword )
+
 module.exports = router;
