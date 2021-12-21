@@ -13,7 +13,8 @@ const dropDownRoutes = require('./routes/dropDown');
 const userProfileRoutes = require('./routes/userProfile');
 const scheduleRoutes = require('./routes/viewSchedule');
 const emailRoutes = require('./routes/emailManagement')
-
+const cors = require('cors');
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
