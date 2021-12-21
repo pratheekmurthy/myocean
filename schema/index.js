@@ -11,6 +11,9 @@ const schemas = {
   }),
   alertSchema: Joi.object().keys({ 
     userpk: Joi.number().required()
+  }),
+  resetpasswordSchema: Joi.object().keys({ 
+    username: Joi.string().required()
   })
 }; 
 module.exports = schemas;
