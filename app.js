@@ -33,15 +33,15 @@ app.use(async (req, res, next) => {
     next();
 });
 
-app.use('/api', menuRoutes);
-app.use('/api/Auth', authRoutes);
-app.use('/api/Signup', signUpRoutes)
-app.use('/api/country', countriesRoutes)
-app.use('/api/Alerts', alertRoutes);
-app.use('/api/dropdown', dropDownRoutes);
-app.use('/api/userprofile', userProfileRoutes);
-app.use('/api/ViewSchedule', scheduleRoutes);
-app.use('/api/EmailManagement', emailRoutes);
+app.use('myoceanapi/api', menuRoutes);
+app.use('myoceanapi/api/Auth', authRoutes);
+app.use('myoceanapi/api/Signup', signUpRoutes)
+app.use('myoceanapi/api/country', countriesRoutes)
+app.use('myoceanapi/api/Alerts', alertRoutes);
+app.use('myoceanapi/api/dropdown', dropDownRoutes);
+app.use('myoceanapi/api/userprofile', userProfileRoutes);
+app.use('myoceanapi/api/ViewSchedule', scheduleRoutes);
+app.use('myoceanapi/api/EmailManagement', emailRoutes);
 
 
 
@@ -53,6 +53,6 @@ app.use(async (error, req, res, next) => {
     await database.close()
 });
 
-app.listen(PORT, () => {
-    console.log(`application started on port ${PORT}`)
+app.listen(process.env.PORT, () => {
+    console.log(`application started on port ${process.env.PORT}`)
 })
