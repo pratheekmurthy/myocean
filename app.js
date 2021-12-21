@@ -33,15 +33,17 @@ app.use(async (req, res, next) => {
     next();
 });
 
-app.use('myoceanapi/api', menuRoutes);
-app.use('myoceanapi/api/Auth', authRoutes);
-app.use('myoceanapi/api/Signup', signUpRoutes)
-app.use('myoceanapi/api/country', countriesRoutes)
-app.use('myoceanapi/api/Alerts', alertRoutes);
-app.use('myoceanapi/api/dropdown', dropDownRoutes);
-app.use('myoceanapi/api/userprofile', userProfileRoutes);
-app.use('myoceanapi/api/ViewSchedule', scheduleRoutes);
-app.use('myoceanapi/api/EmailManagement', emailRoutes);
+let base_url = process.env.base_url || 'api'
+
+app.use(`${base_url}`, menuRoutes);
+app.use(`${base_url}/Auth`, authRoutes);
+app.use(`${base_url}/Signup`, signUpRoutes)
+app.use(`${base_url}/country`, countriesRoutes)
+app.use(`${base_url}/Alerts`, alertRoutes);
+app.use(`${base_url}/dropdown`, dropDownRoutes);
+app.use(`${base_url}/userprofile`, userProfileRoutes);
+app.use(`${base_url}/ViewSchedule`, scheduleRoutes);
+app.use(`${base_url}/EmailManagement`, emailRoutes);
 
 
 
