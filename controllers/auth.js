@@ -85,20 +85,21 @@ exports.login =  async (req, res, next) => {
 };
 
 exports.forgotPassword =  async (req, res, next) => {
-    const username = req.body.username;
+    //const username = req.body.username;
+    const { username } = req.query;
     try{
         let query = `select a.userpk, a.email_id from qport_user_profile a where (lower(a.username) = :username or lower(a.email_id) = :username) and a.is_active = 1`
         let binds = [username, username];
         const user = await database.simpleExecute(query, binds);
         if (user.rows.length == 0) {
-            const error = new Error('Username User not found.');
+            const error = new Error('User not found.');
             error.statusCode = 401;
             throw error;
         }
         let userpk = user.rows[0].USERPK;
         //const newPassword =  RandomPassword();
         const newPassword = 'Welcome@1';
-        let query = ' update qport_user_profile t ';
+        query = ' update qport_user_profile t ';
         query += ' set t.login_code_number = \'' + newPassword + '\' ';
         query += ' where t.userpk = ' + userpk +'';
         const userUpdRes = await database.simpleExecute(query, [],{ autoCommit: true});       
