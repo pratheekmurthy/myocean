@@ -709,7 +709,7 @@ const saveAlerts = (userfk, data) => {
                 query += ' version_no= version_no + 1 ';
                 query += ' where useralertpk=' + data[i].useralertpk + '';
                 await database.simpleExecute(query, [],{ autoCommit: true});
-           }
+            }
         }
         resolve(true);
     })

@@ -2,8 +2,8 @@ const database = require('../services/database')
 
 exports.fetchDropdown = async (req, res, next) => {
     let searchflag = (req.query.searchflag).toUpperCase()
-    let param3 = req.query.param3;
-    let param4 = req.query.param4;
+    let param3 = req.query.param3 || 0;
+    let param4 = req.query.param4 || '';
     let response;
     try {
         switch(searchflag){
@@ -16,9 +16,9 @@ exports.fetchDropdown = async (req, res, next) => {
             // case 'OPERATOR':
             //     response = await FetchOperator();
             //     break;
-            // case 'PORT':
-            //     response = await FetchPort(Param3);
-            //     break;
+            case 'PORT':
+                response = await FetchPort(param3);
+                break;
             // case 'LPORT':
             //     response = await FetchPort(Param3);
             //     break;
@@ -76,6 +76,42 @@ const FetchDDtable = (p1, p2) => {
                 query += ' and lower(b.type) = lower(\'' + p2 + '\')';
             }
             //let bind = [ ]
+            const output = await database.simpleExecute(query);
+            let data = output.rows;
+            api_response.Status = 'Success'
+            api_response.StatusCode = 'GFS000001'
+            api_response.data = data
+            resolve(api_response)
+        }catch(err){
+            api_response.Status = 'Failure'
+            api_response.error = err
+            reject(api_response)
+        }
+    })
+    return resp;
+}
+
+const FetchPort = (p1, p2) => {
+    const resp = new Promise( async (resolve, reject) => {
+        let api_response = {};
+        try{
+            let query = ' select port.port_mst_pk as "pk",';
+            query += ' port.port_id as "id",';
+            query += ' port.port_name as "name",';
+            query += ' \'Port\' as "ColumnCaption"';
+            query += ' from port_mst_tbl port, ';
+            query += ' location_mst_tbl loc, ';
+            query += ' location_working_ports_trn lwpt,';
+            query += ' country_mst_tbl cntry ';
+            query += ' where port.port_mst_pk = lwpt.port_mst_fk';
+            query += ' and lwpt.location_mst_fk = loc.location_mst_pk';
+            query += ' and loc.country_mst_fk = cntry.country_mst_pk';
+            query += ' and port.active = 1';
+            query += ' and port.port_type = \'ICD\'';
+            if(p1.length > 0)
+            {
+                query += ' and cntry.country_mst_pk ='+ p1;
+            }
             const output = await database.simpleExecute(query);
             let data = output.rows;
             api_response.Status = 'Success'
