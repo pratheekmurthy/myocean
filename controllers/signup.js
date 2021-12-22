@@ -642,7 +642,7 @@ const saveNotifications = (userfk, data) => {
         for(let i = 0; i < data.length; i ++){
            if(data[i].usernotifypk == 0)
            {
-                query = ' insert into qport_user_notify'
+                query = ' insert into qport_user_notify';
                 query += ' (userfk, ';
                 query += ' notify_desc_ifk, ';
                 query += ' isselected, ';
@@ -659,20 +659,15 @@ const saveNotifications = (userfk, data) => {
            }
            else
            {
-                query = ' insert into qport_user_notify'
-                query += ' (userfk, ';
-                query += ' notify_desc_ifk, ';
-                query += ' isselected, ';
-                query += ' is_active, ';
-                query += ' created_by_fk) ';
-                query += ' values ';
-                query += ' (' + userfk + ',';
-                query += ' ' + data[i].notify_desc_ifk + ',';
-                query += ' ' + data[i].isselected + ',';
-                query += ' ' + data[i].gen_country_fk + ',';
-                query += ' ' + data[i].is_active + ',';
-                query += ' ' + data[i].created_by_fk + ')';
-
+                query = ' update qport_user_notify ';
+                query += ' set userfk=' + userfk + ',';
+                query += ' notify_desc_ifk=\'' + data[i].notify_desc_ifk + '\',';
+                query += ' isselected=' + data[i].isselected + ',';
+                query += ' is_active=' + data[i].is_active + ',';
+                query += ' last_updated_by_fk=' + data[i].created_by_fk + ',';
+                query += ' last_updated_on= sysdate,';
+                query += ' version_no= version_no + 1 ';
+                query += ' where usernotifypk=' + data[i].usernotifypk + '';
                 await database.simpleExecute(query, [],{ autoCommit: true});
            }
         }
@@ -704,19 +699,15 @@ const saveAlerts = (userfk, data) => {
            }
            else
            {
-                query = ' insert into qport_user_alerts'
-                query += ' (userfk, ';
-                query += ' alert_desc_ifk, ';
-                query += ' isselected, ';
-                query += ' is_active, ';
-                query += ' created_by_fk) ';
-                query += ' values ';
-                query += ' (' + userfk + ',';
-                query += ' \'' + data[i].alert_desc_ifk + '\',';
-                query += ' ' + data[i].isselected + ',';
-                //query += ' ' + data[i].gen_country_fk + ',';
-                query += ' ' + data[i].is_active + ',';
-                query += ' ' + data[i].created_by_fk + ')';
+                query = ' update qport_user_alerts ';
+                query += ' set userfk=' + userfk + ',';
+                query += ' alert_desc_ifk=\'' + data[i].alert_desc_ifk + '\',';
+                query += ' isselected=' + data[i].isselected + ',';
+                query += ' is_active=' + data[i].is_active + ',';
+                query += ' last_updated_by_fk=' + data[i].created_by_fk + ',';
+                query += ' last_updated_on= sysdate,';
+                query += ' version_no= version_no + 1 ';
+                query += ' where useralertpk=' + data[i].useralertpk + '';
                 await database.simpleExecute(query, [],{ autoCommit: true});
            }
         }
