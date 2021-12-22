@@ -45,8 +45,9 @@ exports.menuList =  async (req, res, next) => {
     });
     temp_data['MyConnect'] = getSortedMenu(MC);
     temp_data['HelpCenter'] = getSortedMenu(HC);
-    let data = lowercaseKeys(temp_data)
-    res.status(200).json({data})
+    //let data = lowercaseKeys(temp_data)
+    let Data = temp_data
+    res.status(200).json({Data})
 
 
 }

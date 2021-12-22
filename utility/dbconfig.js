@@ -8,5 +8,6 @@ const password = process.env.password || 'Q#my0cean21'
 module.exports = {
   user: user || "MYOCEAN",
   password: password || "Q#my0cean21",
-  connectString : `${host}:1521/${database}` || "192.168.10.100:1521/QBSO12C"
+  connectString : `${host}:1521/${database}` || "192.168.10.100:1521/QBSO12C", 
+  poolMin : 30, poolMax : 150, poolTimeout: 1000
 };
