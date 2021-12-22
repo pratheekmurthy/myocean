@@ -8,7 +8,7 @@
     "start": "node app.js",
     "watch": "nodemon app.js",
     "build": "webpack",
-    "prod": "node dist/api.bundle.js"
+    "prod": "node dist/app.js"
   },
   "author": "Nithin Muniswamy",
   "license": "ISC",
