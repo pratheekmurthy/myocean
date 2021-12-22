@@ -1,6 +1,6 @@
 const Joi = require('joi') 
 const schemas = { 
-    fetchPOLList: Joi.object().keys({ 
+    fetchPOLSchema: Joi.object().keys({ 
         fromportfk: Joi.string().required()
     }),
     fetchPODSchema: Joi.object().keys({ 
