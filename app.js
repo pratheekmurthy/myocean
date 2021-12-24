@@ -23,8 +23,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
+(async function(){await database.initialize()})()
+
 app.use(async (req, res, next) => {
-    await database.initialize()
+    //await database.initialize()
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader(
         'Access-Control-Allow-Methods',
@@ -47,8 +49,6 @@ app.use(`${base_url}/dropdown`, dropDownRoutes);
 app.use(`${base_url}/userprofile`, userProfileRoutes);
 app.use(`${base_url}/ViewSchedule`, scheduleRoutes);
 app.use(`${base_url}/EmailManagement`, emailRoutes);
-
-
 
 app.use(async (error, req, res, next) => {
     const status = error.statusCode || 500;
