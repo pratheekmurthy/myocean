@@ -32,6 +32,7 @@ async function simpleExecute(statement, binds = [], opts = {}) {
             await conn.close();
         } catch (err) {
             console.error(err);
+            throw (err);
         }
         }
     }

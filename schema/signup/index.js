@@ -1,7 +1,7 @@
 const Joi = require('joi') 
 const schemas = { 
     fetchSignUpSchema: Joi.object().keys({ 
-        userpk: Joi.string().required()
+        userpk: Joi.number().required()
     }),
     fetchLocationsSchema:  Joi.object().keys({ 
         countrypk: Joi.number().required()

@@ -2,13 +2,13 @@ const database = require('../services/database')
 
 exports.fetchDropdown = async (req, res, next) => {
     let searchflag = (req.query.searchflag).toUpperCase()
-    let param3 = req.query.param3 || 0;
-    let param4 = req.query.param4 || '';
+    let Param3 = req.query.Param3 || 0;
+    let Param4 = req.query.Param4 || '';
     let response;
     try {
         switch(searchflag){
             case 'DDVALUE':
-                response = await FetchDDtable(param3, param4); 
+                response = await FetchDDtable(Param3, Param4); 
                 break;
             // case 'ACCTYPE':
             //     response = await FetchAccType();
@@ -17,11 +17,11 @@ exports.fetchDropdown = async (req, res, next) => {
             //     response = await FetchOperator();
             //     break;
             case 'PORT':
-                response = await FetchPort(param3);
+                response = await FetchPort(Param3);
                 break;
 
             case 'LPORT':
-                response = await FetchLPort(param3);
+                response = await FetchLPort(Param3);
                 break;
 
             case 'COUNTRY':
@@ -30,15 +30,15 @@ exports.fetchDropdown = async (req, res, next) => {
                 
             case 'CAPSETTINGS':
                 //response = await FetchCapSettings();
-                response = await FetchDDtable(param3); 
+                response = await FetchDDtable(Param3); 
                 break;
 
             case 'DEPT':
-                response = await FetchDepartment(param3);
+                response = await FetchDepartment(Param3);
                 break;
 
             case 'DESIG':
-                response = await FetchDesignation(param3, param4);
+                response = await FetchDesignation(Param3, Param4);
                 break;
             // case 'BOUND':
             //     response = await FetchDDtable(param3, searchflag);

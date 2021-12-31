@@ -57,7 +57,7 @@ exports.fetchAlerts =  async (req, res, next) => {
 exports.fetchSignUp =  async (req, res, next) => {
     try {
         //User Profile
-        const { userpk } = req.query;
+        const { userpk } = req.query || 0;
         let query = ' select user1.userpk, ';
         query += ' user1.salutation_ifk, ';
         query += ' user1.dob, ';
@@ -116,7 +116,9 @@ exports.fetchSignUp =  async (req, res, next) => {
         query += ' on user1.mailing_add_country_fk = mailingcompany.country_mst_pk ';
         query += ' where 1 = 1 ';
         query += ' and user1.userpk = ' + userpk + '';
-
+        // let query = ' select * from qport_user_profile ';
+        // query += ' user1 where user1.userpk = ' + userpk + '';
+        //console.log(query);
         const userprofile = await database.simpleExecute(query);
         data = lowercaseKeys(userprofile.rows[0]);
 
@@ -614,7 +616,7 @@ const saveUserProfile = (data) => {
                 query += ' where userpk = ' + data.userpk + '';
             }
             //console.log(query)
-            const userInfo = await database.simpleExecute(query, [],{ autoCommit: true});
+            const userInfo = await database.simpleExecute(query, []);
             //console.log(userInfo)
             const respone ={}
             if(userInfo.rowsAffected == 1){
@@ -655,7 +657,7 @@ const saveNotifications = (userfk, data) => {
                 //query += ' ' + data[i].gen_country_fk + ',';
                 query += ' ' + data[i].is_active + ',';
                 query += ' ' + data[i].created_by_fk + ')';
-                await database.simpleExecute(query, [],{ autoCommit: true});
+                //await database.simpleExecute(query, [],{ autoCommit: true});
            }
            else
            {
@@ -668,8 +670,9 @@ const saveNotifications = (userfk, data) => {
                 query += ' last_updated_on= sysdate,';
                 query += ' version_no= version_no + 1 ';
                 query += ' where usernotifypk=' + data[i].usernotifypk + '';
-                await database.simpleExecute(query, [],{ autoCommit: true});
+                //await database.simpleExecute(query, [],{ autoCommit: true});
            }
+           await database.simpleExecute(query, []);
         }
         resolve(true);
     })
@@ -695,7 +698,7 @@ const saveAlerts = (userfk, data) => {
                 //query += ' ' + data[i].gen_country_fk + ',';
                 query += ' ' + data[i].is_active + ',';
                 query += ' ' + data[i].created_by_fk + ')';
-                await database.simpleExecute(query, [],{ autoCommit: true});
+                //await database.simpleExecute(query, [],{ autoCommit: true});
            }
            else
            {
@@ -708,8 +711,9 @@ const saveAlerts = (userfk, data) => {
                 query += ' last_updated_on= sysdate,';
                 query += ' version_no= version_no + 1 ';
                 query += ' where useralertpk=' + data[i].useralertpk + '';
-                await database.simpleExecute(query, [],{ autoCommit: true});
+                //await database.simpleExecute(query, [],{ autoCommit: true});
             }
+            await database.simpleExecute(query, [],{ autoCommit: true});
         }
         resolve(true);
     })
