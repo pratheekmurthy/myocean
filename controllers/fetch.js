@@ -22,7 +22,7 @@ exports.fetchPOLList = async (req, res, next) => {
         data = fetchPOLList.rows
         res.status(200).json({
             "Status": "Success",
-            "StatusCode": "GFS000001", "data": data
+            "StatusCode": "GFS000001", "Data": data
         })
     } catch (err) {
         if (!err.statusCode) {
@@ -55,7 +55,7 @@ exports.fetchPODList = async (req, res, next) => {
         data = fetchPODList.rows
         res.status(200).json({
             "Status": "Success",
-            "StatusCode": "GFS000001", "data": data
+            "StatusCode": "GFS000001", "Data": data
         })
     } catch (err) {
         if (!err.statusCode) {
@@ -87,7 +87,7 @@ exports.fetchTerList = async (req, res, next) => {
         data = FetchTerList.rows
         res.status(200).json({
             "Status": "Success",
-            "StatusCode": "GFS000001", "data": data
+            "StatusCode": "GFS000001", "Data": data
         })
     } catch (err) {
         if (!err.statusCode) {

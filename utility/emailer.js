@@ -22,7 +22,7 @@ const handelEmails = (emailFrom, emailTo, emailTemplate, subject) => {
             
             resolve({
             "status": true,
-            "data": "Success" 
+            "Data": "Success" 
             })
         })
     })

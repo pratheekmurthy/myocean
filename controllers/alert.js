@@ -15,7 +15,7 @@ exports.alertCount =  async (req, res, next) => {
         const alertCount = await database.simpleExecute(query);
         data = alertCount.rows[0]
         res.status(200).json({ "Status": "Success",
-        "StatusCode": "GFS000001", "data": lowercaseKeys(data)})
+        "StatusCode": "GFS000001", "Data": lowercaseKeys(data)})
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;

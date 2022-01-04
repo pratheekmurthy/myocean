@@ -7,7 +7,7 @@ exports.fetchusers = async (req, res, next) => {
        const fetchUser = await database.simpleExecute(query);
        data = fetchUser.rows
        res.send(200).json({ "Status": "Success",
-       "StatusCode": "GFS000001", "data": data})
+       "StatusCode": "GFS000001", "Data": data})
     } catch(err) {
         if (!err.statusCode) {
             err.statusCode = 500;
@@ -22,7 +22,7 @@ try {
     const userDetails = await database.simpleExecute(query);
     data = userDetails.rows
     res.send(200).json({ "Status": "Success",
-    "StatusCode": "GFS000001", "data": data})
+    "StatusCode": "GFS000001", "Data": data})
 }
 catch(err){
     if (!err.statusCode) {
@@ -38,7 +38,7 @@ exports.fetchuserrights = async(req, res, next) => {
         const fetchUserRight = await database.simpleExecute(query);
         data = fetchUserRight.rows
         res.send(200).json({ "Status": "Success",
-        "StatusCode": "GFS000001", "data": data})
+        "StatusCode": "GFS000001", "Data": data})
      } catch(err) {
          if (!err.statusCode) {
              err.statusCode = 500;
@@ -64,7 +64,7 @@ exports.fetchuseraccess = async(req, res, next) => {
         const fetchUserAcces = await database.simpleExecute(query);
         data = fetchUserAcces.rows
         res.send(200).json({ "Status": "Success",
-        "StatusCode": "GFS000001", "data": data})
+        "StatusCode": "GFS000001", "Data": data})
      } catch(err) {
          if (!err.statusCode) {
              err.statusCode = 500;
@@ -123,7 +123,7 @@ exports.getuserdropdown = async(req, res, next) => {
         const userDropdown = await database.simpleExecute(query);
         data = userDropdown.rows
         res.send(200).json({ "Status": "Success",
-        "StatusCode": "GFS000001", "data": data})
+        "StatusCode": "GFS000001", "Data": data})
     } catch(err) {
         if (!err.statusCode) {
             err.statusCode = 500;
@@ -138,7 +138,7 @@ exports.fetchuserpreference = async(req, res, next) => {
         const userPref = await database.simpleExecute(query);
         data = userPref.rows
         res.send(200).json({ "Status": "Success",
-        "StatusCode": "GFS000001", "data": data})
+        "StatusCode": "GFS000001", "Data": data})
     } catch(err) {
         if (!err.statusCode) {
             err.statusCode = 500;
@@ -186,7 +186,7 @@ exports.printusers = async(req, res, next) => {
         const printUser = await database.simpleExecute(query);
         data = printUser.rows
         res.send(200).json({ "Status": "Success",
-        "StatusCode": "GFS000001", "data": data})
+        "StatusCode": "GFS000001", "Data": data})
     } catch(err) {
         if (!err.statusCode) {
             err.statusCode = 500;

@@ -21,7 +21,7 @@ exports.fetchNotifications =  async (req, res, next) => {
         const notification = await database.simpleExecute(query);
         data = notification.rows
         res.status(200).json({ "Status": "Success",
-        "StatusCode": "GFS000001", "data": data})
+        "StatusCode": "GFS000001", "Data": data})
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
@@ -46,7 +46,7 @@ exports.fetchAlerts =  async (req, res, next) => {
         const alerts = await database.simpleExecute(query);
         data = alerts.rows
         res.status(200).json({ "Status": "Success",
-        "StatusCode": "GFS000001", "data": data})
+        "StatusCode": "GFS000001", "Data": data})
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
@@ -161,7 +161,7 @@ exports.fetchSignUp =  async (req, res, next) => {
         
         //let lowerdata =  lowercaseKeys(data);
         res.status(200).json({ "Status": "Success",
-        "StatusCode": "GFS000001", "data": data})
+        "StatusCode": "GFS000001", "Data": data})
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
@@ -190,7 +190,7 @@ exports.saveUserDetails =  async (req, res, next) => {
 
         data = reqData.userpk;
         res.status(200).json({ "Status": "Success",
-        "StatusCode": "GFS000001", "data": data})
+        "StatusCode": "GFS000001", "Data": data})
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
@@ -204,7 +204,7 @@ exports.fetchCountries =  async (req, res, next) => {
         const countries = await database.simpleExecute(query);
         data = countries.rows
         res.status(200).json({ "Status": "Success",
-        "StatusCode": "GFS000001", "data": data})
+        "StatusCode": "GFS000001", "Data": data})
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
@@ -232,7 +232,7 @@ exports.fetchLocations =  async (req, res, next) => {
         const dropdown = await database.simpleExecute(query);
         data = dropdown.rows
         res.status(200).json({ "Status": "Success",
-        "StatusCode": "GFS000001", "data": data})
+        "StatusCode": "GFS000001", "Data": data})
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
@@ -259,7 +259,7 @@ exports.fetchMloCompanies =  async (req, res, next) => {
         const dropdown = await database.simpleExecute(query);
         data = dropdown.rows
         res.status(200).json({ "Status": "Success",
-        "StatusCode": "GFS000001", "data": data})
+        "StatusCode": "GFS000001", "Data": data})
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
@@ -287,7 +287,7 @@ exports.fetchCustomer =  async (req, res, next) => {
         const dropdown = await database.simpleExecute(query);
         data = dropdown.rows
         res.status(200).json({ "Status": "Success",
-        "StatusCode": "GFS000001", "data": data})
+        "StatusCode": "GFS000001", "Data": data})
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
@@ -309,7 +309,7 @@ exports.fetchDesignation =  async (req, res, next) => {
         const dropdown = await database.simpleExecute(query);
         data = dropdown.rows
         res.status(200).json({ "Status": "Success",
-        "StatusCode": "GFS000001", "data": data})
+        "StatusCode": "GFS000001", "Data": data})
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
@@ -329,12 +329,12 @@ exports.validateEmail =  async (req, res, next) => {
         if(data == 0)
         {
             res.status(200).json({ "Status": "Error",
-            "StatusCode": "GFE000009", "data": email})
+            "StatusCode": "GFE000009", "Data": email})
         }
         else
         {
             res.status(200).json({ "Status": "Success",
-            "StatusCode": "GFE000001", "data": email})
+            "StatusCode": "GFE000001", "Data": email})
         }
         
     } catch (err) {
@@ -356,12 +356,12 @@ exports.validateMobile =  async (req, res, next) => {
         if(data == 0)
         {
             res.status(200).json({ "Status": "Error",
-            "StatusCode": "GFE000009", "data": mobile})
+            "StatusCode": "GFE000009", "Data": mobile})
         }
         else
         {
             res.status(200).json({ "Status": "Success",
-            "StatusCode": "GFE000001", "data": mobile})
+            "StatusCode": "GFE000001", "Data": mobile})
         }
         
     } catch (err) {
