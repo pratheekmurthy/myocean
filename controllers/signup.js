@@ -116,8 +116,6 @@ exports.fetchSignUp =  async (req, res, next) => {
         query += ' on user1.mailing_add_country_fk = mailingcompany.country_mst_pk ';
         query += ' where 1 = 1 ';
         query += ' and user1.userpk = ' + userpk + '';
-        // let query = ' select * from qport_user_profile ';
-        // query += ' user1 where user1.userpk = ' + userpk + '';
         //console.log(query);
         const userprofile = await database.simpleExecute(query);
         data = lowercaseKeys(userprofile.rows[0]);
@@ -139,7 +137,7 @@ exports.fetchSignUp =  async (req, res, next) => {
         query += ' order by qdv.preference ';
         
         const notificationdtl = await database.simpleExecute(query);
-        data.notificationdt = turnArraytoLowerCase(notificationdtl.rows)
+        data.notificationdtl = turnArraytoLowerCase(notificationdtl.rows)
 
         query = ' select coalesce(usr.usernotifypk, 0) as usernotifypk, ';
         query += ' coalesce(usr.userfk, 0) as userfk, ';
@@ -200,7 +198,7 @@ exports.saveUserDetails =  async (req, res, next) => {
 }
 exports.fetchCountries =  async (req, res, next) => {
     try {
-        let query = `select cont.country_mst_pk as pk, cont.country_id as "id", cont.country_name as "name", cont.country_name as "text", 0 as "Preference" from country_mst_tbl cont where cont.active = 1 order by cont.country_name`
+        let query = `select cont.country_mst_pk as "pk", cont.country_id as "id", cont.country_name as "name", cont.country_name as "text", 0 as "Preference" from country_mst_tbl cont where cont.active = 1 order by cont.country_name`
         const countries = await database.simpleExecute(query);
         data = countries.rows
         res.status(200).json({ "Status": "Success",

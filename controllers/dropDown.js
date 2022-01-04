@@ -70,8 +70,9 @@ const FetchDDtable = (p1, p2) => {
         let api_response = {};
         try{
             let query = '';
-            query += ' select b.pk, b.id, b.name, b.name as "text", ';
-            query += ' b.preference, b.type as "columnCaption" from ';
+            query += ' select b.pk as "pk", b.id as "id",';
+            query += ' b.name as "name", b.name as "text",';
+            query += ' b.preference as "preference", b.type as "columnCaption" from';
             query += ' qport_dropdown_values b where b.is_active = 1 ';
             if(p1.length > 0)
             {
@@ -86,7 +87,7 @@ const FetchDDtable = (p1, p2) => {
             let data = output.rows;
             api_response.Status = 'Success'
             api_response.StatusCode = 'GFS000001'
-            api_response.data = data
+            api_response.Data = data
             resolve(api_response)
         }catch(err){
             api_response.Status = 'Failure'
