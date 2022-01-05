@@ -17,7 +17,7 @@ function isEmptyObject(value) {
   return Object.keys(value).length === 0 && value.constructor === Object;
 }
 
- exports.turnArraytoLowerCase = (arr) => {
+exports.turnArraytoLowerCase = (arr) => {
   let tempArr = []
   for (let i = 0; i < arr.length; i++) {
     let convertedobj = lowercaseKeys(arr[i])
@@ -31,3 +31,18 @@ const lowercaseKeys = obj =>
     acc[key.toLowerCase()] = obj[key];
     return acc;
   }, {});
+
+exports.chkIsNull = (value, type) => {
+  if (value) {
+    value = value;
+  }
+  else {
+    if (type || type === 0) {
+      value = type;
+    }
+    else {
+      value = '';
+    }
+  }
+  return value;
+}

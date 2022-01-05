@@ -1,5 +1,5 @@
 const database = require('../services/database')
-const {lowercaseKeys, turnArraytoLowerCase} = require('../utility/util')
+const {lowercaseKeys, turnArraytoLowerCase, chkIsNull} = require('../utility/util')
 const {emailerInfo} = require('../utility/emailConfig')
 const sendEmails = require('../utility/emailer')
 const moment =  require('moment');
@@ -139,9 +139,9 @@ exports.fetchSignUp =  async (req, res, next) => {
         const notificationdtl = await database.simpleExecute(query);
         data.notificationdtl = turnArraytoLowerCase(notificationdtl.rows)
 
-        query = ' select coalesce(usr.usernotifypk, 0) as usernotifypk, ';
+        query = ' select coalesce(usr.useralertpk, 0) as useralertpk, ';
         query += ' coalesce(usr.userfk, 0) as userfk, ';
-        query += ' coalesce(usr.notify_desc_ifk, qdv.id) as notify_desc_ifk, ';
+        query += ' coalesce(usr.alert_desc_ifk, qdv.id) as alert_desc_ifk, ';
         query += ' coalesce(usr.isselected, 0) as isselected, ';
         query += ' usr.is_active, ';
         query += ' usr.created_by_fk, ';
@@ -149,8 +149,8 @@ exports.fetchSignUp =  async (req, res, next) => {
         query += ' usr.last_updated_by_fk, ';
         query += ' usr.last_updated_on ';
         query += ' from qport_dropdown_values qdv ';
-        query += ' left join (select * from qport_user_notify n where n.userfk = 0) usr ';
-        query += ' on qdv.id = usr.notify_desc_ifk ';
+        query += ' left join (select * from qport_user_alerts n where n.userfk = 0) usr ';
+        query += ' on qdv.id = usr.alert_desc_ifk ';
         query += ' where qdv.type = \'Alerts\' ';
         query += ' order by qdv.preference ';
         
@@ -642,9 +642,11 @@ const saveNotifications = (userfk, data) => {
     return new Promise( async (resolve, reject) => {
         //const tempId =  [];
         let query = '';
+        let isselected = 0;
         for(let i = 0; i < data.length; i ++){
            if(data[i].usernotifypk == 0)
            {
+                isselected =  data[i].isselected ? 1 : 0;
                 query = ' insert into qport_user_notify';
                 query += ' (userfk, ';
                 query += ' notify_desc_ifk, ';
@@ -654,7 +656,7 @@ const saveNotifications = (userfk, data) => {
                 query += ' values ';
                 query += ' (' + userfk + ',';
                 query += ' \'' + data[i].notify_desc_ifk + '\',';
-                query += ' ' + data[i].isselected + ',';
+                query += ' ' + isselected + ',';
                 //query += ' ' + data[i].gen_country_fk + ',';
                 query += ' ' + data[i].is_active + ',';
                 query += ' ' + chkIsNull(data[i].created_by_fk, 1) + ')';
@@ -662,10 +664,11 @@ const saveNotifications = (userfk, data) => {
            }
            else
            {
+                isselected =  data[i].isselected ? 1 : 0;
                 query = ' update qport_user_notify ';
                 query += ' set userfk=' + userfk + ',';
                 query += ' notify_desc_ifk=\'' + data[i].notify_desc_ifk + '\',';
-                query += ' isselected=' + data[i].isselected + ',';
+                query += ' isselected=' + isselected + ',';
                 query += ' is_active=' + data[i].is_active + ',';
                 query += ' last_updated_by_fk=' + data[i].created_by_fk + ',';
                 query += ' last_updated_on= sysdate,';
@@ -684,9 +687,11 @@ const saveAlerts = (userfk, data) => {
     return new Promise( async (resolve, reject) => {
         //const tempId =  [];
         let query = '';
+        let isselected = 0;
         for(let i = 0; i < data.length; i ++){
            if(data[i].useralertpk == undefined || data[i].useralertpk == 0)
            {
+                isselected =  data[i].isselected ? 1 : 0;
                 query = ' insert into qport_user_alerts'
                 query += ' (userfk, ';
                 query += ' alert_desc_ifk, ';
@@ -696,7 +701,7 @@ const saveAlerts = (userfk, data) => {
                 query += ' values ';
                 query += ' (' + userfk + ',';
                 query += ' \'' + data[i].alert_desc_ifk + '\',';
-                query += ' ' + chkIsNull(data[i].isselected, 1) + ',';
+                query += ' ' + isselected + ',';
                 //query += ' ' + data[i].gen_country_fk + ',';
                 query += ' ' + chkIsNull(data[i].is_active, 1) + ',';
                 query += ' ' + chkIsNull(data[i].created_by_fk, 1) + ')';
@@ -704,10 +709,11 @@ const saveAlerts = (userfk, data) => {
            }
            else
            {
+                isselected =  data[i].isselected ? 1 : 0;
                 query = ' update qport_user_alerts ';
                 query += ' set userfk=' + userfk + ',';
                 query += ' alert_desc_ifk=\'' + data[i].alert_desc_ifk + '\',';
-                query += ' isselected=' + data[i].isselected + ',';
+                query += ' isselected=' + isselected + ',';
                 query += ' is_active=' + data[i].is_active + ',';
                 query += ' last_updated_by_fk=' + data[i].created_by_fk + ',';
                 query += ' last_updated_on= sysdate,';
@@ -721,21 +727,21 @@ const saveAlerts = (userfk, data) => {
     })
 }
 
-function chkIsNull(value, type){
-    if(value)
-    {
-        value = value;
-    }
-    else
-    {
-        if(type || type === 0)
-        {
-            value = type;
-        }
-        else
-        {
-            value = '';
-        }
-    }
-    return value;
-}
+// function chkIsNull(value, type){
+//     if(value)
+//     {
+//         value = value;
+//     }
+//     else
+//     {
+//         if(type || type === 0)
+//         {
+//             value = type;
+//         }
+//         else
+//         {
+//             value = '';
+//         }
+//     }
+//     return value;
+// }
