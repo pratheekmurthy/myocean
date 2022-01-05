@@ -52,12 +52,13 @@ const schemas = {
         login_confirm_password:Joi.string().allow(''),
         login_otp_by:Joi.string().allow(''),
         notification_required:Joi.number(),
-        alert_required:Joi.number().min(1),
+        alert_required:Joi.number(),
         recommended:Joi.number(),
         recommended_emails:Joi.string().allow(''),
         subscribed:Joi.number(),
         terms_conditions:Joi.number(),
         is_active:Joi.number(),
+        both:Joi.number(),
         created_by_fk:Joi.number(),
         created_on:Joi.string().allow(''),
         last_updated_by_fk:Joi.number(),
@@ -83,18 +84,28 @@ const schemas = {
         copy_mailing_address:Joi.number(),
         owner_type:Joi.string().allow(''),
         notificationdtl:Joi.array().items({
-            usernotifypk:Joi.number().required(),
+            userfk:Joi.number(),
+            usernotifypk:Joi.number().allow(''),
             notify_desc_ifk:Joi.string().required(),
             isselected:Joi.number(),
             is_active:Joi.number(),
-            created_by_fk:Joi.number()
+            created_on:Joi.date().allow(''),
+            created_by_fk:Joi.number(),
+            last_updated_on: Joi.date().allow(''),
+            last_updated_by_fk: Joi.number().allow(''),
+            version_no:Joi.number().allow('')
         }),
         alertdtl:Joi.array().items({
-            useralertpk:Joi.number().required(),
+            userfk:Joi.number(),
+            useralertpk:Joi.number().allow(''),
             alert_desc_ifk:Joi.string().required(),
             isselected:Joi.number(),
             is_active:Joi.number(),
-            created_by_fk:Joi.number()
+            created_on:Joi.date().allow(''),
+            created_by_fk:Joi.number(),
+            last_updated_on: Joi.date().allow(''),
+            last_updated_by_fk: Joi.number().allow(''),
+            version_no:Joi.number().allow('')
         })
     }),
     // notificationdtlSchema: Joi.object().keys({
