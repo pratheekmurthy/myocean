@@ -218,7 +218,7 @@ exports.fetchLocations =  async (req, res, next) => {
         query += ' loc.location_name   as "name", ';
         query += ' loc.location_name   as "text", ';
         query += ' 0                   as "peference" ';
-        query += ' from country_mst_tbl cmt, location_mst_tbl loc ';
+        query += ' from country_mst_tbl cmt, qils_location_mst_tbl loc ';
         query += ' where loc.country_mst_fk = cmt.country_mst_pk ';
         query += ' and cmt.active = 1';
         if(countrypk.length > 0)
@@ -499,11 +499,11 @@ const saveUserProfile = (data) => {
                 query += ' \'' + data.company_zipcode + '\',';
                 query += ' \'' + data.contact_email_add + '\',';
                 query += ' \'' + data.contact_comfirm_email_add + '\',';
-                query += ' \'' + data.contact_bus_countrycode + '\',';
-                query += ' \'' + data.contact_bus_area + '\',';
-                query += ' \'' + data.contact_bus_tel_no + '\',';
-                query += ' \'' + data.contact_mob_countrycode + '\',';
-                query += ' \'' + data.contact_mob_phone_no + '\',';
+                query += ' \'' + chkIsNull(data.contact_bus_countrycode) + '\',';
+                query += ' \'' + chkIsNull(data.contact_bus_area) + '\',';
+                query += ' \'' + chkIsNull(data.contact_bus_tel_no) + '\',';
+                query += ' \'' + chkIsNull(data.contact_mob_countrycode) + '\',';
+                query += ' \'' + chkIsNull(data.contact_mob_phone_no) + '\',';
                 query += ' \'' + chkIsNull(data.contact_mob_city) + '\',';
                 query += ' \'' + chkIsNull(data.contact_mob_state) + '\',';
                 query += ' \'' + chkIsNull(data.contact_mob_country_fk) + '\',';
@@ -614,8 +614,7 @@ const saveUserProfile = (data) => {
                 query += ' version_no= version_no + 1 ';
                 query += ' where userpk = ' + data.userpk + '';
             }
-            console.log(query)
-
+            //console.log(query)
             //const userInfo = await database.simpleExecute(query, []);
             const userInfo = await database.simpleExecute(query, [],{ autoCommit: true});
             //console.log(userInfo)
@@ -642,11 +641,11 @@ const saveNotifications = (userfk, data) => {
     return new Promise( async (resolve, reject) => {
         //const tempId =  [];
         let query = '';
-        let isselected = 0;
+        //let isselected = 0;
         for(let i = 0; i < data.length; i ++){
-           if(data[i].usernotifypk == 0)
+           if(data[i].usernotifypk == undefined || data[i].usernotifypk == 0)
            {
-                isselected =  data[i].isselected ? 1 : 0;
+                //isselected =  data[i].isselected ? 1 : 0;
                 query = ' insert into qport_user_notify';
                 query += ' (userfk, ';
                 query += ' notify_desc_ifk, ';
@@ -656,7 +655,7 @@ const saveNotifications = (userfk, data) => {
                 query += ' values ';
                 query += ' (' + userfk + ',';
                 query += ' \'' + data[i].notify_desc_ifk + '\',';
-                query += ' ' + isselected + ',';
+                query += ' ' + data[i].isselected + ',';
                 //query += ' ' + data[i].gen_country_fk + ',';
                 query += ' ' + data[i].is_active + ',';
                 query += ' ' + chkIsNull(data[i].created_by_fk, 1) + ')';
@@ -668,7 +667,7 @@ const saveNotifications = (userfk, data) => {
                 query = ' update qport_user_notify ';
                 query += ' set userfk=' + userfk + ',';
                 query += ' notify_desc_ifk=\'' + data[i].notify_desc_ifk + '\',';
-                query += ' isselected=' + isselected + ',';
+                query += ' isselected=' + data[i].isselected + ',';
                 query += ' is_active=' + data[i].is_active + ',';
                 query += ' last_updated_by_fk=' + data[i].created_by_fk + ',';
                 query += ' last_updated_on= sysdate,';
@@ -687,7 +686,7 @@ const saveAlerts = (userfk, data) => {
     return new Promise( async (resolve, reject) => {
         //const tempId =  [];
         let query = '';
-        let isselected = 0;
+        //let isselected = 0;
         for(let i = 0; i < data.length; i ++){
            if(data[i].useralertpk == undefined || data[i].useralertpk == 0)
            {
@@ -701,7 +700,7 @@ const saveAlerts = (userfk, data) => {
                 query += ' values ';
                 query += ' (' + userfk + ',';
                 query += ' \'' + data[i].alert_desc_ifk + '\',';
-                query += ' ' + isselected + ',';
+                query += ' ' + data[i].isselected + ',';
                 //query += ' ' + data[i].gen_country_fk + ',';
                 query += ' ' + chkIsNull(data[i].is_active, 1) + ',';
                 query += ' ' + chkIsNull(data[i].created_by_fk, 1) + ')';
@@ -713,7 +712,7 @@ const saveAlerts = (userfk, data) => {
                 query = ' update qport_user_alerts ';
                 query += ' set userfk=' + userfk + ',';
                 query += ' alert_desc_ifk=\'' + data[i].alert_desc_ifk + '\',';
-                query += ' isselected=' + isselected + ',';
+                query += ' isselected=' + data[i].isselected + ',';
                 query += ' is_active=' + data[i].is_active + ',';
                 query += ' last_updated_by_fk=' + data[i].created_by_fk + ',';
                 query += ' last_updated_on= sysdate,';
@@ -726,22 +725,3 @@ const saveAlerts = (userfk, data) => {
         resolve(true);
     })
 }
-
-// function chkIsNull(value, type){
-//     if(value)
-//     {
-//         value = value;
-//     }
-//     else
-//     {
-//         if(type || type === 0)
-//         {
-//             value = type;
-//         }
-//         else
-//         {
-//             value = '';
-//         }
-//     }
-//     return value;
-// }
