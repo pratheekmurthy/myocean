@@ -265,23 +265,60 @@ exports.fetchMloCompanies =  async (req, res, next) => {
         next(err);
     }
 }
+// exports.fetchCustomer =  async (req, res, next) => {
+//     try {
+//         const { custpk } = req.query;
+//         let query = ' select cmt.customer_mst_pk as "pk", ';
+//         query += ' cmt.customer_id     as "id", ';
+//         query += ' cmt.customer_name   as "name", ';
+//         query += ' cmt.customer_name   as "text", ';
+//         query += ' 0                   as "peference" ';
+//         query += ' from customer_mst_tbl cmt, location_mst_tbl lmt ';
+//         query += ' where cmt.qils_location_mst_fk = lmt.location_mst_pk ';
+//         query += ' and cmt.isactive = 1 ';
+//         if(custpk.length > 0)
+//         {
+//             query += ' and cmt.customer_mst_pk = '+ custpk;
+//         }
+//         query += ' order by cmt.customer_name ';
+
+//         const dropdown = await database.simpleExecute(query);
+//         data = dropdown.rows
+//         res.status(200).json({ "Status": "Success",
+//         "StatusCode": "GFS000001", "Data": data})
+//     } catch (err) {
+//         if (!err.statusCode) {
+//             err.statusCode = 500;
+//         }
+//         next(err);
+//     }
+// }
 exports.fetchCustomer =  async (req, res, next) => {
     try {
         const { custpk } = req.query;
-        let query = ' select cmt.customer_mst_pk as "pk", ';
-        query += ' cmt.customer_id     as "id", ';
-        query += ' cmt.customer_name   as "name", ';
-        query += ' cmt.customer_name   as "text", ';
-        query += ' 0                   as "peference" ';
-        query += ' from customer_mst_tbl cmt, location_mst_tbl lmt ';
-        query += ' where cmt.qils_location_mst_fk = lmt.location_mst_pk ';
-        query += ' and cmt.isactive = 1 ';
+        let query = ' select c.customer_mst_pk as "customermasterpk", ';
+        query += ' c.customer_name as "customername", ';
+        query += ' c.customer_id as "customercode", ';
+        query += ' c.customer_name as "sequencenumber", ';
+        query += ' c.address1 as "hq_addressline1", ';
+        query += ' c.address2 as "hq_addressline2", ';
+        query += ' c.address3 as "hq_addressline3", ';
+        query += ' c.city as "hq_city", ';
+        query += ' cnt.country_id as "hq_country", ';
+        query += ' c.state as "hq_state", ';
+        query += ' c.zip as "hq_postalcode" ';
+        query += ' from customer_mst_tbl c, country_mst_tbl cnt ';
+        query += ' where c.country_mst_fk = cnt.country_mst_pk ';
+        query += ' and c.isactive = 1 ';
         if(custpk.length > 0)
         {
-            query += ' and cmt.customer_mst_pk = '+ custpk;
+            query += ' and c.customer_mst_pk = '+ custpk;
         }
-        query += ' order by cmt.customer_name ';
-
+        else
+        {
+            query += ' and c.customer_mst_pk = 0';
+        }
+        query += ' order by c.customer_name ';
         const dropdown = await database.simpleExecute(query);
         data = dropdown.rows
         res.status(200).json({ "Status": "Success",
@@ -293,6 +330,7 @@ exports.fetchCustomer =  async (req, res, next) => {
         next(err);
     }
 }
+
 exports.fetchDesignation =  async (req, res, next) => {
     try {
         let query = ' select dmt.designation_mst_pk as "pk", ';
@@ -639,13 +677,10 @@ const saveUserProfile = (data) => {
 
 const saveNotifications = (userfk, data) => {
     return new Promise( async (resolve, reject) => {
-        //const tempId =  [];
         let query = '';
-        //let isselected = 0;
         for(let i = 0; i < data.length; i ++){
            if(data[i].usernotifypk == undefined || data[i].usernotifypk == 0)
            {
-                //isselected =  data[i].isselected ? 1 : 0;
                 query = ' insert into qport_user_notify';
                 query += ' (userfk, ';
                 query += ' notify_desc_ifk, ';
@@ -663,13 +698,12 @@ const saveNotifications = (userfk, data) => {
            }
            else
            {
-                isselected =  data[i].isselected ? 1 : 0;
                 query = ' update qport_user_notify ';
                 query += ' set userfk=' + userfk + ',';
                 query += ' notify_desc_ifk=\'' + data[i].notify_desc_ifk + '\',';
                 query += ' isselected=' + data[i].isselected + ',';
                 query += ' is_active=' + data[i].is_active + ',';
-                query += ' last_updated_by_fk=' + data[i].created_by_fk + ',';
+                query += ' last_updated_by_fk=' + chkIsNull(data[i].created_by_fk, 1) + + ',';
                 query += ' last_updated_on= sysdate,';
                 query += ' version_no= version_no + 1 ';
                 query += ' where usernotifypk=' + data[i].usernotifypk + '';
