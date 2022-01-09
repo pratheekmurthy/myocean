@@ -1,21 +1,35 @@
 const database = require('../services/database')
 
 exports.fetchGridPref =  async (req, res, next) => {
-    const { userpk } = req.query || 0;
+    const { UserFK } = req.query || 0;
+    const { FormFK } = req.query || 0;
     try {
-        let query = 'select count(*) unreadcount ';
-        query += ' from qport_messagelog msg where msg.is_active = 1 ';
-        if(userpk > 0)
-        {
-          query += ' and msg.receiver_fk = ' + userpk + '';
-        }
-        query += ' and msg.read_status = \'Un Read\'';
-        query += ' group by msg.receiver_fk, msg.read_status';
-        //let bind = [userpk]
-        const alertCount = await database.simpleExecute(query);
-        data = alertCount.rows[0]
+        let query = ' select \'center\' as "columnAlign", ';
+        query += ' \'\' as "columnCaption", ';
+        query += ' \'terminalLogo\' as "columnName", ';
+        query += ' \'\' as "columnTitle", ';
+        query += ' \'3rem\' as "columnWidth", ';
+        query += ' \'TerminalGrid\' as "controlname", ';
+        query += ' \'Grid\' as "controltype", ';
+        query += ' null as "dataType", ';
+        query += ' 1 as "displayOrder", ';
+        query += ' 237 as "fieldConfigFK", ';
+        query += ' 30 as "formMasterFK", ';
+        query += ' 0 as "gridUserConfigPK", ';
+        query += ' \'false\' as "isDisplayMandatory", ';
+        query += ' \'true\' as "isEnabled", ';
+        query += ' \'false\' as "isMandatory", ';
+        query += ' \'true\' as "isVisible", ';
+        query += ' 0 as "maxLength", ';
+        query += ' 0 as "userMasterFK" ';
+        query += ' from dual ';
+        
+       
+        const result = await database.simpleExecute(query);
+        data = result.rows
+        AccessRights = 15;
         res.status(200).json({ "Status": "Success",
-        "StatusCode": "GFS000001", "Data": lowercaseKeys(data)})
+        "StatusCode": "GFS000001", "AccessRights": AccessRights, "Data": data})
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;

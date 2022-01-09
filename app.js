@@ -7,6 +7,7 @@ const app = express();
 const authRoutes = require('./routes/auth');
 const alertRoutes = require('./routes/alerts');
 const menuRoutes = require('./routes/menu');
+const commonRoutes = require('./routes/common');
 const signUpRoutes = require('./routes/Signup');
 const countriesRoutes = require('./routes/countries');
 const dropDownRoutes = require('./routes/dropDown');
@@ -25,10 +26,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
-//(async function(){await database.initialize()})()
+(async function(){await database.initialize()})()
 
 app.use(async (req, res, next) => {
-    await database.initialize()
+    //await database.initialize()
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader(
         'Access-Control-Allow-Methods',
@@ -45,6 +46,7 @@ let base_url = process.env.base_url || 'api'
 app.use(`${base_url}`, menuRoutes);
 app.use(`${base_url}/Auth`, authRoutes);
 app.use(`${base_url}/Signup`, signUpRoutes)
+app.use(`${base_url}/FormPref`, commonRoutes)
 app.use(`${base_url}/country`, countriesRoutes)
 app.use(`${base_url}/Alerts`, alertRoutes);
 app.use(`${base_url}/dropdown`, dropDownRoutes);
