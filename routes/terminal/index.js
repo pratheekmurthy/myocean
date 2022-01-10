@@ -7,6 +7,6 @@ const { terminalSchema } = require('../../schema/terminal/index')
 
 router.get('/GetQPORTCntry', terminalController.getQPORTCntry);
 router.get('/FetchQPORTLocList', terminalController.fetchQPORTLocList);
-router.get('/FetchQPORTTerList', terminalController.fetchQPORTTerList);
+router.get('/FetchQPORTTerList', joiValidator(terminalSchema), terminalController.fetchQPORTTerList);
 
 module.exports = router;

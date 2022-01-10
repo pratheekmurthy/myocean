@@ -1,7 +1,8 @@
 const Joi = require('joi')
 const schemas = {
     terminalSchema: Joi.object().keys({
-        terminalpk: Joi.string().allow('')
+        CountryPK: Joi.string().allow(''),
+        LocPK: Joi.string().allow('')
     })
 };
 module.exports = schemas;
