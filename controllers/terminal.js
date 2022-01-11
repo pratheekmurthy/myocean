@@ -5,8 +5,8 @@ exports.getQPORTCntry = async (req, res, next) => {
     const { countrypk } = req.query || 0;
     try {
         let query = ' select c.country_mst_pk as "pk",';
-        query += ' c.country_id   as "id",';
-        query += ' c.country_name   as "name"';
+        query += ' c.country_id as "id",';
+        query += ' c.country_name as "name"';
         query += ' from country_mst_tbl c';
         query += ' where c.active = 1';
         if (countrypk > 0) {
@@ -31,8 +31,8 @@ exports.fetchQPORTLocList = async (req, res, next) => {
     const { locationpk } = req.query || 0;
     try {
         let query = 'select t.location_mst_pk as "pk",';
-        query += ' t.location_mst_pk   as "id",';
-        query += ' t.location_name   as "name"';
+        query += ' t.location_id as "id",';
+        query += ' t.location_name as "name"';
         query += ' from qils_location_mst_tbl t';
         query += ' where 1 = 1';
         if (locationpk > 0) {
@@ -58,7 +58,7 @@ exports.fetchQPORTTerList = async (req, res, next) => {
     const { LocPK } = req.query || 0;
     try {
         let query = 'select distinct t.terminal_mst_pk as "pk",';
-        query += ' t.terminal_name as "id",';
+        query += ' t.terminal_id as "id",';
         query += ' t.terminal_name as "name"';
         query += ' from terminal_mst_tbl t, port_mst_tbl p, location_working_ports_trn w';
         query += ' where t.port_mst_fk = p.port_mst_pk';
@@ -85,6 +85,9 @@ exports.fetchQPORTTerList = async (req, res, next) => {
 }
 
 exports.fetchQPORTTerminal = async (req, res, next) => {
+    const curpage = 1;
+    pagination = '{"currentPage":' + curpage + ',"itemsPerPage":10,"totalItems":4,"endRecord":4}';
+    res.setHeader('Pagination', pagination);
     const { CntryPK } = req.query || 0;
     const { LocPK } = req.query || 0;
     const { TerPK } = req.query || 0;
