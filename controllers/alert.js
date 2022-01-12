@@ -3,8 +3,8 @@ const database = require('../services/database')
 exports.alertCount =  async (req, res, next) => {
     const { userpk } = req.query || 0;
     try {
-        let query = 'select count(*) unreadcount ';
-        query += ' from qport_messagelog msg where msg.is_active = 1 ';
+        let query = 'select count(*) unreadcount';
+        query += ' from qport_messagelog msg where msg.is_active = 1';
         if(userpk > 0)
         {
           query += ' and msg.receiver_fk = ' + userpk + '';
