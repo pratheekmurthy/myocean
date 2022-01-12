@@ -15,6 +15,7 @@ const userProfileRoutes = require('./routes/userProfile');
 const scheduleRoutes = require('./routes/viewSchedule');
 const emailRoutes = require('./routes/emailManagement');
 const terminalRoutes = require('./routes/terminal')
+const vesselRoutes = require('./routes/vessel')
 
 const cors = require('cors');
 app.use(cors());
@@ -26,10 +27,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
-(async function(){await database.initialize()})()
+//(async function(){await database.initialize()})()
 
 app.use(async (req, res, next) => {
-    //await database.initialize()
+    await database.initialize()
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader(
         'Access-Control-Allow-Methods',
@@ -54,6 +55,7 @@ app.use(`${base_url}/userprofile`, userProfileRoutes);
 app.use(`${base_url}/ViewSchedule`, scheduleRoutes);
 app.use(`${base_url}/EmailManagement`, emailRoutes);
 app.use(`${base_url}/Terminal`, terminalRoutes);
+app.use(`${base_url}/Vessel`, vesselRoutes);
 
 app.use(async (error, req, res, next) => {
     const status = error.statusCode || 500;
