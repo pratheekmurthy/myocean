@@ -14,7 +14,8 @@ const dropDownRoutes = require('./routes/dropDown');
 const userProfileRoutes = require('./routes/userProfile');
 const scheduleRoutes = require('./routes/viewSchedule');
 const emailRoutes = require('./routes/emailManagement');
-const terminalRoutes = require('./routes/terminal')
+const terminalRoutes = require('./routes/terminal');
+const agentRoutes = require('./routes/agent');
 
 const cors = require('cors');
 app.use(cors());
@@ -54,6 +55,7 @@ app.use(`${base_url}/userprofile`, userProfileRoutes);
 app.use(`${base_url}/ViewSchedule`, scheduleRoutes);
 app.use(`${base_url}/EmailManagement`, emailRoutes);
 app.use(`${base_url}/Terminal`, terminalRoutes);
+app.use(`${base_url}/Company`, agentRoutes);
 
 app.use(async (error, req, res, next) => {
     const status = error.statusCode || 500;
