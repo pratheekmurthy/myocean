@@ -17,6 +17,7 @@ const emailRoutes = require('./routes/emailManagement');
 const terminalRoutes = require('./routes/terminal')
 const vesselRoutes = require('./routes/vessel')
 const commodityRoutes = require('./routes/commodity')
+const roeRoutes = require('./routes/roe')
 
 const cors = require('cors');
 app.use(cors());
@@ -58,6 +59,7 @@ app.use(`${base_url}/EmailManagement`, emailRoutes);
 app.use(`${base_url}/Terminal`, terminalRoutes);
 app.use(`${base_url}/Vessel`, vesselRoutes);
 app.use(`${base_url}/Commodity`, commodityRoutes);
+app.use(`${base_url}/roe`, roeRoutes);
 
 app.use(async (error, req, res, next) => {
     const status = error.statusCode || 500;
