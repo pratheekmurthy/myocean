@@ -21,18 +21,34 @@ exports.login =  async (req, res, next) => {
         let binds = [username, username];
         const user = await database.simpleExecute(query, binds);
         if (user.rows.length == 0) {
-            const error = new Error('Username invalid');
-            error.statusCode = 401;
-            throw error;
+            // const error = new Error('Username invalid');
+            // error.statusCode = 401;
+            // throw error;
+            res.status(403).json({
+                Error: true,
+                Message: "Username invalid",
+                OTPRequired: false,
+                statusCode: 403,
+                Token: ""
+            });
+            return;
         }
         let currUser = user.rows[0]
         let q1 = `select * from user_preferences_tbl a where a.user_mst_fk = :userpk`
         let b1 = [currUser.USERPK]
         const user_prefrence = await database.simpleExecute(q1, b1);
         if(user_prefrence.rows.length == 0){
-            const error = new Error('A user prefrence was not found.');
-            error.statusCode = 401;
-            throw error;
+            //const error = new Error('A user prefrence was not found.');
+            //error.statusCode = 401;
+            //throw error;
+            res.status(401).json({
+                Error: true,
+                Message: "A user prefrence was not found.",
+                OTPRequired: false,
+                StatusCode: 401,
+                Token: ""
+            });
+            return;
         }
         let userPrefers = user_prefrence.rows[0]
 
@@ -40,9 +56,17 @@ exports.login =  async (req, res, next) => {
         let b2 = [username, password]
         isValidUser = await database.simpleExecute(q2, b2);
         if (isValidUser.rows.length == 0) {
-            const error = new Error('unauthorized');
-            error.statusCode = 401;
-            throw error;
+            // const error = new Error('unauthorized');
+            // error.statusCode = 401;
+            // throw error;
+            res.status(401).json({
+                Error: true,
+                Message: "Username invalid",
+                OTPRequired: false,
+                StatusCode: 401,
+                Token: ""
+            });
+            return;
         }
         loadedUser = {
             'usermaster_pk': currUser.USERMASTER_PK,
@@ -80,7 +104,7 @@ exports.login =  async (req, res, next) => {
         if (!err.statusCode) {
             err.statusCode = 500;
         }
-          next(err);
+        next(err);
     }
 };
 

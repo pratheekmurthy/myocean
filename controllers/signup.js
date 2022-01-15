@@ -3,6 +3,7 @@ const {lowercaseKeys, turnArraytoLowerCase, chkIsNull} = require('../utility/uti
 const {emailerInfo} = require('../utility/emailConfig')
 const sendEmails = require('../utility/emailer')
 const moment =  require('moment');
+const { response } = require('express');
 
 exports.fetchNotifications =  async (req, res, next) => {
     try {
@@ -58,6 +59,7 @@ exports.fetchSignUp =  async (req, res, next) => {
     try {
         //User Profile
         const { userpk } = req.query || 0;
+        let data = null;
         let query = ' select user1.userpk, ';
         query += ' user1.salutation_ifk, ';
         query += ' user1.dob, ';
@@ -136,8 +138,8 @@ exports.fetchSignUp =  async (req, res, next) => {
         query += ' where qdv.type = \'Notifications\' ';
         query += ' order by qdv.preference ';
         
-        const notificationdtl = await database.simpleExecute(query);
-        data.notificationdtl = turnArraytoLowerCase(notificationdtl.rows)
+        const notifyresult = await database.simpleExecute(query);
+        data.notificationdtl = turnArraytoLowerCase(notifyresult.rows)
 
         query = ' select coalesce(usr.useralertpk, 0) as useralertpk, ';
         query += ' coalesce(usr.userfk, 0) as userfk, ';
@@ -154,8 +156,8 @@ exports.fetchSignUp =  async (req, res, next) => {
         query += ' where qdv.type = \'Alerts\' ';
         query += ' order by qdv.preference ';
         
-        const alertdtl = await database.simpleExecute(query);
-        data.alertdtl = turnArraytoLowerCase(alertdtl.rows)
+        const alertresult = await database.simpleExecute(query);
+        data.alertdtl = turnArraytoLowerCase(alertresult.rows)
         
         //let lowerdata =  lowercaseKeys(data);
         res.status(200).json({ "Status": "Success",
@@ -174,10 +176,11 @@ exports.saveUserDetails =  async (req, res, next) => {
 
         if(reqData.userpk == 0)
         {
-            let queryUser = 'select t.userpk from qport_user_profile ';
-            queryUser+= ' t where t.rowid = \'' + response.data.lastRowid + '\'';
-            const UserDataRow = await database.simpleExecute(queryUser);
-            reqData.userpk = UserDataRow.rows[0]["USERPK"];
+            //let queryUser = 'select t.userpk from qport_user_profile ';
+            //queryUser+= ' t where t.rowid = \'' + response.data.lastRowid + '\'';
+            //const UserDataRow = await database.simpleExecute(queryUser);
+            //reqData.userpk = UserDataRow.rows[0]["USERPK"];
+            reqData.userpk = response.returnvalue;
         }
         //Notification
         notificationArr = reqData.notificationdtl;
@@ -364,13 +367,13 @@ exports.validateEmail =  async (req, res, next) => {
         data = cnt.rows[0].ECNT;
         if(data == 0)
         {
-            res.status(200).json({ "Status": "Error",
-            "StatusCode": "GFE000009", "Data": email})
+            res.status(200).json({ "Status": "Success",
+            "StatusCode": "GFE000001", "Data": email})
         }
         else
         {
-            res.status(200).json({ "Status": "Success",
-            "StatusCode": "GFE000001", "Data": email})
+            res.status(200).json({ "Status": "Error",
+            "StatusCode": "GFE000009", "Data": email})
         }
         
     } catch (err) {
@@ -391,13 +394,13 @@ exports.validateMobile =  async (req, res, next) => {
         data = cnt.rows[0].ECNT;
         if(data == 0)
         {
-            res.status(200).json({ "Status": "Error",
-            "StatusCode": "GFE000009", "Data": mobile})
+            res.status(200).json({ "Status": "Success",
+            "StatusCode": "GFE000001", "Data": mobile})
         }
         else
         {
-            res.status(200).json({ "Status": "Success",
-            "StatusCode": "GFE000001", "Data": mobile})
+            res.status(200).json({ "Status": "Error",
+            "StatusCode": "GFE000009", "Data": mobile})
         }
         
     } catch (err) {
@@ -454,11 +457,15 @@ const saveUserProfile = (data) => {
             let dob =  moment(data.dob).format('DD/MM/YYYY');
 
             let query = '';
+            let returnvalue = 0;
 
             if(data.userpk == 0)
             {
+                query = 'select QPORT_USER_PROFILE_SEQ.NEXTVAL from dual '
+                const result = await database.simpleExecute(query);
+                returnvalue = result.rows[0].NEXTVAL;
                 query = ' insert into qport_user_profile ';
-                query += ' (salutation_ifk, ';
+                query += ' (userpk, salutation_ifk, ';
                 query += ' gen_country_fk, ';
                 query += ' dob, ';
                 query += ' first_name, ';
@@ -521,7 +528,8 @@ const saveUserProfile = (data) => {
                 query += ' copy_mailing_address, ';
                 query += ' owner_type) ';
                 query += ' values ';
-                query += ' (\''+ data.salutation_ifk + '\',';
+                query += ' (' + returnvalue + ',';
+                query += ' \''+ data.salutation_ifk + '\',';
                 query += ' ' + data.gen_country_fk + ',';
                 query += ' \'' + dob + '\',';
                 query += ' \'' + data.first_name + '\',';
@@ -564,15 +572,15 @@ const saveUserProfile = (data) => {
                 query += ' \'' + chkIsNull(data.is_active, 1) + '\',';
                 query += ' \'' + chkIsNull(data.created_by_fk, 1) + '\',';
                 query += ' sysdate,';
-                query += ' \'' + chkIsNull(data.passwordhash) + '\',';
-                query += ' \'' + chkIsNull(data.passwordsalt) + '\',';
-                query += ' \'' + chkIsNull(data.username) + '\',';
+                query += ' encoder(\'' + data.login_password + '\'),'; //passwordhash
+                query += ' encoder(\'' + data.login_password + '\'),'; //passwordsalt
+                query += ' \'' + chkIsNull(data.contact_email_add) + '\','; //username
                 query += ' \'' + chkIsNull(data.login_code_number) + '\',';
                 query += ' \'' + chkIsNull(data.wrong_pwd_count, 0) + '\',';
                 query += ' \'' + chkIsNull(data.enable_otp, 0) + '\',';
                 query += ' \'' + chkIsNull(data.company_fk) + '\',';
-                query += ' \'' + chkIsNull(data.usermaster_pk) + '\',';
-                query += ' \'' + chkIsNull(data.email_id) + '\',';
+                query += ' ' + returnvalue + ','; //usermaster_pk
+                query += ' \'' + chkIsNull(data.contact_email_add) + '\',';
                 query += ' \'' + chkIsNull(data.mobile_number) + '\',';
                 query += ' \'' + chkIsNull(data.office_number) + '\',';
                 query += ' \'' + chkIsNull(data.rel_mobile_number) + '\',';
@@ -603,32 +611,32 @@ const saveUserProfile = (data) => {
                 query += ' company_zipcode=\'' + data.company_zipcode + '\', ';
                 query += ' contact_email_add=\'' + data.contact_email_add + '\', ';
                 query += ' contact_comfirm_email_add=\'' + data.contact_comfirm_email_add + '\', ';
-                query += ' contact_bus_countrycode=\'' + data.contact_bus_countrycode + '\', ';
-                query += ' contact_bus_area=\'' + data.contact_bus_area + '\', ';
-                query += ' contact_bus_tel_no=\'' + data.contact_bus_tel_no + '\', ';
-                query += ' contact_mob_countrycode=\'' + data.contact_mob_countrycode + '\', ';
-                query += ' contact_mob_phone_no=\'' + data.contact_mob_phone_no + '\', ';
-                query += ' contact_mob_city=\'' + data.contact_mob_city + '\', ';
-                query += ' contact_mob_state=\'' + data.contact_mob_state + '\', ';
-                query += ' contact_mob_country_fk=' + data.contact_mob_country_fk + ', ';
-                query += ' contact_mob_zipcode=\'' + data.contact_mob_zipcode + '\', ';
-                query += ' mailing_add_str_add1=\'' + data.mailing_add_str_add1 + '\', ';
-                query += ' mailing_add_str_add2=\'' + data.mailing_add_str_add2 + '\', ';
-                query += ' mailing_add_city=\'' + data.mailing_add_city + '\', ';
-                query += ' mailing_add_state=\'' + data.mailing_add_state + '\', ';
-                query += ' mailing_add_country_fk=' + data.mailing_add_country_fk + ', ';
-                query += ' mailing_add_zipcode=\'' + data.mailing_add_zipcode + '\', ';
+                query += ' contact_bus_countrycode=\'' + chkIsNull(data.contact_bus_countrycode) + '\', ';
+                query += ' contact_bus_area=\'' + chkIsNull(data.contact_bus_area) + '\', ';
+                query += ' contact_bus_tel_no=\'' + chkIsNull(data.contact_bus_tel_no) + '\', ';
+                query += ' contact_mob_countrycode=\'' + chkIsNull(data.contact_mob_countrycode) + '\', ';
+                query += ' contact_mob_phone_no=\'' + chkIsNull(data.contact_mob_phone_no) + '\', ';
+                query += ' contact_mob_city=\'' + chkIsNull(data.contact_mob_city) + '\', ';
+                query += ' contact_mob_state=\'' + chkIsNull(data.contact_mob_state) + '\', ';
+                //query += ' contact_mob_country_fk=' + chkIsNull(data.contact_mob_country_fk) + ', ';
+                query += ' contact_mob_zipcode=\'' + chkIsNull(data.contact_mob_zipcode) + '\', ';
+                query += ' mailing_add_str_add1=\'' + chkIsNull(data.mailing_add_str_add1) + '\', ';
+                query += ' mailing_add_str_add2=\'' + chkIsNull(data.mailing_add_str_add2) + '\', ';
+                query += ' mailing_add_city=\'' + chkIsNull(data.mailing_add_city) + '\', ';
+                query += ' mailing_add_state=\'' + chkIsNull(data.mailing_add_state) + '\', ';
+                query += ' mailing_add_country_fk=' + chkIsNull(data.mailing_add_country_fk) + ', ';
+                query += ' mailing_add_zipcode=\'' + chkIsNull(data.mailing_add_zipcode) + '\', ';
                 query += ' login_password=\'' + chkIsNull(data.login_password, '') + '\', ';
-                query += ' login_confirm_password=\'' + data.login_confirm_password + '\', ';
-                query += ' login_otp_by=\'' + data.login_otp_by + '\', ';
+                query += ' login_confirm_password=\'' + chkIsNull(data.login_confirm_password)+ '\', ';
+                query += ' login_otp_by=\'' + chkIsNull(data.login_otp_by) + '\', ';
                 query += ' notification_required=' + data.notification_required + ', ';
                 query += ' alert_required=' + data.alert_required + ', ';
                 query += ' recommended=\'' + data.recommended + '\', ';
-                query += ' recommended_emails=\'' + data.recommended_emails + '\', ';
+                query += ' recommended_emails=\'' + chkIsNull(data.recommended_emails) + '\', ';
                 query += ' subscribed=' + data.subscribed + ', ';
                 query += ' terms_conditions=' + data.terms_conditions + ', ';
-                query += ' is_active= 1, ';
-                query += ' last_updated_by_fk=' + chkIsNull(data.last_updated_by_fk, '') + ', ';
+                query += ' is_active= \'' + chkIsNull(data.is_active, 1) + '\', ';
+                query += ' last_updated_by_fk=' + chkIsNull(data.last_updated_by_fk, 1) + ', ';
                 query += ' last_updated_on = sysdate, ';
                 query += ' passwordhash=\'' + chkIsNull(data.passwordhash, '') + '\', ';
                 query += ' passwordsalt=\'' + chkIsNull(data.passwordsalt, '') + '\', ';
@@ -636,8 +644,8 @@ const saveUserProfile = (data) => {
                 query += ' login_code_number=\'' + chkIsNull(data.login_code_number, '') + '\', ';
                 query += ' wrong_pwd_count=' + chkIsNull(data.wrong_pwd_count, 0) + ', ';
                 query += ' enable_otp=' + chkIsNull(data.enable_otp, 0) + ', ';
-                query += ' company_fk=' + chkIsNull(data.company_fk, '') + ', ';
-                query += ' usermaster_pk=' + chkIsNull(data.usermaster_pk,'') + ', ';
+                //query += ' company_fk=' + chkIsNull(data.company_fk, '') + ', ';
+                //query += ' usermaster_pk=' + chkIsNull(data.usermaster_pk,'') + ', ';
                 query += ' email_id=\'' + chkIsNull(data.email_id) + '\', ';
                 query += ' mobile_number=\'' + chkIsNull(data.mobile_number) + '\', ';
                 query += ' office_number=\'' + chkIsNull(data.office_number) + '\', ';
@@ -656,15 +664,16 @@ const saveUserProfile = (data) => {
             //const userInfo = await database.simpleExecute(query, []);
             const userInfo = await database.simpleExecute(query, [],{ autoCommit: true});
             //console.log(userInfo)
-            const respone ={}
+            const response ={}
             if(userInfo.rowsAffected == 1){
-                respone.status='true';
-                respone.data = userInfo;
-                resolve(respone)
+                response.status='true';
+                response.data = userInfo;
+                response.returnvalue = returnvalue;
+                resolve(response)
             }else{
-                respone.status='false';
-                respone.error = 'user record not created';
-                resolve(respone)
+                response.status='false';
+                response.error = 'user record not created';
+                resolve(response)
             }
         })
     } catch (err) {
