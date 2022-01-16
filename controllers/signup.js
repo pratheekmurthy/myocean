@@ -92,8 +92,8 @@ exports.fetchSignUp =  async (req, res, next) => {
         query += ' user1.mailing_add_city, ';
         query += ' user1.mailing_add_state, ';
         query += ' user1.mailing_add_zipcode, ';
-        query += ' \'Welcome@2021\' as login_password, ';
-        query += ' \'Welcome@2021\' as login_confirm_password, ';
+        query += ' user1.login_password, ';
+        query += ' user1.login_confirm_password, ';
         query += ' user1.login_otp_by, ';
         query += ' user1.notification_required, ';
         query += ' user1.alert_required, ';
@@ -151,7 +151,7 @@ exports.fetchSignUp =  async (req, res, next) => {
         query += ' usr.last_updated_by_fk, ';
         query += ' usr.last_updated_on ';
         query += ' from qport_dropdown_values qdv ';
-        query += ' left join (select * from qport_user_alerts n where n.userfk = 0) usr ';
+        query += ' left join (select * from qport_user_alerts n where n.userfk = ' + userpk + ') usr ';
         query += ' on qdv.id = usr.alert_desc_ifk ';
         query += ' where qdv.type = \'Alerts\' ';
         query += ' order by qdv.preference ';
@@ -638,9 +638,9 @@ const saveUserProfile = (data) => {
                 query += ' is_active= \'' + chkIsNull(data.is_active, 1) + '\', ';
                 query += ' last_updated_by_fk=' + chkIsNull(data.last_updated_by_fk, 1) + ', ';
                 query += ' last_updated_on = sysdate, ';
-                query += ' passwordhash=\'' + chkIsNull(data.passwordhash, '') + '\', ';
-                query += ' passwordsalt=\'' + chkIsNull(data.passwordsalt, '') + '\', ';
-                query += ' username=\'' + chkIsNull(data.username, '') + '\', ';
+                query += ' passwordhash = encoder(\'' + data.login_password + '\'),';
+                query += ' passwordsalt = encoder(\'' + data.login_password + '\'), ';
+                query += ' username=\'' + chkIsNull(data.contact_email_add) + '\', ';
                 query += ' login_code_number=\'' + chkIsNull(data.login_code_number, '') + '\', ';
                 query += ' wrong_pwd_count=' + chkIsNull(data.wrong_pwd_count, 0) + ', ';
                 query += ' enable_otp=' + chkIsNull(data.enable_otp, 0) + ', ';
@@ -712,7 +712,7 @@ const saveNotifications = (userfk, data) => {
                 query += ' notify_desc_ifk=\'' + data[i].notify_desc_ifk + '\',';
                 query += ' isselected=' + data[i].isselected + ',';
                 query += ' is_active=' + data[i].is_active + ',';
-                query += ' last_updated_by_fk=' + chkIsNull(data[i].created_by_fk, 1) + + ',';
+                query += ' last_updated_by_fk=' + chkIsNull(data[i].created_by_fk, 1) + ',';
                 query += ' last_updated_on= sysdate,';
                 query += ' version_no= version_no + 1 ';
                 query += ' where usernotifypk=' + data[i].usernotifypk + '';
@@ -727,13 +727,10 @@ const saveNotifications = (userfk, data) => {
 
 const saveAlerts = (userfk, data) => {
     return new Promise( async (resolve, reject) => {
-        //const tempId =  [];
         let query = '';
-        //let isselected = 0;
         for(let i = 0; i < data.length; i ++){
            if(data[i].useralertpk == undefined || data[i].useralertpk == 0)
            {
-                isselected =  data[i].isselected ? 1 : 0;
                 query = ' insert into qport_user_alerts'
                 query += ' (userfk, ';
                 query += ' alert_desc_ifk, ';
@@ -751,7 +748,6 @@ const saveAlerts = (userfk, data) => {
            }
            else
            {
-                isselected =  data[i].isselected ? 1 : 0;
                 query = ' update qport_user_alerts ';
                 query += ' set userfk=' + userfk + ',';
                 query += ' alert_desc_ifk=\'' + data[i].alert_desc_ifk + '\',';
