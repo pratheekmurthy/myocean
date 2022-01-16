@@ -6,7 +6,7 @@ module.exports = {
   entry: './app.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'api.js'
+    filename: 'app.js'
   },
   mode: 'production',
   plugins: [
