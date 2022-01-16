@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const database = require('../services/database')
-
+const {forgotPassword} = require('../utility/forgotpassword')
+const {emailerInfo} = require('../utility/emailConfig')
+const sendEmails = require('../utility/emailer')
 // let libPath;
 // if (process.platform === 'win32') {           // Windows
 //   libPath = 'D:\app\instantclient_11_2_32Bit';
@@ -111,7 +113,7 @@ exports.login = async (req, res, next) => {
 
 exports.forgotPassword = async (req, res, next) => {
     //const username = req.body.username;
-    const { username } = req.query;
+    const { username } = req.body;
     try {
         let query = `select a.userpk, a.email_id from qport_user_profile a where (lower(a.username) = :username or lower(a.email_id) = :username) and a.is_active = 1`
         let binds = [username, username];
@@ -128,6 +130,11 @@ exports.forgotPassword = async (req, res, next) => {
         query += ' set t.login_code_number = \'' + newPassword + '\' ';
         query += ' where t.userpk = ' + userpk + '';
         const userUpdRes = await database.simpleExecute(query, [], { autoCommit: true });
+        let resp =  {
+            MC_PREVIEW_TEXT : "abc"
+        }
+        const output = forgotPassword('subject', newPassword, resp)
+        let response = await sendEmails(emailerInfo.FromUser, 'goutamkumar7@gmail.com', output, 'MyOcean: OTP for login');
         res.status(200).json({ "StatusCode": "OK", "Data": "Password sent successfully in register email." });
     } catch (err) {
         if (!err.statusCode) {
