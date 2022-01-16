@@ -120,8 +120,8 @@ const schemas = {
     //     created_by_fk:Joi.number()
     // }),
     inviteColleagueSchema: Joi.object().keys({
-        emailids:Joi.string().required(),
-        userName:Joi.string().required()
+        Emailids:Joi.string().required(),
+        UserName:Joi.string().required()
     })
 };
 module.exports = schemas;
