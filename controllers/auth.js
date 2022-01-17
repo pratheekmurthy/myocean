@@ -3,6 +3,7 @@ const database = require('../services/database')
 const {forgotPassword} = require('../utility/forgotpassword')
 const {emailerInfo} = require('../utility/emailConfig')
 const sendEmails = require('../utility/emailer')
+const crypto = require('crypto')
 // let libPath;
 // if (process.platform === 'win32') {           // Windows
 //   libPath = 'D:\app\instantclient_11_2_32Bit';
@@ -119,23 +120,24 @@ exports.forgotPassword = async (req, res, next) => {
         let binds = [username, username];
         const user = await database.simpleExecute(query, binds);
         if (user.rows.length == 0) {
-            const error = new Error('User not found.');
-            error.statusCode = 401;
-            throw error;
+            res.status(200).json({ "StatusCode": "404", "Data": "User not found.", error: true });
+            return;
         }
         let userpk = user.rows[0].USERPK;
-        //const newPassword =  RandomPassword();
-        const newPassword = 'Welcome@1';
+        const newPassword =  RandomPassword();
+        //const newPassword = 'Welcome@2022';
         query = ' update qport_user_profile t ';
-        query += ' set t.login_code_number = \'' + newPassword + '\' ';
+        query += ' set t.login_code_number = \'' + newPassword + '\'';
         query += ' where t.userpk = ' + userpk + '';
         const userUpdRes = await database.simpleExecute(query, [], { autoCommit: true });
         let resp =  {
-            MC_PREVIEW_TEXT : "abc"
+            MC_PREVIEW_TEXT : "Forgot Password",
+            USER_NAME: username,
+            LOGIN_CODE_NUMNER: newPassword
         }
-        const output = forgotPassword('subject', newPassword, resp)
+        const output = forgotPassword('Forgot Password', resp)
         let response = await sendEmails(emailerInfo.FromUser, 'goutamkumar7@gmail.com', output, 'MyOcean: OTP for login');
-        res.status(200).json({ "StatusCode": "OK", "Data": "Password sent successfully in register email." });
+        res.status(200).json({ "StatusCode": 200, "Data": "Password sent successfully in register email." });
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
@@ -145,8 +147,15 @@ exports.forgotPassword = async (req, res, next) => {
 };
 
 function RandomPassword() {
-    var result = {};
-    return result;
+    const generatePassword = (
+        length = 15,
+        wishlist = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~!@-#$'
+      ) =>
+        Array.from(crypto.randomFillSync(new Uint32Array(length)))
+          .map((x) => wishlist[x % wishlist.length])
+          .join('')
+      
+    return generatePassword()
 }
 
 function toObject(names, values) {
