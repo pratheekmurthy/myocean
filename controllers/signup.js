@@ -583,7 +583,7 @@ const saveUserProfile = (data) => {
                 query += ' \'' + chkIsNull(data.enable_otp, 0) + '\',';
                 query += ' \'' + chkIsNull(data.company_fk) + '\',';
                 query += ' ' + returnvalue + ','; //usermaster_pk
-                query += ' \'' + chkIsNull(data.contact_email_add) + '\',';
+                query += ' \'' + data.contact_email_add + '\',';
                 query += ' \'' + chkIsNull(data.mobile_number) + '\',';
                 query += ' \'' + chkIsNull(data.office_number) + '\',';
                 query += ' \'' + chkIsNull(data.rel_mobile_number) + '\',';
@@ -649,7 +649,7 @@ const saveUserProfile = (data) => {
                 query += ' enable_otp=' + chkIsNull(data.enable_otp, 0) + ', ';
                 //query += ' company_fk=' + chkIsNull(data.company_fk, '') + ', ';
                 //query += ' usermaster_pk=' + chkIsNull(data.usermaster_pk,'') + ', ';
-                query += ' email_id=\'' + chkIsNull(data.email_id) + '\', ';
+                query += ' email_id=\'' + data.contact_email_add + '\', ';
                 query += ' mobile_number=\'' + chkIsNull(data.mobile_number) + '\', ';
                 query += ' office_number=\'' + chkIsNull(data.office_number) + '\', ';
                 query += ' rel_mobile_number=\'' + chkIsNull(data.rel_mobile_number) + '\', ';

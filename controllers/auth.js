@@ -114,16 +114,17 @@ exports.login = async (req, res, next) => {
 
 exports.forgotPassword = async (req, res, next) => {
     //const username = req.body.username;
-    const { username } = req.body;
+    const { userName } = req.body;
     try {
-        let query = `select a.userpk, a.email_id from qport_user_profile a where (lower(a.username) = :username or lower(a.email_id) = :username) and a.is_active = 1`
-        let binds = [username, username];
+        let query = `select a.userpk, a.email_id from qport_user_profile a where (lower(a.username) = :userName or lower(a.email_id) = :userName) and a.is_active = 1`
+        let binds = [userName, userName];
         const user = await database.simpleExecute(query, binds);
         if (user.rows.length == 0) {
-            res.status(200).json({ "StatusCode": "404", "Data": "User not found.", error: true });
+            res.status(200).json({ "statusCode": 404, "data": "User not found.", error: true });
             return;
         }
         let userpk = user.rows[0].USERPK;
+        let emailid =  user.rows[0].EMAIL_ID;
         const newPassword =  RandomPassword();
         //const newPassword = 'Welcome@2022';
         query = ' update qport_user_profile t ';
@@ -132,12 +133,15 @@ exports.forgotPassword = async (req, res, next) => {
         const userUpdRes = await database.simpleExecute(query, [], { autoCommit: true });
         let resp =  {
             MC_PREVIEW_TEXT : "Forgot Password",
-            USER_NAME: username,
+            USER_NAME: userName,
             LOGIN_CODE_NUMNER: newPassword
         }
         const output = forgotPassword('Forgot Password', resp)
-        let response = await sendEmails(emailerInfo.FromUser, 'goutamkumar7@gmail.com', output, 'MyOcean: OTP for login');
-        res.status(200).json({ "StatusCode": 200, "Data": "Password sent successfully in register email." });
+        let response = await sendEmails(emailerInfo.FromUser, emailid, output, 'MyOcean: OTP for login');
+        if(response.Data ==='Success')
+             res.status(200).json({ "statusCode": 200, "data": "Password sent successfully in register email." });
+        else
+            res.status(200).json({ "statusCode": 401, "data":  response.Data});
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;

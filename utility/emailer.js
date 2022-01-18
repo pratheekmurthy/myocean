@@ -17,7 +17,11 @@ const handelEmails = (emailFrom, emailTo, emailTemplate, subject) => {
         // send mail with defined transport object
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
-                reject(error)
+                //reject(error)
+                resolve({
+                "status": false,
+                "Data": error.message
+                })
             }
             
             resolve({

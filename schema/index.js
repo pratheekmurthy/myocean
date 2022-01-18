@@ -13,7 +13,7 @@ const schemas = {
     userpk: Joi.number().required()
   }),
   resetpasswordSchema: Joi.object().keys({ 
-    username: Joi.string().required()
+    userName: Joi.string().required()
   })
 }; 
 module.exports = schemas;
