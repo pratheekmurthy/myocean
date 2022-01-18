@@ -14,7 +14,6 @@ const dropDownRoutes = require('./routes/dropDown');
 const userProfileRoutes = require('./routes/userProfile');
 const scheduleRoutes = require('./routes/viewSchedule');
 const emailRoutes = require('./routes/emailManagement');
-const terminalRoutes = require('./routes/terminal')
 const vesselRoutes = require('./routes/vessel')
 const commodityRoutes = require('./routes/commodity')
 const roeRoutes = require('./routes/roe')
@@ -31,10 +30,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
-//(async function(){await database.initialize()})()
+(async function(){await database.initialize()})()
 
 app.use(async (req, res, next) => {
-    await database.initialize()
+    //await database.initialize()
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader(
         'Access-Control-Allow-Methods',
