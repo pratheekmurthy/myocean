@@ -18,6 +18,8 @@ const terminalRoutes = require('./routes/terminal')
 const vesselRoutes = require('./routes/vessel')
 const commodityRoutes = require('./routes/commodity')
 const roeRoutes = require('./routes/roe')
+const terminalRoutes = require('./routes/terminal');
+const agentRoutes = require('./routes/agent');
 
 const cors = require('cors');
 app.use(cors());
@@ -60,6 +62,7 @@ app.use(`${base_url}/Terminal`, terminalRoutes);
 app.use(`${base_url}/Vessel`, vesselRoutes);
 app.use(`${base_url}/Commodity`, commodityRoutes);
 app.use(`${base_url}/roe`, roeRoutes);
+app.use(`${base_url}/Company`, agentRoutes);
 
 app.use(async (error, req, res, next) => {
     const status = error.statusCode || 500;

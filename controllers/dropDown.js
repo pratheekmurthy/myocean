@@ -64,7 +64,24 @@ exports.fetchDropdown = async (req, res, next) => {
           next(err);
     }
 }
-
+exports.FetchAccType = async (req, res, next) => {
+    let response;
+    try {
+        response = await FetchAccType();
+        if(response.Status == "Success"){
+            res.status(200).json(response)
+        }else{
+            const error = api_response.error
+            error.statusCode = 500;
+            throw error;
+        }
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+          next(err);
+    }
+}
 const FetchDDtable = (p1, p2) => {
     const resp = new Promise( async (resolve, reject) => {
         let api_response = {};
@@ -237,6 +254,31 @@ const FetchDesignation = (p1, p2) => {
                 query += ' and lower(dmt.department_id) = lower(\'' + p2 + '\')';
             }
             query += ' order by des.designation_name ';
+            const output = await database.simpleExecute(query);
+            let data = output.rows;
+            api_response.Status = 'Success'
+            api_response.StatusCode = 'GFS000001'
+            api_response.data = data
+            resolve(api_response)
+        }catch(err){
+            api_response.Status = 'Failure'
+            api_response.error = err
+            reject(api_response)
+        }
+    })
+    return resp;
+}
+const FetchAccType=()=>{
+    const resp = new Promise( async (resolve, reject) => {
+        let api_response = {};
+        try{
+            let query = ' select a.accounttype_pk as "Pk", ';
+            query += ' a.accounttype_id as "Id", ';
+            query += ' a.accounttype_name as "Name", ';
+            query += ' \'Acc Type\' as "ColumnCaption" ';
+            query += ' from accounttype_sf a ';
+            query += ' where a.is_active = 1 ';
+
             const output = await database.simpleExecute(query);
             let data = output.rows;
             api_response.Status = 'Success'
