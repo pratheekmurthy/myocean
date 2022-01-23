@@ -33,10 +33,10 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerFile = require('./swagger_output.json');
 app.use('/api-documents', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
-//(async function(){await database.initialize()})()
+(async function(){await database.initialize()})()
 
 app.use(async (req, res, next) => {
-    await database.initialize()
+    //await database.initialize()
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader(
         'Access-Control-Allow-Methods',

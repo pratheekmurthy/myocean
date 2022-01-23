@@ -12,30 +12,13 @@ exports.lowercaseKeys = obj => {
   }
 }
 
-exports.paginatedResults = async (sqlstatement, req, res, next) => {
+exports.paginatedResults = async (sqlstatement, req, res) => {
   let pageSize = parseInt(req.query.pageSize, 10) || 1;
   let currentPage = parseInt(req.query.pageNumber, 1) || 1;
 
   try {
       let queryCount = 'select count(*) as numRows FROM (' + sqlstatement + ')';
-     
       let resultCount = await database.simpleExecute(queryCount);
-
-      // V_TOTALPAGE := FLOOR(V_TOTALRECORDS / M_MASTERPAGESIZE_IN);
-      // IF V_TOTALRECORDS MOD M_MASTERPAGESIZE_IN <> 0 THEN
-      //   V_TOTALPAGE := V_TOTALPAGE + 1;
-      // END IF;
-      // IF CURRENTPAGE_IN > V_TOTALPAGE THEN
-      //   V_CURRENTPAGE := 1;
-      // END IF;
-      // IF V_TOTALRECORDS = 0 THEN
-      //   V_CURRENTPAGE := 0;
-      // END IF;
-      // V_LAST         := V_CURRENTPAGE * M_MASTERPAGESIZE_IN;
-      // V_START        := (V_CURRENTPAGE - 1) * M_MASTERPAGESIZE_IN + 1;
-      // TOTALPAGE_IN   := V_TOTALPAGE;
-      // CURRENTPAGE_IN := V_CURRENTPAGE;
-
       let totalRecord =  resultCount.rows[0].NUMROWS;
       let totalPage = Math.ceil(totalRecord / pageSize);
       if ((totalRecord%totalPage) != 0) 
@@ -54,39 +37,22 @@ exports.paginatedResults = async (sqlstatement, req, res, next) => {
       let V_LAST = currentPage * pageSize;
       let V_START =  (currentPage - 1) * pageSize + 1;
 
-      console.log('number of pages:', totalPage);
+      //console.log('number of pages:', totalPage);
 
-      let mainQuery =  'SELECT * FROM (SELECT ROWNUM SL_NR, Q.*';
+      let mainQuery =  'SELECT * FROM (SELECT Q.*, ROWNUM as "slnr"';
       mainQuery += ' FROM (' + sqlstatement + ') Q )';
-      mainQuery += ' WHERE SL_NR BETWEEN ' + V_START + ' AND ' + V_LAST + '';
+      mainQuery += ' WHERE "slnr" BETWEEN ' + V_START + ' AND ' + V_LAST + '';
 
       //console.log(mainQuery);
       let paginatedResults = await database.simpleExecute(mainQuery);
-
-      // let responsePayload = {
-      //     results: results
-      // };
-      // if (page < numPages) {
-      //     responsePayload.pagination = {
-      //         current: page,
-      //         perPage: pageSize,
-      //         previous: page > 0 ? page - 1 : undefined,
-      //         next: page < numPages - 1 ? page + 1 : undefined
-      //     }
-      // }
-      // else responsePayload.pagination = {
-      //     err: 'queried page ' + page + ' is >= to maximum page number ' + numPages
-      // }
-
       pagination = '{"currentPage":' + currentPage + ',"itemsPerPage":' + pageSize + ',"totalItems": ' + totalRecord + ',"endRecord":' + V_LAST + '}';
       res.setHeader('Pagination', pagination);
 
       return (paginatedResults);
   } catch (err) {
       if (!err.statusCode) {
-          err.statusCode = 500;
+          res.status(500).json({"StatusCode": 500, error: err.message })
       }
-      next(err);
   }
 }
 
