@@ -1,5 +1,6 @@
 const { terminalSchema } = require('../schema/terminal');
-const database = require('../services/database')
+const database = require('../services/database');
+const { paginatedResults } = require('../utility/util');
 
 exports.getQPORTCntry = async (req, res, next) => {
     const { countrypk } = req.query || 0;
@@ -85,14 +86,10 @@ exports.fetchQPORTTerList = async (req, res, next) => {
 }
 
 exports.fetchQPORTTerminal = async (req, res, next) => {
-    const curpage = 1;
-    pagination = '{"currentPage":' + curpage + ',"itemsPerPage":10,"totalItems":4,"endRecord":4}';
-    res.setHeader('Pagination', pagination);
+    
     const { CntryPK } = req.query || 0;
     const { LocPK } = req.query || 0;
     const { TerPK } = req.query || 0;
-    const { pageNumber } = req.query || 0;
-    const { pageSize } = req.query || 0;
     try {
         let query = 'select distinct ter.terminal_mst_pk as "TerminalmasterPk",';
         query += ' ter.terminal_id as "TerminalId",';
@@ -186,7 +183,8 @@ exports.fetchQPORTTerminal = async (req, res, next) => {
             query += ' and loc.location_mst_fk=' + LocPK + '';
         }
         query += ' order by ter.terminal_name';
-        const result = await database.simpleExecute(query);
+
+        const result = await paginatedResults(query, req, res);
         data = result.rows
  
         query = ' select null as "ContactName",';
@@ -218,3 +216,5 @@ exports.fetchQPORTTerminal = async (req, res, next) => {
         next(err);
     }
 }
+
+  

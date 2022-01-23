@@ -460,7 +460,7 @@ const saveUserProfile = (data) => {
             let dob =  moment(data.dob).format('DD/MM/YYYY');
 
             let query = '';
-            let returnvalue = 0;
+            let returnvalue = 0; 
 
             if(data.userpk == 0)
             {

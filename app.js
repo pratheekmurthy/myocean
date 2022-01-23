@@ -30,10 +30,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
-(async function(){await database.initialize()})()
+//(async function(){await database.initialize()})()
 
 app.use(async (req, res, next) => {
-    //await database.initialize()
+    await database.initialize()
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader(
         'Access-Control-Allow-Methods',
