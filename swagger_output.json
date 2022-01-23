@@ -719,7 +719,39 @@
         "description": "",
         "parameters": [
           {
-            "name": "userpk",
+            "name": "SearchValue",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Commodity/fetchQPORTCommList": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "CommGrpPK",
+            "in": "query",
+            "type": "number"
+          },
+          {
+            "name": "HSCode",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "commName",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "FuzzySearch",
             "in": "query",
             "type": "string"
           }
