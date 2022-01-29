@@ -65,6 +65,7 @@ app.use(`${base_url}/Vessel`, vesselRoutes);
 app.use(`${base_url}/Commodity`, commodityRoutes);
 app.use(`${base_url}/roe`, roeRoutes);
 app.use(`${base_url}/Company`, agentRoutes);
+app.use(`${base_url}/ActiveSurchargeRpt`, agentRoutes);
 
 app.use(async (error, req, res, next) => {
     const status = error.statusCode || 500;
