@@ -19,6 +19,9 @@ const commodityRoutes = require('./routes/commodity')
 const roeRoutes = require('./routes/roe')
 const terminalRoutes = require('./routes/terminal');
 const agentRoutes = require('./routes/agent');
+const activeSurchargeRptRoutes = require('./routes/ActiveSurchargeRpt')
+const ageingRoutes = require('./routes/ageing')
+
 
 const cors = require('cors');
 app.use(cors());
@@ -65,7 +68,9 @@ app.use(`${base_url}/Vessel`, vesselRoutes);
 app.use(`${base_url}/Commodity`, commodityRoutes);
 app.use(`${base_url}/roe`, roeRoutes);
 app.use(`${base_url}/Company`, agentRoutes);
-app.use(`${base_url}/ActiveSurchargeRpt`, agentRoutes);
+app.use(`${base_url}/ActiveSurchargeRpt`, activeSurchargeRptRoutes);
+app.use(`${base_url}/Ageing`, ageingRoutes);
+app.use(`${base_url}/Alerts`, alertRoutes);
 
 app.use(async (error, req, res, next) => {
     const status = error.statusCode || 500;
