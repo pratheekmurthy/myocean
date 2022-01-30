@@ -378,170 +378,7 @@
             "name": "body",
             "in": "body",
             "schema": {
-              "type": "object",
-              "properties": {
-                "userpk": {
-                  "example": 0},
-  "salutation_ifk": {
-                  "example": "string"},
-  "gen_country_fk": {
-                  "example": 0},
-  "dob": {
-                  "example": "2022-01-29T08:19:56.144Z"},
-  "first_name": {
-                  "example": "string"},
-  "last_name": {
-                  "example": "string"},
-  "gen_location_fk": {
-                  "example": 0},
-  "company_type": {
-                  "example": "string"},
-  "company_name": {
-                  "example": "string"},
-  "company_cus_ref_no": {
-                  "example": "string"},
-  "company_designation": {
-                  "example": "string"},
-  "company_str_add1": {
-                  "example": "string"},
-  "company_str_add2": {
-                  "example": "string"},
-  "company_country_fk": {
-                  "example": 0},
-  "company_zipcode": {
-                  "example": "string"},
-  "contact_email_add": {
-                  "example": "string"},
-  "contact_comfirm_email_add": {
-                  "example": "string"},
-  "contact_bus_countrycode": {
-                  "example": "string"},
-  "contact_bus_area": {
-                  "example": "string"},
-  "contact_bus_tel_no": {
-                  "example": "string"},
-  "contact_mob_countrycode": {
-                  "example": "string"},
-  "contact_mob_phone_no": {
-                  "example": "string"},
-  "contact_mob_city": {
-                  "example": "string"},
-  "contact_mob_state": {
-                  "example": "string"},
-  "contact_mob_country_fk": {
-                  "example": 0},
-  "contact_mob_zipcode": {
-                  "example": "string"},
-  "mailing_add_str_add1": {
-                  "example": "string"},
-  "mailing_add_str_add2": {
-                  "example": "string"},
-  "mailing_add_city": {
-                  "example": "string"},
-  "mailing_add_state": {
-                  "example": "string"},
-  "mailing_add_country_fk": {
-                  "example": 0},
-  "mailing_add_zipcode": {
-                  "example": "string"},
-  "login_password": {
-                  "example": "string"},
-  "login_confirm_password": {
-                  "example": "string"},
-  "login_otp_by": {
-                  "example": "string"},
-  "notification_required": {
-                  "example": true},
-  "alert_required": {
-                  "example": true},
-  "recommended": {
-                  "example": true},
-  "recommended_emails": {
-                  "example": "string"},
-  "subscribed": {
-                  "example": true},
-  "terms_conditions": {
-                  "example": true},
-  "is_active": {
-                  "example": 0},
-  "created_by_fk": {
-                  "example": 0},
-  "created_on": {
-                  "example": "2022-01-29T08:19:56.144Z"},
-  "last_updated_by_fk":{
-    "example": 0},
-  "last_updated_on":{
-    "example": "2022-01-29T08:19:56.144Z"},
-  "version_no":{
-                  "example": 0},
-  "passwordhash":{
-                  "example": "string"},
-  "passwordsalt":{
-                  "example": "string"},
-  "username":{
-                  "example": "string"},
-  "login_code_number":{
-                  "example": "string"},
-  "wrong_pwd_count":{
-                  "example": 0},
-  "enable_otp":{
-                  "example": true},
-  "company_fk":{
-                  "example": 0},
-  "usermaster_pk":{
-                  "example": 0},
-  "email_id":{
-                  "example": "string"},
-  "mobile_number":{
-                  "example": "string"},
-  "office_number":{
-                  "example": "string"},
-  "rel_mobile_number":{
-                  "example": "string"},
-  "user_image":{
-                  "example": "string"},
-  "alias":{
-                  "example": "string"},
-  "cust_fk":{
-                  "example": 0},
-  "company_city":{
-                  "example": "string"},
-  "company_state":{
-                  "example": "string"},
-  "copy_mailing_address":{
-                  "example": true},
-  "owner_type":{
-                  "example": "string"},
-  "trnpassword":{
-                  "example": "string"},
-                "notificationdtl": {
-                  "type": "array",
-                  "usernotifypk":{
-                    "example": 0},
-        "userfk":{
-                    "example": 0},
-        "notify_desc_ifk":{
-                    "example": "string"},
-        "isselected":{
-                    "example": true},
-        "is_active":{
-                    "example": 0},
-        "created_by_fk":{
-                    "example": 0},
-        "created_on":{
-                    "example": "2022-01-29T08:19:56.144Z"},
-        "last_updated_by_fk": {
-          "example": 0},
-        "last_updated_on": {
-          "example": "2022-01-29T08:19:56.144Z"},
-        "version_no":{
-          "example": 0}
-                 
-                },
-                "alertdtl": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/qport_userSaveDto"
             }
           }
         ],
@@ -716,15 +553,7 @@
             "name": "body",
             "in": "body",
             "schema": {
-              "type": "object",
-              "properties": {
-                "Emailids": {
-                  "example": "any"
-                },
-                "UserName": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/Invitedto"
             }
           }
         ],
@@ -749,15 +578,7 @@
             "name": "body",
             "in": "body",
             "schema": {
-              "type": "object",
-              "properties": {
-                "userPK": {
-                  "example": 0
-                },
-                "status": {
-                  "example": 0
-                }
-              }
+              "$ref": "#/definitions/RemoveDto"
             }
           }
         ],
@@ -1000,56 +821,7 @@
           "name": "body",
           "in": "body",
           "schema": {
-            
-            "type": "object",
-            "properties": {
-              "country_pk":{
-                "example": 0},
-"country_code2":{
-                "example": "string"},
-"country_code3":{
-                "example": "string"},
-"numeric_code":{
-                "example": "string"},
-"country_name":{
-                "example": "string"},
-"area_mst_fk":{
-                "example": 0},
-"currency_mst_fk":{
-                "example": 0},
-"isd_code":{
-                "example": "string"},
-"flag_url":{
-                "example": "string"},
-"environment_fk":{
-                "example": 0},
-"timezone1_val":{
-                "example": "string"},
-"timezone2_val":{
-                "example": "string"},
-"timezone3_val": {
-                "example": "string"},
-"timezone4_val": {
-                "example": "string"},
-"timezone5_val": {
-                "example": "string"},
-"timezone6_val": {
-                "example": "string"},
-"is_active": {
-                "example": 0},
-"created_by_fk": {
-                "example": 0},
-"created_on": {
-                "example": "2022-01-29T10:01:41.842Z"},
-"last_updated_by_fk" : {
-                "example": 0},
-"last_updated_on" : {
-                "example": "2022-01-29T10:01:41.842Z"},
-"version_no" : {
-                "example": 0},
-"currency_symbol" : {
-                "example": "string"}
-            }
+            "$ref": "#/definitions/CountryForSaveDto"
           }
         }],
         "responses": { "200": {
@@ -1067,23 +839,7 @@
           "name": "body",
           "in": "body",
           "schema": {
-            
-            "type": "object",
-            "properties": {
-              "countryPk": {
-                "example": 0},
-    "currencyPk": {
-                "example": 0},
-    "currencyId": {
-                "example": "string"},
-    "searchValue": {
-                "example": "string"},
-    "status": {
-                "example": 0},
-    "last_updated_by_fk": {
-                "example": 0
-  }
-            }
+            "$ref": "#/definitions/CountryDto"            
           }
         }],
         "responses": { "200": {
@@ -1101,23 +857,7 @@
           "name": "body",
           "in": "body",
           "schema": {
-            
-            "type": "object",
-            "properties": {
-              "countryPk": {
-                "example": 0},
-    "currencyPk": {
-                "example": 0},
-    "currencyId": {
-                "example": "string"},
-    "searchValue": {
-                "example": "string"},
-    "status": {
-                "example": 0},
-    "last_updated_by_fk": {
-                "example": 0
-  }
-            }
+            "$ref": "#/definitions/CountryDto"
           }
         }],
         "responses": { "200": {
@@ -1975,6 +1715,3216 @@
         "name",
         "age"
       ]
+    },
+    "MessageLogDto": {
+      "type": "object",
+      "properties": {
+        "messagelogpk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "process": {
+          "type": "string",
+          "nullable": true
+        },
+        "message_type": {
+          "type": "string",
+          "nullable": true
+        },
+        "receiver_fk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message_header": {
+          "type": "string",
+          "nullable": true
+        },
+        "message_body": {
+          "type": "string",
+          "nullable": true
+        },
+        "action_url": {
+          "type": "string",
+          "nullable": true
+        },
+        "generated_date": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "sent_date": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "sent_status": {
+          "type": "string",
+          "nullable": true
+        },
+        "read_date": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "read_status": {
+          "type": "string",
+          "nullable": true
+        },
+        "action_click_dt": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "action_status": {
+          "type": "string",
+          "nullable": true
+        },
+        "delete_status": {
+          "type": "boolean"
+        },
+        "delete_date": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "expiry_date": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "is_active": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_on": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_updated_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "last_updated_on": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "version_no": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "sender_fk": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "additionalProperties": false
+    },
+    "DeleteParams": {
+      "required": [
+        "messagelogpk",
+        "userpk"
+      ],
+      "type": "object",
+      "properties": {
+        "messagelogpk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "userpk": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "additionalProperties": false
+    },
+    "MarkParams": {
+      "required": [
+        "messagelogpk",
+        "userpk"
+      ],
+      "type": "object",
+      "properties": {
+        "messagelogpk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "userpk": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ActionParams": {
+      "required": [
+        "messagelogpk",
+        "userpk"
+      ],
+      "type": "object",
+      "properties": {
+        "messagelogpk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "userpk": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "additionalProperties": false
+    },
+    "SaveMessageFieldsDto": {
+      "type": "object",
+      "properties": {
+        "messagefield_pk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "msgtemplate_mst_fk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "db_table_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "db_field_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "db_field_desc": {
+          "type": "string",
+          "nullable": true
+        },
+        "active_flag": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "is_active": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_on": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_updated_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "last_updated_on": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "version_no": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "SaveTemplateDto": {
+      "type": "object",
+      "properties": {
+        "msgtemplate_mst_pk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "document_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "config_id": {
+          "type": "string",
+          "nullable": true
+        },
+        "default_email_subject": {
+          "type": "string",
+          "nullable": true
+        },
+        "default_email_msg": {
+          "type": "string",
+          "nullable": true
+        },
+        "default_doc_path": {
+          "type": "string",
+          "nullable": true
+        },
+        "display_order": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "is_active": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_on": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_updated_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "last_updated_on": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "version_no": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "message_type": {
+          "type": "string",
+          "nullable": true
+        },
+        "default_sms_msg": {
+          "type": "string",
+          "nullable": true
+        },
+        "partytype_ifk": {
+          "type": "string",
+          "nullable": true
+        },
+        "mcmodule_fk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "parameterList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SaveMessageFieldsDto"
+          },
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "UserLoginRequestDto": {
+      "required": [
+        "password",
+        "userName"
+      ],
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "otpValue": {
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "UserDeviceDto": {
+      "required": [
+        "deviceAddress",
+        "userName"
+      ],
+      "type": "object",
+      "properties": {
+        "deviceAddress": {
+          "type": "string"
+        },
+        "userName": {
+          "type": "string"
+        },
+        "deviceId": {
+          "type": "string",
+          "nullable": true
+        },
+        "clientip": {
+          "type": "string",
+          "nullable": true
+        },
+        "devicetype": {
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "UserPKDto": {
+      "required": [
+        "userPK"
+      ],
+      "type": "object",
+      "properties": {
+        "userPK": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "additionalProperties": false
+    },
+    "UsernameDto": {
+      "required": [
+        "username"
+      ],
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "currentpassword": {
+          "type": "string",
+          "nullable": true
+        },
+        "newpassword": {
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "CountryForSaveDto": {
+      "required": [
+        "area_mst_fk",
+        "country_code2",
+        "country_code3",
+        "country_name",
+        "country_pk"
+      ],
+      "type": "object",
+      "properties": {
+        "country_pk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "country_code2": {
+          "type": "string"
+        },
+        "country_code3": {
+          "type": "string"
+        },
+        "numeric_code": {
+          "type": "string",
+          "nullable": true
+        },
+        "country_name": {
+          "type": "string"
+        },
+        "area_mst_fk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "currency_mst_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "isd_code": {
+          "type": "string",
+          "nullable": true
+        },
+        "flag_url": {
+          "type": "string",
+          "nullable": true
+        },
+        "environment_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "timezone1_val": {
+          "type": "string",
+          "nullable": true
+        },
+        "timezone2_val": {
+          "type": "string",
+          "nullable": true
+        },
+        "timezone3_val": {
+          "type": "string",
+          "nullable": true
+        },
+        "timezone4_val": {
+          "type": "string",
+          "nullable": true
+        },
+        "timezone5_val": {
+          "type": "string",
+          "nullable": true
+        },
+        "timezone6_val": {
+          "type": "string",
+          "nullable": true
+        },
+        "is_active": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "created_by_fk": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "created_on": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_updated_by_fk": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "last_updated_on": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "version_no": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "currency_symbol": {
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "CountryDto": {
+      "type": "object",
+      "properties": {
+        "countryPk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "currencyPk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "currencyId": {
+          "type": "string",
+          "nullable": true
+        },
+        "searchValue": {
+          "type": "string",
+          "nullable": true
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "last_updated_by_fk": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "additionalProperties": false
+    },
+    "SaveMailAttachmentDto": {
+      "type": "object",
+      "properties": {
+        "user_message_det_pk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "user_message_fk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "attachment_caption": {
+          "type": "string",
+          "nullable": true
+        },
+        "attachment_data": {
+          "type": "string",
+          "nullable": true
+        },
+        "url_page": {
+          "type": "string",
+          "nullable": true
+        },
+        "icon_flag": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "attachment_path": {
+          "type": "string",
+          "nullable": true
+        },
+        "archieve_flag": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_on": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_updated_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "last_updated_on": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "version_no": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "SaveForTemplateMailDto": {
+      "type": "object",
+      "properties": {
+        "user_message_pk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "sender_fk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "receiver_fk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "msg_read": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "followup_flag": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "has_attachment": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "msg_subject": {
+          "type": "string",
+          "nullable": true
+        },
+        "msg_body": {
+          "type": "string",
+          "nullable": true
+        },
+        "starred_flag": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "important_flag": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "user_message_folders_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "msg_received_dt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "delete_flag": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "del_sender_flag": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "del_sentitem_flag": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "customer_mst_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "archieve_flag": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_on": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_updated_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "last_updated_on": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "version_no": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "to_mail_id": {
+          "type": "string",
+          "nullable": true
+        },
+        "cc_mail_id": {
+          "type": "string",
+          "nullable": true
+        },
+        "bcc_mail_id": {
+          "type": "string",
+          "nullable": true
+        },
+        "from_mail_id": {
+          "type": "string",
+          "nullable": true
+        },
+        "label_flag": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "receiver_fks": {
+          "type": "string",
+          "nullable": true
+        },
+        "attachmentList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SaveMailAttachmentDto"
+          },
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "UpdateMail": {
+      "type": "object",
+      "properties": {
+        "user_message_fk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "flagType": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "flagStatus": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "additionalProperties": false
+    },
+    "MovetoTrash": {
+      "type": "object",
+      "properties": {
+        "user_message_fk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "user_message_folders_fk": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "additionalProperties": false
+    },
+    "RatingMasterSaveDto": {
+      "type": "object",
+      "properties": {
+        "ratingmastermasterpk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "userfk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "process": {
+          "type": "string",
+          "nullable": true
+        },
+        "feature": {
+          "type": "string",
+          "nullable": true
+        },
+        "trndate": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "trnstatus": {
+          "type": "string",
+          "nullable": true
+        },
+        "rating": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "ratingcomment": {
+          "type": "string",
+          "nullable": true
+        },
+        "is_active": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_on": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_updated_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "last_updated_on": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "version_no": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "FeedbackMasterSaveDto": {
+      "type": "object",
+      "properties": {
+        "feedbackmasterpk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "ratingmastermasterfk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "userfk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "questionmstfk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "answermstfks": {
+          "type": "string",
+          "nullable": true
+        },
+        "otheranswer": {
+          "type": "string",
+          "nullable": true
+        },
+        "feedbackdate": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "is_active": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_on": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_updated_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "last_updated_on": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "version_no": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "SaveMCFieldsDto": {
+      "type": "object",
+      "properties": {
+        "messagefield_pk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "msgtemplate_mst_fk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "db_table_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "db_field_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "db_field_desc": {
+          "type": "string",
+          "nullable": true
+        },
+        "active_flag": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "is_active": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_on": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_updated_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "last_updated_on": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "version_no": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "FetchMCReciptListDto": {
+      "type": "object",
+      "properties": {
+        "mcrecpk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "recipientPk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "recipientType": {
+          "type": "string",
+          "nullable": true
+        },
+        "recipientName": {
+          "type": "string",
+          "nullable": true
+        },
+        "designation": {
+          "type": "string",
+          "nullable": true
+        },
+        "email": {
+          "type": "string",
+          "nullable": true
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "to_flag": {
+          "type": "boolean"
+        },
+        "cc_flag": {
+          "type": "boolean"
+        },
+        "bcc_flag": {
+          "type": "boolean"
+        },
+        "last_updated_by": {
+          "type": "string",
+          "nullable": true
+        },
+        "recipient_image": {
+          "type": "string",
+          "nullable": true
+        },
+        "recipient_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "last_updated_on": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "intext_flag": {
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "FetchMCReciptDto": {
+      "type": "object",
+      "properties": {
+        "pk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "id": {
+          "type": "string",
+          "nullable": true
+        },
+        "name": {
+          "type": "string",
+          "nullable": true
+        },
+        "to_flag": {
+          "type": "boolean"
+        },
+        "cc_flag": {
+          "type": "boolean"
+        },
+        "bcc_flag": {
+          "type": "boolean"
+        },
+        "last_updated_by": {
+          "type": "string",
+          "nullable": true
+        },
+        "last_updated_on": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "hiddenField": {
+          "type": "string",
+          "nullable": true
+        },
+        "user_image": {
+          "type": "string",
+          "nullable": true
+        },
+        "recipientList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FetchMCReciptListDto"
+          },
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "SaveMCTemplateDto": {
+      "type": "object",
+      "properties": {
+        "msgtemplate_mst_pk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "document_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "config_id": {
+          "type": "string",
+          "nullable": true
+        },
+        "default_email_subject": {
+          "type": "string",
+          "nullable": true
+        },
+        "default_email_msg": {
+          "type": "string",
+          "nullable": true
+        },
+        "default_doc_path": {
+          "type": "string",
+          "nullable": true
+        },
+        "display_order": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "is_active": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_on": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_updated_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "last_updated_on": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "version_no": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "message_type": {
+          "type": "string",
+          "nullable": true
+        },
+        "default_sms_msg": {
+          "type": "string",
+          "nullable": true
+        },
+        "partytype_ifk": {
+          "type": "string",
+          "nullable": true
+        },
+        "mcmodule_fk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "email_flag": {
+          "type": "boolean"
+        },
+        "alert_flag": {
+          "type": "boolean"
+        },
+        "pdf_flag": {
+          "type": "boolean"
+        },
+        "xml_flag": {
+          "type": "boolean"
+        },
+        "xl_flag": {
+          "type": "boolean"
+        },
+        "recipient_to": {
+          "type": "string",
+          "nullable": true
+        },
+        "recipient_cc": {
+          "type": "string",
+          "nullable": true
+        },
+        "recipient_bcc": {
+          "type": "string",
+          "nullable": true
+        },
+        "msg_new_flag": {
+          "type": "boolean"
+        },
+        "msg_modify_flag": {
+          "type": "boolean"
+        },
+        "msg_cancel_flag": {
+          "type": "boolean"
+        },
+        "alert_new_flag": {
+          "type": "boolean"
+        },
+        "alert_modify_flag": {
+          "type": "boolean"
+        },
+        "alert_cancel_flag": {
+          "type": "boolean"
+        },
+        "link_flag": {
+          "type": "boolean"
+        },
+        "intext_flag": {
+          "type": "string",
+          "nullable": true
+        },
+        "parameterList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SaveMCFieldsDto"
+          },
+          "nullable": true
+        },
+        "recipientModule": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FetchMCReciptDto"
+          },
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "SaveMCCustomerDto": {
+      "type": "object",
+      "properties": {
+        "customermaster_fk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "category_ifk": {
+          "type": "string",
+          "nullable": true
+        },
+        "isinternal": {
+          "type": "boolean"
+        },
+        "isexternal": {
+          "type": "boolean"
+        },
+        "userpk": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "additionalProperties": false
+    },
+    "RoleDto": {
+      "type": "object",
+      "properties": {
+        "roleaccessPk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "modulemasterFk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "moduleName": {
+          "type": "string",
+          "nullable": true
+        },
+        "companyFk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "departmentFk": {
+          "type": "number",
+          "format": "double"
+        },
+        "departmentId": {
+          "type": "string",
+          "nullable": true
+        },
+        "designationFk": {
+          "type": "number",
+          "format": "double"
+        },
+        "designationId": {
+          "type": "string",
+          "nullable": true
+        },
+        "designationName": {
+          "type": "string",
+          "nullable": true
+        },
+        "isFullAccess": {
+          "type": "boolean"
+        },
+        "isPartialAccess": {
+          "type": "boolean"
+        },
+        "isViewAccess": {
+          "type": "boolean"
+        },
+        "isNoAccess": {
+          "type": "boolean"
+        },
+        "isActive": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "createdByFk": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "createdOn": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastUpdatedByFk": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "lastUpdatedOn": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "versionNo": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "SequenceSaveDto": {
+      "required": [
+        "sequencecatgoryfk",
+        "sequencemasterpk"
+      ],
+      "type": "object",
+      "properties": {
+        "sequencemasterpk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "sequencecatgoryfk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "sequenceprefix": {
+          "type": "string",
+          "nullable": true
+        },
+        "prefixseparatorifk": {
+          "type": "string",
+          "nullable": true
+        },
+        "digittype": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "seqstartnr": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "digitseparatorifk": {
+          "type": "string",
+          "nullable": true
+        },
+        "suffixtype": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "suffixseparatorifk": {
+          "type": "string",
+          "nullable": true
+        },
+        "seqoptvalueifk": {
+          "type": "string",
+          "nullable": true
+        },
+        "defaultvalue": {
+          "type": "string",
+          "nullable": true
+        },
+        "is_active": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "created_by_fk": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "created_on": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_updated_by_fk": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "last_updated_on": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "version_no": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "currency_symbol": {
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "SequenceDto": {
+      "type": "object",
+      "properties": {
+        "sequencemasterpk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "searchValue": {
+          "type": "string",
+          "nullable": true
+        },
+        "sequencecategoryid": {
+          "type": "string",
+          "nullable": true
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "additionalProperties": false
+    },
+    "qport_usernotifySaveDto": {
+      "type": "object",
+      "properties": {
+        "usernotifypk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "userfk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "notify_desc_ifk": {
+          "type": "string",
+          "nullable": true
+        },
+        "isselected": {
+          "type": "boolean"
+        },
+        "is_active": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "created_by_fk": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "created_on": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_updated_by_fk": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "last_updated_on": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "version_no": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "qport_useralertsSaveDto": {
+      "type": "object",
+      "properties": {
+        "useralertpk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "userfk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "alert_desc_ifk": {
+          "type": "string",
+          "nullable": true
+        },
+        "isselected": {
+          "type": "boolean"
+        },
+        "is_active": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "created_by_fk": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "created_on": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_updated_by_fk": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "last_updated_on": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "version_no": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "qport_userSaveDto": {
+      "type": "object",
+      "properties": {
+        "userpk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "salutation_ifk": {
+          "type": "string",
+          "nullable": true
+        },
+        "gen_country_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "dob": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "first_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "last_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "gen_location_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "company_type": {
+          "type": "string",
+          "nullable": true
+        },
+        "company_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "company_cus_ref_no": {
+          "type": "string",
+          "nullable": true
+        },
+        "company_designation": {
+          "type": "string",
+          "nullable": true
+        },
+        "company_str_add1": {
+          "type": "string",
+          "nullable": true
+        },
+        "company_str_add2": {
+          "type": "string",
+          "nullable": true
+        },
+        "company_country_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "company_zipcode": {
+          "type": "string",
+          "nullable": true
+        },
+        "contact_email_add": {
+          "type": "string",
+          "nullable": true
+        },
+        "contact_comfirm_email_add": {
+          "type": "string",
+          "nullable": true
+        },
+        "contact_bus_countrycode": {
+          "type": "string",
+          "nullable": true
+        },
+        "contact_bus_area": {
+          "type": "string",
+          "nullable": true
+        },
+        "contact_bus_tel_no": {
+          "type": "string",
+          "nullable": true
+        },
+        "contact_mob_countrycode": {
+          "type": "string",
+          "nullable": true
+        },
+        "contact_mob_phone_no": {
+          "type": "string",
+          "nullable": true
+        },
+        "contact_mob_city": {
+          "type": "string",
+          "nullable": true
+        },
+        "contact_mob_state": {
+          "type": "string",
+          "nullable": true
+        },
+        "contact_mob_country_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "contact_mob_zipcode": {
+          "type": "string",
+          "nullable": true
+        },
+        "mailing_add_str_add1": {
+          "type": "string",
+          "nullable": true
+        },
+        "mailing_add_str_add2": {
+          "type": "string",
+          "nullable": true
+        },
+        "mailing_add_city": {
+          "type": "string",
+          "nullable": true
+        },
+        "mailing_add_state": {
+          "type": "string",
+          "nullable": true
+        },
+        "mailing_add_country_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "mailing_add_zipcode": {
+          "type": "string",
+          "nullable": true
+        },
+        "login_password": {
+          "type": "string",
+          "nullable": true
+        },
+        "login_confirm_password": {
+          "type": "string",
+          "nullable": true
+        },
+        "login_otp_by": {
+          "type": "string",
+          "nullable": true
+        },
+        "notification_required": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "alert_required": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "recommended": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "recommended_emails": {
+          "type": "string",
+          "nullable": true
+        },
+        "subscribed": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "terms_conditions": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "is_active": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_on": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "last_updated_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "last_updated_on": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "version_no": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "passwordhash": {
+          "type": "string",
+          "format": "byte",
+          "nullable": true
+        },
+        "passwordsalt": {
+          "type": "string",
+          "format": "byte",
+          "nullable": true
+        },
+        "username": {
+          "type": "string",
+          "nullable": true
+        },
+        "login_code_number": {
+          "type": "string",
+          "nullable": true
+        },
+        "wrong_pwd_count": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "enable_otp": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "company_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "usermaster_pk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "email_id": {
+          "type": "string",
+          "nullable": true
+        },
+        "mobile_number": {
+          "type": "string",
+          "nullable": true
+        },
+        "office_number": {
+          "type": "string",
+          "nullable": true
+        },
+        "rel_mobile_number": {
+          "type": "string",
+          "nullable": true
+        },
+        "user_image": {
+          "type": "string",
+          "nullable": true
+        },
+        "alias": {
+          "type": "string",
+          "nullable": true
+        },
+        "cust_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "company_city": {
+          "type": "string",
+          "nullable": true
+        },
+        "company_state": {
+          "type": "string",
+          "nullable": true
+        },
+        "copy_mailing_address": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "owner_type": {
+          "type": "string",
+          "nullable": true
+        },
+        "trnpassword": {
+          "type": "string",
+          "nullable": true
+        },
+        "notificationdtl": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/qport_usernotifySaveDto"
+          },
+          "nullable": true
+        },
+        "alertdtl": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/qport_useralertsSaveDto"
+          },
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "Invitedto": {
+      "type": "object",
+      "properties": {
+        "emailids": {
+          "type": "string",
+          "nullable": true
+        },
+        "userName": {
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "RemoveDto": {
+      "type": "object",
+      "properties": {
+        "userPK": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "additionalProperties": false
+    },
+    "UserProfileForSaveDto": {
+      "type": "object",
+      "properties": {
+        "usermaster_pk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "company_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "username": {
+          "type": "string",
+          "nullable": true
+        },
+        "branch_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "password": {
+          "type": "string",
+          "nullable": true
+        },
+        "user_type_ifk": {
+          "type": "string",
+          "nullable": true
+        },
+        "employee_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "rolemaster_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "is_administrator": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "wrong_pwd_count": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "enable_otp": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "pwd_expiry_days": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "is_active": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "created_by_fk": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "created_on": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_updated_by_fk": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "last_updated_on": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "version_no": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "first_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "middle_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "last_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "alias": {
+          "type": "string",
+          "nullable": true
+        },
+        "gender_ifk": {
+          "type": "string",
+          "nullable": true
+        },
+        "marital_status_ifk": {
+          "type": "string",
+          "nullable": true
+        },
+        "date_of_birth": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "email_id": {
+          "type": "string",
+          "nullable": true
+        },
+        "mobile_number": {
+          "type": "string",
+          "nullable": true
+        },
+        "office_number": {
+          "type": "string",
+          "nullable": true
+        },
+        "department_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "designation_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "date_of_joining": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "relationship_ifk": {
+          "type": "string",
+          "nullable": true
+        },
+        "rel_first_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "rel_middle_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "rel_last_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "rel_email_id": {
+          "type": "string",
+          "nullable": true
+        },
+        "rel_mobile_number": {
+          "type": "string",
+          "nullable": true
+        },
+        "address_line1": {
+          "type": "string",
+          "nullable": true
+        },
+        "address_line2": {
+          "type": "string",
+          "nullable": true
+        },
+        "city": {
+          "type": "string",
+          "nullable": true
+        },
+        "country_mst_pk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "state": {
+          "type": "string",
+          "nullable": true
+        },
+        "postal_code": {
+          "type": "string",
+          "nullable": true
+        },
+        "user_image": {
+          "type": "string",
+          "nullable": true
+        },
+        "reportingmanager_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "organization_typeifk": {
+          "type": "string",
+          "nullable": true
+        },
+        "designation": {
+          "type": "string",
+          "nullable": true
+        },
+        "department": {
+          "type": "string",
+          "nullable": true
+        },
+        "companyName": {
+          "type": "string",
+          "nullable": true
+        },
+        "reportingManager": {
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "SecUserAccessForSaveDto": {
+      "type": "object",
+      "properties": {
+        "useraccess_pk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "modulemaster_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "usermaster_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "is_view_allowed": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "is_add_allowed": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "is_edit_allowed": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "is_del_allowed": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "is_print_allowed": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "is_email_allowed": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "is_report_allowed": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "is_addlfunc01_allowed": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "is_addlfunc02_allowed": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "is_addlfunc03_allowed": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "is_addlfunc04_allowed": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "is_addlfunc05_allowed": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "is_addlfunc06_allowed": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "is_addlfunc07_allowed": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "is_addlfunc08_allowed": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "is_addlfunc09_allowed": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "is_addlfunc10_allowed": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "is_addlfunc11_allowed": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "is_addlfunc12_allowed": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "is_addlfunc13_allowed": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "is_addlfunc14_allowed": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "is_addlfunc15_allowed": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "is_active": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "created_by_fk": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "created_on": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_updated_by_fk": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        },
+        "last_updated_on": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "version_no": {
+          "type": "number",
+          "format": "double",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "UserProfileDto": {
+      "required": [
+        "loggedInUser"
+      ],
+      "type": "object",
+      "properties": {
+        "userPK": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "companyPK": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "depPK": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "desPK": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "companyType": {
+          "type": "string",
+          "nullable": true
+        },
+        "loggedInUser": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "additionalProperties": false
+    },
+    "SecUserPreferenceSaveDto": {
+      "required": [
+        "environment_ifk",
+        "font_color",
+        "usermaster_fk"
+      ],
+      "type": "object",
+      "properties": {
+        "userpreference_pk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "usermaster_fk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "font_color": {
+          "type": "string"
+        },
+        "font_size": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "is_notification_allowed": {
+          "type": "boolean"
+        },
+        "is_message_allowed": {
+          "type": "boolean"
+        },
+        "is_profile_allowed": {
+          "type": "boolean"
+        },
+        "is_email_allowed": {
+          "type": "boolean"
+        },
+        "environment_ifk": {
+          "type": "string"
+        },
+        "regionalformat_ifk": {
+          "type": "string",
+          "nullable": true
+        },
+        "is_active": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_on": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_updated_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "last_updated_on": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "version_no": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "pref_date_format": {
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "ChangePwdSaveDto": {
+      "required": [
+        "confirmpassword",
+        "newpassword",
+        "password"
+      ],
+      "type": "object",
+      "properties": {
+        "usermaster_pk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "password": {
+          "type": "string"
+        },
+        "newpassword": {
+          "type": "string",
+          "format": "password"
+        },
+        "confirmpassword": {
+          "type": "string",
+          "format": "password"
+        },
+        "otp": {
+          "maxLength": 6,
+          "minLength": 4,
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "UserSendOTPDto": {
+      "type": "object",
+      "properties": {
+        "userPK": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "senderId": {
+          "type": "string",
+          "nullable": true
+        },
+        "password": {
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "UserPasswordDto": {
+      "type": "object",
+      "properties": {
+        "userPK": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "password": {
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "Version": {
+      "type": "object",
+      "properties": {
+        "major": {
+          "type": "integer",
+          "format": "int32",
+          "readOnly": true
+        },
+        "minor": {
+          "type": "integer",
+          "format": "int32",
+          "readOnly": true
+        },
+        "build": {
+          "type": "integer",
+          "format": "int32",
+          "readOnly": true
+        },
+        "revision": {
+          "type": "integer",
+          "format": "int32",
+          "readOnly": true
+        },
+        "majorRevision": {
+          "type": "integer",
+          "format": "int32",
+          "readOnly": true
+        },
+        "minorRevision": {
+          "type": "integer",
+          "format": "int32",
+          "readOnly": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "StringStringIEnumerableKeyValuePair": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "nullable": true,
+          "readOnly": true
+        },
+        "value": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "nullable": true,
+          "readOnly": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "HttpContent": {
+      "type": "object",
+      "properties": {
+        "headers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StringStringIEnumerableKeyValuePair"
+          },
+          "nullable": true,
+          "readOnly": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "HttpStatusCode": {
+      "enum": [
+        100,
+        101,
+        102,
+        103,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208,
+        226,
+        300,
+        301,
+        302,
+        303,
+        304,
+        305,
+        306,
+        307,
+        308,
+        400,
+        401,
+        402,
+        403,
+        404,
+        405,
+        406,
+        407,
+        408,
+        409,
+        410,
+        411,
+        412,
+        413,
+        414,
+        415,
+        416,
+        417,
+        421,
+        422,
+        423,
+        424,
+        426,
+        428,
+        429,
+        431,
+        451,
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        510,
+        511
+      ],
+      "type": "integer",
+      "format": "int32"
+    },
+    "HttpMethod": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "nullable": true,
+          "readOnly": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "HttpRequestMessage": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "$ref": "#/definitions/Version"
+        },
+        "content": {
+          "$ref": "#/definitions/HttpContent"
+        },
+        "method": {
+          "$ref": "#/definitions/HttpMethod"
+        },
+        "requestUri": {
+          "type": "string",
+          "format": "uri",
+          "nullable": true
+        },
+        "headers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StringStringIEnumerableKeyValuePair"
+          },
+          "nullable": true,
+          "readOnly": true
+        },
+        "properties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false
+          },
+          "nullable": true,
+          "readOnly": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "HttpResponseMessage": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "$ref": "#/definitions/Version"
+        },
+        "content": {
+          "$ref": "#/definitions/HttpContent"
+        },
+        "statusCode": {
+          "$ref": "#/definitions/HttpStatusCode"
+        },
+        "reasonPhrase": {
+          "type": "string",
+          "nullable": true
+        },
+        "headers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StringStringIEnumerableKeyValuePair"
+          },
+          "nullable": true,
+          "readOnly": true
+        },
+        "trailingHeaders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StringStringIEnumerableKeyValuePair"
+          },
+          "nullable": true,
+          "readOnly": true
+        },
+        "requestMessage": {
+          "$ref": "#/definitions/HttpRequestMessage"
+        },
+        "isSuccessStatusCode": {
+          "type": "boolean",
+          "readOnly": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "UserRuleSettingSaveDto": {
+      "type": "object",
+      "properties": {
+        "rulesettingpk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "ruleconfigfk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pass_min_length": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "pass_max_length": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "pass_cap_letter": {
+          "type": "boolean"
+        },
+        "pass_special_char": {
+          "type": "boolean"
+        },
+        "pass_numeric": {
+          "type": "boolean"
+        },
+        "pass_space_allowed": {
+          "type": "boolean"
+        },
+        "pass_history": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "pass_userid_allowed": {
+          "type": "boolean",
+          "nullable": true
+        },
+        "pass_change_days": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "pass_change_remainder": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "max_image_size": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "image_file_type": {
+          "type": "string",
+          "nullable": true
+        },
+        "max_upload_size": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "file_storage_loc": {
+          "type": "string",
+          "nullable": true
+        },
+        "is_active": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_on": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_updated_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "last_updated_on": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "version_no": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "permitted_file_types": {
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "UserPreferenceSettingSaveDto": {
+      "type": "object",
+      "properties": {
+        "preferencesettingpk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "ruleconfigfk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "preferred_language": {
+          "type": "string",
+          "nullable": true
+        },
+        "no_of_record": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "date_range": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "default_screen": {
+          "type": "string",
+          "nullable": true
+        },
+        "no_recent_access_menu": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "default_otp_type": {
+          "type": "string",
+          "nullable": true
+        },
+        "default_download_loc": {
+          "type": "string",
+          "nullable": true
+        },
+        "message_preference": {
+          "type": "string",
+          "nullable": true
+        },
+        "alert_preference": {
+          "type": "string",
+          "nullable": true
+        },
+        "is_active": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_on": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_updated_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "last_updated_on": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "version_no": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "UserRuleConfigMFSaveDto": {
+      "type": "object",
+      "properties": {
+        "userruleconfigpk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "usermasterfk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "userrolefk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "is_active": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_on": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_updated_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "last_updated_on": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "version_no": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "rules": {
+          "$ref": "#/definitions/UserRuleSettingSaveDto"
+        },
+        "preference": {
+          "$ref": "#/definitions/UserPreferenceSettingSaveDto"
+        }
+      },
+      "additionalProperties": false
+    },
+    "UserRuleDetailDto": {
+      "required": [
+        "userruleconfigpk"
+      ],
+      "type": "object",
+      "properties": {
+        "userruleconfigpk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "is_active": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "additionalProperties": false
+    },
+    "DocSaveDto": {
+      "type": "object",
+      "properties": {
+        "documentmaster_pk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "document_id": {
+          "type": "string",
+          "nullable": true
+        },
+        "document_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "documenttype_fk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "documentgroup_fk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "document_subject": {
+          "type": "string",
+          "nullable": true
+        },
+        "document_header": {
+          "type": "string",
+          "nullable": true
+        },
+        "document_body": {
+          "type": "string",
+          "nullable": true
+        },
+        "doucment_footer": {
+          "type": "string",
+          "nullable": true
+        },
+        "messagefolder_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "is_active": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_on": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_updated_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "last_updated_on": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "version_no": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "WFLocListSaveDto": {
+      "type": "object",
+      "properties": {
+        "workflow_loc_trn_pk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "from_loc_mst_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "location_id": {
+          "type": "string",
+          "nullable": true
+        },
+        "location_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "is_active": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "WorkFlowSaveDto": {
+      "type": "object",
+      "properties": {
+        "workflow_rules_trn_pk": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "workflow_id": {
+          "type": "string",
+          "nullable": true
+        },
+        "document_mst_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "document_id": {
+          "type": "string",
+          "nullable": true
+        },
+        "document_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "is_active": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "to_loc_mst_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "location_id": {
+          "type": "string",
+          "nullable": true
+        },
+        "location_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "department_mst_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "department_id": {
+          "type": "string",
+          "nullable": true
+        },
+        "department_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "designation_mst_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "designation_id": {
+          "type": "string",
+          "nullable": true
+        },
+        "designation_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "user_mst_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "username": {
+          "type": "string",
+          "nullable": true
+        },
+        "copy1_mst_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "copy1_id": {
+          "type": "string",
+          "nullable": true
+        },
+        "copy2_mst_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "copy2_id": {
+          "type": "string",
+          "nullable": true
+        },
+        "copy3_mst_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "copy3_id": {
+          "type": "string",
+          "nullable": true
+        },
+        "valid_from": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "valid_to": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "actiondays": {
+          "type": "string",
+          "nullable": true
+        },
+        "reminderdays": {
+          "type": "string",
+          "nullable": true
+        },
+        "reminderfreq": {
+          "type": "string",
+          "nullable": true
+        },
+        "escalate_user_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "escalteid": {
+          "type": "string",
+          "nullable": true
+        },
+        "targetdays": {
+          "type": "string",
+          "nullable": true
+        },
+        "created_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "created_on": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "last_updated_by_fk": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "last_updated_on": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        },
+        "version_no": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "reminder_alert": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "reminder_email": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "notification_alert": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "notification_email": {
+          "type": "integer",
+          "format": "int32",
+          "nullable": true
+        },
+        "locationDtls": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WFLocListSaveDto"
+          },
+          "nullable": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "WFEntryDto": {
+      "required": [
+        "workFlowPK"
+      ],
+      "type": "object",
+      "properties": {
+        "workFlowPK": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "additionalProperties": false
     }
+  
+
   }
 }

@@ -32,8 +32,14 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 
 const swaggerUi = require("swagger-ui-express");
 const swaggerFile = require("./swagger_output.json");
-app.use("/api-documents", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
+app.use('/api-documents', swaggerUi.serve, swaggerUi.setup(swaggerFile, {
+  explorer: true,
+  swaggerOptions: {
+      displayRequestDuration: true
+
+  }
+}));
 (async function () {
   await database.initialize();
 })();
