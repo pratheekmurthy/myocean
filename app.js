@@ -21,7 +21,10 @@ const terminalRoutes = require('./routes/terminal');
 const agentRoutes = require('./routes/agent');
 const activeSurchargeRptRoutes = require('./routes/ActiveSurchargeRpt')
 const ageingRoutes = require('./routes/ageing')
-
+const areaRoutes = require('./routes/area')
+const bookingStatusRoutes = require('./routes/bookingStatus')
+const canRoutes = require('./routes/can')
+const capacityRoutes = require('./routes/capacity')
 
 const cors = require('cors');
 app.use(cors());
@@ -71,6 +74,10 @@ app.use(`${base_url}/Company`, agentRoutes);
 app.use(`${base_url}/ActiveSurchargeRpt`, activeSurchargeRptRoutes);
 app.use(`${base_url}/Ageing`, ageingRoutes);
 app.use(`${base_url}/Alerts`, alertRoutes);
+app.use(`${base_url}/Area`, areaRoutes);
+app.use(`${base_url}/BookingStatus`, bookingStatusRoutes);
+app.use(`${base_url}/CAN`, canRoutes);
+app.use(`${base_url}/Capacity`, capacityRoutes);
 
 app.use(async (error, req, res, next) => {
     const status = error.statusCode || 500;
