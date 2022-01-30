@@ -1,17 +1,6 @@
 const database = require('../services/database')
 
 
-
-
-
-
-
-
-
-
-
-
-
 exports.fetchDDCarrier =  async (req, res, next) => {
     try {
         let query = ' select sysdate from dual ';
