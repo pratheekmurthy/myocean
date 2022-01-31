@@ -20,6 +20,8 @@ const commodityRoutes = require("./routes/commodity");
 const roeRoutes = require("./routes/roe");
 const terminalRoutes = require("./routes/terminal");
 const agentRoutes = require("./routes/agent");
+const workFlowRoutes = require("./routes/workFlow");
+const userRuleRoutes = require("./routes/userRule");
 
 const cors = require("cors");
 app.use(cors());
@@ -33,13 +35,16 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 const swaggerUi = require("swagger-ui-express");
 const swaggerFile = require("./swagger_output.json");
 
-app.use('/api-documents', swaggerUi.serve, swaggerUi.setup(swaggerFile, {
-  explorer: true,
-  swaggerOptions: {
-      displayRequestDuration: true
-
-  }
-}));
+app.use(
+  "/api-documents",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerFile, {
+    explorer: true,
+    swaggerOptions: {
+      displayRequestDuration: true,
+    },
+  })
+);
 (async function () {
   await database.initialize();
 })();
@@ -78,6 +83,8 @@ app.use(`${base_url}/Commodity`, commodityRoutes);
 app.use(`${base_url}/roe`, roeRoutes);
 app.use(`${base_url}/Company`, agentRoutes);
 app.use(`${base_url}/ActiveSurchargeRpt`, agentRoutes);
+app.use(`${base_url}/WorkFlow`, workFlowRoutes);
+app.use(`${base_url}/UserRule`, userRuleRoutes);
 
 app.use(async (error, req, res, next) => {
   const status = error.statusCode || 500;
