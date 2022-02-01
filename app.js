@@ -25,6 +25,11 @@ const areaRoutes = require('./routes/area')
 const bookingStatusRoutes = require('./routes/bookingStatus')
 const canRoutes = require('./routes/can')
 const capacityRoutes = require('./routes/capacity')
+const commodityRateRoutes = require('./routes/commodityRate')
+const creditNoteRoutes = require('./routes/creditNote')
+const dailyBookingReportRoutes = require('./routes/dailyBookingReport')
+const deliveryOrderRoutes = require('./routes/deliveryOrder')
+
 
 const cors = require('cors');
 app.use(cors());
@@ -37,6 +42,7 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerFile = require('./swagger_output.json');
+const { required } = require('joi');
 app.use('/api-documents', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 (async function(){await database.initialize()})()
@@ -78,6 +84,11 @@ app.use(`${base_url}/Area`, areaRoutes);
 app.use(`${base_url}/BookingStatus`, bookingStatusRoutes);
 app.use(`${base_url}/CAN`, canRoutes);
 app.use(`${base_url}/Capacity`, capacityRoutes);
+app.use(`${base_url}/CommodityRate`, commodityRateRoutes);
+app.use(`${base_url}/CreditNote`, creditNoteRoutes);
+app.use(`${base_url}/DailyBookingReport`, dailyBookingReportRoutes);
+app.use(`${base_url}/DeliveryOrder`, deliveryOrderRoutes);
+
 
 app.use(async (error, req, res, next) => {
     const status = error.statusCode || 500;
