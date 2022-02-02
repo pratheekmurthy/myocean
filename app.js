@@ -22,6 +22,7 @@ const terminalRoutes = require("./routes/terminal");
 const agentRoutes = require("./routes/agent");
 const workFlowRoutes = require("./routes/workFlow");
 const userRuleRoutes = require("./routes/userRule");
+const spotRateRoutes = require("./routes/spotRate");
 
 const cors = require("cors");
 app.use(cors());
@@ -85,6 +86,7 @@ app.use(`${base_url}/Company`, agentRoutes);
 app.use(`${base_url}/ActiveSurchargeRpt`, agentRoutes);
 app.use(`${base_url}/WorkFlow`, workFlowRoutes);
 app.use(`${base_url}/UserRule`, userRuleRoutes);
+app.use(`${base_url}/SpotRate`, spotRateRoutes);
 
 app.use(async (error, req, res, next) => {
   const status = error.statusCode || 500;

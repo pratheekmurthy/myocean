@@ -122,6 +122,12 @@ const schemas = {
     inviteColleagueSchema: Joi.object().keys({
         Emailids:Joi.string().required(),
         UserName:Joi.string().required()
+    }),
+    removeUserSchema: Joi.object().keys({
+        userPK:Joi.number(),
+        status:Joi.number()
     })
+
+ 
 };
 module.exports = schemas;
