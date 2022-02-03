@@ -5,24 +5,32 @@ const fs = require("fs");
 const PORT = process.env.PORT || 6000;
 const database = require("./services/database");
 const app = express();
-const authRoutes = require("./routes/auth");
-const alertRoutes = require("./routes/alerts");
-const menuRoutes = require("./routes/menu");
-const commonRoutes = require("./routes/common");
-const signUpRoutes = require("./routes/Signup");
-const countriesRoutes = require("./routes/countries");
-const dropDownRoutes = require("./routes/dropDown");
-const userProfileRoutes = require("./routes/userProfile");
-const scheduleRoutes = require("./routes/viewSchedule");
-const emailRoutes = require("./routes/emailManagement");
-const vesselRoutes = require("./routes/vessel");
-const commodityRoutes = require("./routes/commodity");
-const roeRoutes = require("./routes/roe");
-const terminalRoutes = require("./routes/terminal");
-const agentRoutes = require("./routes/agent");
-const workFlowRoutes = require("./routes/workFlow");
-const userRuleRoutes = require("./routes/userRule");
-const spotRateRoutes = require("./routes/spotRate");
+const authRoutes = require('./routes/auth');
+const alertRoutes = require('./routes/alerts');
+const menuRoutes = require('./routes/menu');
+const commonRoutes = require('./routes/common');
+const signUpRoutes = require('./routes/Signup');
+const countriesRoutes = require('./routes/countries');
+const dropDownRoutes = require('./routes/dropDown');
+const userProfileRoutes = require('./routes/userProfile');
+const scheduleRoutes = require('./routes/viewSchedule');
+const emailRoutes = require('./routes/emailManagement');
+const vesselRoutes = require('./routes/vessel')
+const commodityRoutes = require('./routes/commodity')
+const roeRoutes = require('./routes/roe')
+const terminalRoutes = require('./routes/terminal');
+const agentRoutes = require('./routes/agent');
+const activeSurchargeRptRoutes = require('./routes/ActiveSurchargeRpt')
+const ageingRoutes = require('./routes/ageing')
+const areaRoutes = require('./routes/area')
+const bookingStatusRoutes = require('./routes/bookingStatus')
+const canRoutes = require('./routes/can')
+const capacityRoutes = require('./routes/capacity')
+const commodityRateRoutes = require('./routes/commodityRate')
+const creditNoteRoutes = require('./routes/creditNote')
+const dailyBookingReportRoutes = require('./routes/dailyBookingReport')
+const deliveryOrderRoutes = require('./routes/deliveryOrder')
+
 
 const cors = require("cors");
 app.use(cors());
@@ -33,8 +41,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/images", express.static(path.join(__dirname, "images")));
 
-const swaggerUi = require("swagger-ui-express");
-const swaggerFile = require("./swagger_output.json");
+const swaggerUi = require('swagger-ui-express');
+const swaggerFile = require('./swagger_output.json');
+const { required } = require('joi');
+app.use('/api-documents', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use(
   "/api-documents",
@@ -83,10 +93,18 @@ app.use(`${base_url}/Vessel`, vesselRoutes);
 app.use(`${base_url}/Commodity`, commodityRoutes);
 app.use(`${base_url}/roe`, roeRoutes);
 app.use(`${base_url}/Company`, agentRoutes);
-app.use(`${base_url}/ActiveSurchargeRpt`, agentRoutes);
-app.use(`${base_url}/WorkFlow`, workFlowRoutes);
-app.use(`${base_url}/UserRule`, userRuleRoutes);
-app.use(`${base_url}/SpotRate`, spotRateRoutes);
+app.use(`${base_url}/ActiveSurchargeRpt`, activeSurchargeRptRoutes);
+app.use(`${base_url}/Ageing`, ageingRoutes);
+app.use(`${base_url}/Alerts`, alertRoutes);
+app.use(`${base_url}/Area`, areaRoutes);
+app.use(`${base_url}/BookingStatus`, bookingStatusRoutes);
+app.use(`${base_url}/CAN`, canRoutes);
+app.use(`${base_url}/Capacity`, capacityRoutes);
+app.use(`${base_url}/CommodityRate`, commodityRateRoutes);
+app.use(`${base_url}/CreditNote`, creditNoteRoutes);
+app.use(`${base_url}/DailyBookingReport`, dailyBookingReportRoutes);
+app.use(`${base_url}/DeliveryOrder`, deliveryOrderRoutes);
+
 
 app.use(async (error, req, res, next) => {
   const status = error.statusCode || 500;
