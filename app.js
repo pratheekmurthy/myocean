@@ -23,6 +23,13 @@ const agentRoutes = require("./routes/agent");
 const workFlowRoutes = require("./routes/workFlow");
 const userRuleRoutes = require("./routes/userRule");
 const spotRateRoutes = require("./routes/spotRate");
+const shippingInstRoutes = require("./routes/shippingInst");
+const serviceBLRoutes = require("./routes/serviceBL");
+const sequenceRoutes = require("./routes/sequence");
+const roleRoutes = require("./routes/role");
+const riverBLRoutes = require("./routes/riverBL");
+const requestRateRoutes = require("./routes/requestRate");
+const regionRoutes = require("./routes/region");
 
 const cors = require("cors");
 app.use(cors());
@@ -87,6 +94,13 @@ app.use(`${base_url}/ActiveSurchargeRpt`, agentRoutes);
 app.use(`${base_url}/WorkFlow`, workFlowRoutes);
 app.use(`${base_url}/UserRule`, userRuleRoutes);
 app.use(`${base_url}/SpotRate`, spotRateRoutes);
+app.use(`${base_url}/ShippingInst`, shippingInstRoutes);
+app.use(`${base_url}/ServiceBL`, serviceBLRoutes);
+app.use(`${base_url}/Sequence`, sequenceRoutes);
+app.use(`${base_url}/Role`, roleRoutes);
+app.use(`${base_url}/RiverBL`, riverBLRoutes);
+app.use(`${base_url}/RequestRate`, requestRateRoutes);
+app.use(`${base_url}/Region`, regionRoutes);
 
 app.use(async (error, req, res, next) => {
   const status = error.statusCode || 500;
