@@ -3,14 +3,12 @@ const alertController = require('../../controllers/alert');
 
 const router = express.Router();
 const joiValidator = require('../../middleware/joi')
-const { alertSchema } = require('../../schema/index')
+//const { alertSchema } = require('../../schema/index')
 
-const {getMessageSchema,createMessageSchema,getMessagesForUserSchema,getMessageThreadSchema,deleteMessageSchema,clearMessageSchema,
-    updateActionSchema,getUnReadCountSchema,getParametersSchema,getMessageTemplateSchema,saveTemplateSchema,
-    markReadSchema} = require('../../schema/alert/index')
-
-// router.get('/GetUnReadCount', joiValidator(alertSchema, 'query'), alertController.alertCount);
-
+const { getMessageSchema, createMessageSchema, getMessagesForUserSchema, 
+        getMessageThreadSchema, deleteMessageSchema, clearMessageSchema, 
+        updateActionSchema, getUnReadCountSchema, getParametersSchema, 
+        getMessageTemplateSchema, saveTemplateSchema, markReadSchema } = require('../../schema/alert/index')
 
 router.get('/GetMessage', joiValidator(getMessageSchema, 'query'), alertController.getMessage);
 router.post('/CreateMessage', joiValidator(createMessageSchema, 'body'), alertController.createMessage);
@@ -20,7 +18,7 @@ router.post('/DeleteMessage', joiValidator(deleteMessageSchema, 'body'), alertCo
 router.post('/ClearMessage', joiValidator(clearMessageSchema, 'body'), alertController.clearMessage);
 router.post('/UpdateAction', joiValidator(updateActionSchema, 'body'), alertController.updateAction);
 router.get('/GetUnReadCount', joiValidator(getUnReadCountSchema, 'query'), alertController.getUnReadCount);
-router.get('/GetAlertType',alertController.getAlertType);
+router.get('/GetAlertType', alertController.getAlertType);
 router.get('/GetParameters', joiValidator(getParametersSchema, 'query'), alertController.getParameters);
 router.get('/GetMessageTemplate', joiValidator(getMessageTemplateSchema, 'query'), alertController.getMessageTemplate);
 router.post('/SaveTemplate', joiValidator(saveTemplateSchema, 'body'), alertController.saveTemplate);

@@ -43,7 +43,6 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerFile = require('./swagger_output.json');
-const { required } = require('joi');
 app.use('/api-documents', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use(
@@ -56,9 +55,7 @@ app.use(
     },
   })
 );
-(async function () {
-  await database.initialize();
-})();
+(async function () { await database.initialize();})();
 
 app.use(async (req, res, next) => {
   //await database.initialize()
