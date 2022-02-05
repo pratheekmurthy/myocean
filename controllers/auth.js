@@ -36,7 +36,7 @@ exports.login = async (req, res, next) => {
         //     });
         //     return;
         // }
-        let query = `select * from qport_user_profile t where t.is_active = 1 and (lower(t.username) = :username or lower(t.email_id) = :email) and (decoder(t.passwordhash) = :password or t.login_code_number = :password)`
+        let query = `select * from qport_user_profile t where t.is_active = 1 and (lower(t.first_name) = :username or lower(t.email_id) = :email) and (decoder(t.passwordhash) = :password or t.login_code_number = :password)`
         let binds = [username, username, password, password]
         isValidUser = await database.simpleExecute(query, binds);
         if (isValidUser.rows.length == 0) {

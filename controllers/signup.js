@@ -473,7 +473,7 @@ const saveUserProfile = (data) => {
   try {
     return new Promise(async (resolve, reject) => {
       let dob = moment(data.dob).format("DD/MM/YYYY");
-
+      let username =  data.first_name + ' ' + data.last_name;
       let query = "";
       let returnvalue = 0;
 
@@ -591,7 +591,7 @@ const saveUserProfile = (data) => {
         query += " sysdate,";
         query += " encoder('" + data.login_password + "'),"; //passwordhash
         query += " encoder('" + data.login_password + "'),"; //passwordsalt
-        query += " '" + chkIsNull(data.contact_email_add) + "',"; //username
+        query += " '" + username + "',"; //username
         query += " '" + chkIsNull(data.login_code_number) + "',";
         query += " '" + chkIsNull(data.wrong_pwd_count, 0) + "',";
         query += " '" + chkIsNull(data.enable_otp, 0) + "',";
@@ -694,7 +694,7 @@ const saveUserProfile = (data) => {
         query += " last_updated_on = sysdate, ";
         query += " passwordhash = encoder('" + data.login_password + "'),";
         query += " passwordsalt = encoder('" + data.login_password + "'), ";
-        query += " username='" + chkIsNull(data.contact_email_add) + "', ";
+        query += " username='" + username + "', ";
         query +=
           " login_code_number='" +
           chkIsNull(data.login_code_number, "") +
