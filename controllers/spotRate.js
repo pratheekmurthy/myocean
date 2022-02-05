@@ -2,7 +2,7 @@ const database = require("../services/database");
 
 exports.fetchDDCarrier = async (req, res, next) => {
   try {
-    let query = " select sysdate from dual ";
+    let query = ' select sysdate from dual ';
     const result = await database.simpleExecute(query);
     data = result.rows;
     res
@@ -17,7 +17,7 @@ exports.fetchDDCarrier = async (req, res, next) => {
 };
 exports.fetchDDType = async (req, res, next) => {
   try {
-    let query = " select sysdate from dual ";
+    let query = ' select sysdate from dual ';
     const result = await database.simpleExecute(query);
     data = result.rows;
     res
@@ -32,7 +32,7 @@ exports.fetchDDType = async (req, res, next) => {
 };
 exports.fetchDDContract = async (req, res, next) => {
   try {
-    let query = " select sysdate from dual ";
+    let query = ' select sysdate from dual ';
     const result = await database.simpleExecute(query);
     data = result.rows;
     res
@@ -47,7 +47,7 @@ exports.fetchDDContract = async (req, res, next) => {
 };
 exports.fetchDDPol = async (req, res, next) => {
   try {
-    let query = " select sysdate from dual ";
+    let query = ' select sysdate from dual ';
     const result = await database.simpleExecute(query);
     data = result.rows;
     res
@@ -62,7 +62,7 @@ exports.fetchDDPol = async (req, res, next) => {
 };
 exports.fetchDDPod = async (req, res, next) => {
   try {
-    let query = " select sysdate from dual ";
+    let query = ' select sysdate from dual ';
     const result = await database.simpleExecute(query);
     data = result.rows;
     res
@@ -77,7 +77,7 @@ exports.fetchDDPod = async (req, res, next) => {
 };
 exports.fetchDDVoyage = async (req, res, next) => {
   try {
-    let query = " select sysdate from dual ";
+    let query = ' select sysdate from dual ';
     const result = await database.simpleExecute(query);
     data = result.rows;
     res

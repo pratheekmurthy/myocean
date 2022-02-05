@@ -2,7 +2,7 @@ const database = require("../services/database");
 
 exports.fetchSequenceList = async (req, res, next) => {
   try {
-    let query = " select sysdate from dual ";
+     let query = ' select sysdate from dual ';
     const result = await database.simpleExecute(query);
     data = result.rows;
     res
@@ -17,7 +17,7 @@ exports.fetchSequenceList = async (req, res, next) => {
 };
 exports.saveSequence = async (req, res, next) => {
   try {
-    let query = " select sysdate from dual ";
+     let query = ' select sysdate from dual ';
     const result = await database.simpleExecute(query);
     data = result.rows;
     res
@@ -32,7 +32,7 @@ exports.saveSequence = async (req, res, next) => {
 };
 exports.deactivateSequence = async (req, res, next) => {
   try {
-    let query = " select sysdate from dual ";
+     let query = ' select sysdate from dual ';
     const result = await database.simpleExecute(query);
     data = result.rows;
     res
@@ -47,7 +47,7 @@ exports.deactivateSequence = async (req, res, next) => {
 };
 exports.delSequence = async (req, res, next) => {
   try {
-    let query = " select sysdate from dual ";
+     let query = ' select sysdate from dual ';
     const result = await database.simpleExecute(query);
     data = result.rows;
     res

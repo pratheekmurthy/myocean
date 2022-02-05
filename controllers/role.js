@@ -2,7 +2,7 @@ const database = require("../services/database");
 
 exports.fetchRole = async (req, res, next) => {
   try {
-    let query = " select sysdate from dual ";
+     let query = ' select sysdate from dual ';
     const result = await database.simpleExecute(query);
     data = result.rows;
     res
@@ -17,7 +17,7 @@ exports.fetchRole = async (req, res, next) => {
 };
 exports.saveRole = async (req, res, next) => {
   try {
-    let query = " select sysdate from dual ";
+     let query = ' select sysdate from dual ';
     const result = await database.simpleExecute(query);
     data = result.rows;
     res

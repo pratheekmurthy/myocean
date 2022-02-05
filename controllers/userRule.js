@@ -2,7 +2,7 @@ const database = require("../services/database");
 
 exports.getUserRuleDropdown = async (req, res, next) => {
   try {
-    let query = " select sysdate from dual ";
+    let query = ' select sysdate from dual ';
     const result = await database.simpleExecute(query);
     data = result.rows;
     res
@@ -18,7 +18,7 @@ exports.getUserRuleDropdown = async (req, res, next) => {
 
 exports.fetchUserRuleList = async (req, res, next) => {
   try {
-    let query = " select sysdate from dual ";
+    let query = ' select sysdate from dual ';
     const result = await database.simpleExecute(query);
     data = result.rows;
     res
@@ -33,7 +33,7 @@ exports.fetchUserRuleList = async (req, res, next) => {
 };
 exports.fetchUserRuleDetails = async (req, res, next) => {
   try {
-    let query = " select sysdate from dual ";
+    let query = ' select sysdate from dual ';
     const result = await database.simpleExecute(query);
     data = result.rows;
     res
@@ -48,7 +48,7 @@ exports.fetchUserRuleDetails = async (req, res, next) => {
 };
 exports.getUserRuleAndPreference = async (req, res, next) => {
   try {
-    let query = " select sysdate from dual ";
+    let query = ' select sysdate from dual ';
     const result = await database.simpleExecute(query);
     data = result.rows;
     res
@@ -63,7 +63,7 @@ exports.getUserRuleAndPreference = async (req, res, next) => {
 };
 exports.saveUserRules = async (req, res, next) => {
   try {
-    let query = " select sysdate from dual ";
+    let query = ' select sysdate from dual ';
     const result = await database.simpleExecute(query);
     data = result.rows;
     res
@@ -78,7 +78,7 @@ exports.saveUserRules = async (req, res, next) => {
 };
 exports.deactivateUserRule = async (req, res, next) => {
   try {
-    let query = " select sysdate from dual ";
+    let query = ' select sysdate from dual ';
     const result = await database.simpleExecute(query);
     data = result.rows;
     res
@@ -93,7 +93,7 @@ exports.deactivateUserRule = async (req, res, next) => {
 };
 exports.deleteUserRule = async (req, res, next) => {
   try {
-    let query = " select sysdate from dual ";
+    let query = ' select sysdate from dual ';
     const result = await database.simpleExecute(query);
     data = result.rows;
     res

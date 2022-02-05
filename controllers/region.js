@@ -2,7 +2,7 @@ const database = require("../services/database");
 
 exports.fetchRegion = async (req, res, next) => {
   try {
-    let query = " select sysdate from dual ";
+    let query = ' select sysdate from dual ';
     const result = await database.simpleExecute(query);
     data = result.rows;
     res
