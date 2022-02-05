@@ -824,13 +824,14 @@ const saveAlerts = (userfk, data) => {
 };
 
 exports.removeUser = async (req, res, next) => {
+  const userpk = req.body.userPK;
+  const active = req.body.status;
   try {
-    let query = " select sysdate from dual ";
-    const result = await database.simpleExecute(query);
+    let query = `update qport_user_profile t set t.is_active = :active where t.userpk = :userpk`
+    let binds = [userpk, active]
+    const result = await database.simpleExecute(query, binds);
     data = result.rows;
-    res
-      .status(200)
-      .json({ Status: "Success", StatusCode: "GFS000001", Data: data });
+    res.status(200).json({ Status: "Success", StatusCode: "GFE000001", PKValue: userpk, ID:null });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
