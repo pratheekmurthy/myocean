@@ -45,6 +45,7 @@ const rebatAndDiscRoutes = require("./routes/rebatAndDisc");
 const provBookingRoutes = require("./routes/provBooking");
 const periodicRptRoutes = require("./routes/periodicRpt");
 const periodicReportRoutes = require("./routes/periodicReport");
+const OTSRoutes = require("./routes/OTS");
 
 const cors = require("cors");
 app.use(cors());
@@ -131,6 +132,7 @@ app.use(`${base_url}/RebatAndDisc`, rebatAndDiscRoutes);
 app.use(`${base_url}/ProvBooking`, provBookingRoutes);
 app.use(`${base_url}/PeriodicRpt`, periodicRptRoutes);
 app.use(`${base_url}/PeriodicReport`, periodicReportRoutes);
+app.use(`${base_url}/OTS`, OTSRoutes);
 
 app.use(async (error, req, res, next) => {
   const status = error.statusCode || 500;

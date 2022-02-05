@@ -3,26 +3,13 @@ const workFlowController = require('../../controllers/workFlow');
 
 const router = express.Router();
 const joiValidator = require('../../middleware/joi')
-const {fetchDocListingSchema, 
-    fetchDocEntrySchema,
-    fetchDocParameterSchema,
-    getDocGrpDropdownSchema, 
-    documentSaveSchema, 
-    fetchWFListingSchema, 
-    fetchWorkFlowEntrySchema,
-    fetchWorkFlowLogSchema,
-    saveWorkFlowSchema, 
-    isApproverSchema, 
-    getWorkFlowMailSchema, 
-    fetchWFLocationSchema, 
-    fetchWFUserSchema,
-    fetchWFAppUserSchema, 
-    fetchDepartmentSchema, 
-    fetchDesignationSchema, 
-    fetchDocDropdownSchema, 
-    delWorkFlowSchema, 
-    deactivateWorkFlowSchema, 
-    getLocationPKSchema } = require('../../schema/workFlow/index')
+const {fetchDocListingSchema,fetchDocEntrySchema,fetchDocParameterSchema,
+    getDocGrpDropdownSchema,documentSaveSchema, fetchWFListingSchema, 
+    fetchWorkFlowEntrySchema,fetchWorkFlowLogSchema,saveWorkFlowSchema, 
+    isApproverSchema,getWorkFlowMailSchema, fetchWFLocationSchema, 
+    fetchWFUserSchema,fetchWFAppUserSchema,fetchDepartmentSchema, 
+    fetchDesignationSchema,fetchDocDropdownSchema,delWorkFlowSchema, 
+    deactivateWorkFlowSchema,getLocationPKSchema } = require('../../schema/workFlow/index')
 
 router.get('/FetchDocListing', joiValidator(fetchDocListingSchema, 'query'), workFlowController.fetchDocListing);
 router.get('/FetchDocEntry', joiValidator(fetchDocEntrySchema, 'query'), workFlowController.fetchDocEntry);
