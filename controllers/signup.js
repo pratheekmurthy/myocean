@@ -473,7 +473,7 @@ const saveUserProfile = (data) => {
   try {
     return new Promise(async (resolve, reject) => {
       let dob = moment(data.dob).format("DD/MM/YYYY");
-      let username =  data.first_name + ' ' + data.last_name;
+      let username = data.first_name + " " + data.last_name;
       let query = "";
       let returnvalue = 0;
 
@@ -598,7 +598,7 @@ const saveUserProfile = (data) => {
         query += " '" + chkIsNull(data.company_fk) + "',";
         query += " " + returnvalue + ","; //usermaster_pk
         query += " '" + data.contact_email_add + "',";
-        query += " '" + chkIsNull(data.mobile_number) + "',";
+        query += " '" + data.contact_mob_phone_no + "',";
         query += " '" + chkIsNull(data.office_number) + "',";
         query += " '" + chkIsNull(data.rel_mobile_number) + "',";
         query += " '" + chkIsNull(data.user_image) + "',";
@@ -649,7 +649,6 @@ const saveUserProfile = (data) => {
           " contact_mob_city='" + chkIsNull(data.contact_mob_city) + "', ";
         query +=
           " contact_mob_state='" + chkIsNull(data.contact_mob_state) + "', ";
-        //query += ' contact_mob_country_fk=' + chkIsNull(data.contact_mob_country_fk) + ', ';
         query +=
           " contact_mob_zipcode='" +
           chkIsNull(data.contact_mob_zipcode) +
@@ -705,7 +704,7 @@ const saveUserProfile = (data) => {
         //query += ' company_fk=' + chkIsNull(data.company_fk, '') + ', ';
         //query += ' usermaster_pk=' + chkIsNull(data.usermaster_pk,'') + ', ';
         query += " email_id='" + data.contact_email_add + "', ";
-        query += " mobile_number='" + chkIsNull(data.mobile_number) + "', ";
+        query += " mobile_number='" + data.contact_mob_phone_no + "', ";
         query += " office_number='" + chkIsNull(data.office_number) + "', ";
         query +=
           " rel_mobile_number='" + chkIsNull(data.rel_mobile_number) + "', ";
@@ -825,13 +824,14 @@ const saveAlerts = (userfk, data) => {
 };
 
 exports.removeUser = async (req, res, next) => {
+  const userpk = req.body.userPK;
+  const active = req.body.status;
   try {
-    let query = ' select sysdate from dual ';
-    const result = await database.simpleExecute(query);
+    let query = `update qport_user_profile t set t.is_active = :active where t.userpk = :userpk`
+    let binds = [userpk, active]
+    const result = await database.simpleExecute(query, binds);
     data = result.rows;
-    res
-      .status(200)
-      .json({ Status: "Success", StatusCode: "GFS000001", Data: data });
+    res.status(200).json({ Status: "Success", StatusCode: "GFE000001", PKValue: userpk, ID:null });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;

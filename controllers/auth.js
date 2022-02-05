@@ -4,15 +4,6 @@ const {forgotPassword} = require('../utility/forgotpassword')
 const {emailerInfo} = require('../utility/emailConfig')
 const sendEmails = require('../utility/emailer')
 const crypto = require('crypto')
-// let libPath;
-// if (process.platform === 'win32') {           // Windows
-//   libPath = 'D:\app\instantclient_11_2_32Bit';
-// } else if (process.platform === 'darwin') {   // macOS
-//   libPath = process.env.HOME + '/Downloads/instantclient_19_8';
-// }
-// if (libPath && fs.existsSync(libPath)) {
-//   oracledb.initOracleClient({ libDir: libPath });
-// }
 
 exports.login = async (req, res, next) => {
     const username = req.body.userName;
@@ -20,29 +11,10 @@ exports.login = async (req, res, next) => {
     const otp_value = req.body.otpValue;
     let loadedUser;
     try {
-        // let query = `select * from qport_user_profile a where (lower(a.username) = :username or lower(a.email_id) = :email) and a.is_active = 1`
-        // let binds = [username, username];
-        // const user = await database.simpleExecute(query, binds);
-        // if (user.rows.length == 0) {
-        //     // const error = new Error('Username invalid');
-        //     // error.statusCode = 401;
-        //     // throw error;
-        //     res.status(200).json({
-        //         Error: true,
-        //         Message: "Username invalid",
-        //         OTPRequired: false,
-        //         statusCode: 403,
-        //         Token: ""
-        //     });
-        //     return;
-        // }
         let query = `select * from qport_user_profile t where t.is_active = 1 and (lower(t.first_name) = :username or lower(t.email_id) = :email) and (decoder(t.passwordhash) = :password or t.login_code_number = :password)`
         let binds = [username, username, password, password]
         isValidUser = await database.simpleExecute(query, binds);
         if (isValidUser.rows.length == 0) {
-            // const error = new Error('unauthorized');
-            // error.statusCode = 401;
-            // throw error;
             res.status(200).json({
                 error: true,
                 message: "Invalid Credential",
@@ -58,9 +30,6 @@ exports.login = async (req, res, next) => {
         let b1 = [currUser.USERPK]
         const user_prefrence = await database.simpleExecute(q1, b1);
         if (user_prefrence.rows.length == 0) {
-            //const error = new Error('A user prefrence was not found.');
-            //error.statusCode = 401;
-            //throw error;
             res.status(200).json({
                 Error: true,
                 message: "A user prefrence was not found.",
@@ -113,7 +82,6 @@ exports.login = async (req, res, next) => {
 };
 
 exports.forgotPassword = async (req, res, next) => {
-    //const username = req.body.username;
     const { userName } = req.body;
     try {
         let query = `select a.userpk, a.email_id from qport_user_profile a where (lower(a.username) = :userName or lower(a.email_id) = :userName) and a.is_active = 1`
@@ -126,7 +94,6 @@ exports.forgotPassword = async (req, res, next) => {
         let userpk = user.rows[0].USERPK;
         let emailid =  user.rows[0].EMAIL_ID;
         const newPassword =  RandomPassword();
-        //const newPassword = 'Welcome@2022';
         query = ' update qport_user_profile t ';
         query += ' set t.login_code_number = \'' + newPassword + '\'';
         query += ' where t.userpk = ' + userpk + '';
@@ -176,9 +143,6 @@ function extractName(data) {
     return result;
 }
 
-
-
-
 exports.trnLogin =  async (req, res, next) => {
     try {
         let query = ' select sysdate from dual ';
@@ -193,6 +157,7 @@ exports.trnLogin =  async (req, res, next) => {
           next(err);
     }
 }
+
 exports.updateLogOut =  async (req, res, next) => {
     try {
         let query = ' select sysdate from dual ';
@@ -207,6 +172,7 @@ exports.updateLogOut =  async (req, res, next) => {
           next(err);
     }
 }
+
 exports.deviceaddress =  async (req, res, next) => {
     try {
         let query = ' select sysdate from dual ';
@@ -221,6 +187,7 @@ exports.deviceaddress =  async (req, res, next) => {
           next(err);
     }
 }
+
 exports.resetpassword =  async (req, res, next) => {
     try {
         let query = ' select sysdate from dual ';
@@ -235,6 +202,7 @@ exports.resetpassword =  async (req, res, next) => {
           next(err);
     }
 }
+
 exports.deviceaddressUserdetails =  async (req, res, next) => {
     try {
         let query = ' select sysdate from dual ';
@@ -249,6 +217,7 @@ exports.deviceaddressUserdetails =  async (req, res, next) => {
           next(err);
     }
 }
+
 exports.otpfails =  async (req, res, next) => {
     try {
         let query = ' select sysdate from dual ';
