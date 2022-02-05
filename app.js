@@ -30,6 +30,11 @@ const roleRoutes = require("./routes/role");
 const riverBLRoutes = require("./routes/riverBL");
 const requestRateRoutes = require("./routes/requestRate");
 const regionRoutes = require("./routes/region");
+const receiptRoutes = require("./routes/receipt");
+const rebatAndDiscRoutes = require("./routes/rebatAndDisc");
+const provBookingRoutes = require("./routes/provBooking");
+const periodicRptRoutes = require("./routes/periodicRpt");
+const periodicReportRoutes = require("./routes/periodicReport");
 
 const cors = require("cors");
 app.use(cors());
@@ -101,6 +106,11 @@ app.use(`${base_url}/Role`, roleRoutes);
 app.use(`${base_url}/RiverBL`, riverBLRoutes);
 app.use(`${base_url}/RequestRate`, requestRateRoutes);
 app.use(`${base_url}/Region`, regionRoutes);
+app.use(`${base_url}/Receipt`, receiptRoutes);
+app.use(`${base_url}/RebatAndDisc`, rebatAndDiscRoutes);
+app.use(`${base_url}/ProvBooking`, provBookingRoutes);
+app.use(`${base_url}/PeriodicRpt`, periodicRptRoutes);
+app.use(`${base_url}/PeriodicReport`, periodicReportRoutes);
 
 app.use(async (error, req, res, next) => {
   const status = error.statusCode || 500;
