@@ -17,7 +17,7 @@ exports.fetchDDCarrier =  async (req, res, next) => {
     }
 }
 
-exports.fetchDDCustomer =  async (req, res, next) => {
+exports.fetchDDService =  async (req, res, next) => {
     try {
         let query = ' select sysdate from dual ';
         const result = await database.simpleExecute(query);
@@ -32,7 +32,7 @@ exports.fetchDDCustomer =  async (req, res, next) => {
     }
 }
 
-exports.FetchDDPod =  async (req, res, next) => {
+exports.fetchDDVoyage =  async (req, res, next) => {
     try {
         let query = ' select sysdate from dual ';
         const result = await database.simpleExecute(query);
@@ -47,7 +47,7 @@ exports.FetchDDPod =  async (req, res, next) => {
     }
 }
 
-exports.FetchDDPol =  async (req, res, next) => {
+exports.fetchDDPort =  async (req, res, next) => {
     try {
         let query = ' select sysdate from dual ';
         const result = await database.simpleExecute(query);
@@ -62,7 +62,7 @@ exports.FetchDDPol =  async (req, res, next) => {
     }
 }
 
-exports.FetchDDSurcharge =  async (req, res, next) => {
+exports.fetchDDBooking =  async (req, res, next) => {
     try {
         let query = ' select sysdate from dual ';
         const result = await database.simpleExecute(query);
@@ -77,47 +77,12 @@ exports.FetchDDSurcharge =  async (req, res, next) => {
     }
 }
 
-exports.FetchDDLocalcharge =  async (req, res, next) => {
-    try {
-        let query = ' select sysdate from dual ';
-        const result = await database.simpleExecute(query);
-        data = result.rows
-        res.status(200).json({ "Status": "Success",
-        "StatusCode": "GFS000001", "Data": data})
-    } catch (err) {
-        if (!err.statusCode) {
-            err.statusCode = 500;
-        }
-          next(err);
-    }
-}
 
-exports.FetchDDRebatecharge =  async (req, res, next) => {
-    try {
-        let query = ' select sysdate from dual ';
-        const result = await database.simpleExecute(query);
-        data = result.rows
-        res.status(200).json({ "Status": "Success",
-        "StatusCode": "GFS000001", "Data": data})
-    } catch (err) {
-        if (!err.statusCode) {
-            err.statusCode = 500;
-        }
-          next(err);
-    }
-}
 
-exports.FetchDDCommodity =  async (req, res, next) => {
-    try {
-        let query = ' select sysdate from dual ';
-        const result = await database.simpleExecute(query);
-        data = result.rows
-        res.status(200).json({ "Status": "Success",
-        "StatusCode": "GFS000001", "Data": data})
-    } catch (err) {
-        if (!err.statusCode) {
-            err.statusCode = 500;
-        }
-          next(err);
-    }
-}
+
+
+
+
+
+
+
