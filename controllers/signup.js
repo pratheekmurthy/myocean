@@ -598,7 +598,7 @@ const saveUserProfile = (data) => {
         query += " '" + chkIsNull(data.company_fk) + "',";
         query += " " + returnvalue + ","; //usermaster_pk
         query += " '" + data.contact_email_add + "',";
-        query += " '" + data.mobile_number + "',";
+        query += " '" + data.contact_mob_phone_no + "',";
         query += " '" + chkIsNull(data.office_number) + "',";
         query += " '" + chkIsNull(data.rel_mobile_number) + "',";
         query += " '" + chkIsNull(data.user_image) + "',";
@@ -704,7 +704,7 @@ const saveUserProfile = (data) => {
         //query += ' company_fk=' + chkIsNull(data.company_fk, '') + ', ';
         //query += ' usermaster_pk=' + chkIsNull(data.usermaster_pk,'') + ', ';
         query += " email_id='" + data.contact_email_add + "', ";
-        query += " mobile_number='" + data.mobile_number + "', ";
+        query += " mobile_number='" + data.contact_mob_phone_no + "', ";
         query += " office_number='" + chkIsNull(data.office_number) + "', ";
         query +=
           " rel_mobile_number='" + chkIsNull(data.rel_mobile_number) + "', ";
